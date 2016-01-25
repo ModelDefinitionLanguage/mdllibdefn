@@ -6,7 +6,7 @@ import org.eclipse.xtext.ui.generator.*
 
 var grammarURI = "classpath:/eu/ddmore/mdl/mdllib/MdlLib.xtext"
 var fileExtensions = "mlib"
-var projectName = "eu.ddmore.mdl"
+var projectName = "eu.ddmore.mdl.mdllib"
 var runtimeProject = "../${projectName}"
 var generateXtendStub = true
 
@@ -68,7 +68,7 @@ Workflow {
     		// Xtend-based API for validation
     		fragment = validation.ValidatorFragment auto-inject {
     		//    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
-    		//	composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+    			composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
     		}
     
     		// old scoping and exporting API
@@ -82,7 +82,7 @@ Workflow {
     
     		// generator API
     		fragment = generator.GeneratorFragment auto-inject {
-    			generateXtendMain = true
+    			generateXtendMain = false
     		}
     
     		// formatter API

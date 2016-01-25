@@ -8,5 +8,25 @@ Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.5.0",
- org.eclipse.xtext.generator;bundle-version="2.9.0"
+ org.eclipse.xtext.generator;bundle-version="2.9.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.eclipse.xtext.xbase.lib,
+ org.antlr.runtime,
+ org.eclipse.xtext.common.types,
+ org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: eu.ddmore.mdl.mdllib,
+ eu.ddmore.mdl.mdllib.services,
+ eu.ddmore.mdl.mdllib.mdlLib,
+ eu.ddmore.mdl.mdllib.mdlLib.impl,
+ eu.ddmore.mdl.mdllib.mdlLib.util,
+ eu.ddmore.mdl.mdllib.serializer,
+ eu.ddmore.mdl.mdllib.parser.antlr,
+ eu.ddmore.mdl.mdllib.parser.antlr.internal,
+ eu.ddmore.mdl.mdllib.validation,
+ eu.ddmore.mdl.mdllib.scoping,
+ eu.ddmore.mdl.mdllib.generator,
+ eu.ddmore.mdl.mdllib.formatting
+Import-Package: org.apache.log4j

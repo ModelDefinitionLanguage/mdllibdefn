@@ -2,8 +2,29 @@ grammar eu.ddmore.mdl.mdllib.MdlLib with org.eclipse.xtext.common.Terminals
 
 generate mdlLib "http://www.ddmore.eu/mdl/mdllib/MdlLib"
 
-Model:
-	greetings+=Greeting*;
+
+Library:
+	{Library} funcDefns += FunctionDefinition* 	
+;
 	
-Greeting:
-	'Hello' name=ID '!';
+	
+FunctionDefinition:
+	{FunctionDefinition} name = ID  fType = TypeSpec '(' argument=FuncArgDefns ')'
+			('returns' returnType=TypeSpec)? ';'
+;
+	
+FuncArgDefns:
+	{FuncArgDefns} (arguments += ArgumentDefinition (=> ',' arguments += ArgumentDefinition)*)? 
+;
+
+ArgumentDefinition:
+	{ArgumentDefinition}name=ID typeSpec=TypeSpec?
+;
+
+TypeSpec:
+	{TypeSpec} typeName=TYPE_NAME ('[' elementType=TypeSpec ']'|'[[' cellType=TypeSpec ']]')?
+;
+
+terminal TYPE_NAME:
+	'::' + ('A'..'Z')('a'..'z'|'A'..'Z'| '0'..'9')+
+;
