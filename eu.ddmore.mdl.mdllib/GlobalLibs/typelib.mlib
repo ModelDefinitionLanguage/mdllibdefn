@@ -1,0 +1,7 @@
+type Int _scalar;
+type Real _scalar;
+type Boolean _scalar;
+type String _scalar;
+type Pdf _scalar;
+type Vector _vector;
+type Matrix _matrix;

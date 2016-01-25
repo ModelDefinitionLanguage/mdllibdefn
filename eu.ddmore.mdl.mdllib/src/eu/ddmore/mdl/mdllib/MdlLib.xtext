@@ -4,27 +4,63 @@ generate mdlLib "http://www.ddmore.eu/mdl/mdllib/MdlLib"
 
 
 Library:
-	{Library} funcDefns += FunctionDefinition* 	
+	{Library} typeDefns += TypeDefinition* 
+	funcDefns += FunctionDefinition* 	
 ;
 	
+	
+TypeDefinition:
+	'type' name=ID class=TypeClass ';'
+;
 	
 FunctionDefinition:
-	{FunctionDefinition} name = ID  fType = TypeSpec '(' argument=FuncArgDefns ')'
-			('returns' returnType=TypeSpec)? ';'
+	{FunctionDefinition} 'func'  defns+= FunctionDefnBody (',' defns+=FunctionDefnBody)* ';'
 ;
-	
-FuncArgDefns:
-	{FuncArgDefns} (arguments += ArgumentDefinition (=> ',' arguments += ArgumentDefinition)*)? 
+
+FunctionDefnBody:
+	{FunctionDefnBody} name = ID descn=STRING? argument=FuncArgs 
+			'returns' returnType=TypeSpec
+;
+
+FuncArgs:
+	UnnamedFuncArgs|NamedFuncArgs
+;
+
+UnnamedFuncArgs:
+	{UnnamedFuncArgs} '(' (arguments += ArgumentDefinition (=> ',' arguments += ArgumentDefinition)*)? ')'
 ;
 
 ArgumentDefinition:
-	{ArgumentDefinition}name=ID typeSpec=TypeSpec?
+	{ArgumentDefinition} name=ID typeSpec=TypeSpec descn=STRING? 
 ;
+
+NamedFuncArgs:
+	{NamedFuncArgs} 'named' '(' arguments += ArgumentDefinition (=> ',' arguments += ArgumentDefinition)* ')'
+					('sig' (sigLists+= SignatureList (',' sigLists+= SignatureList)*))? 
+;
+
+SignatureList:
+	{SignatureList} '(' (argRefs+=ArgumentRef (',' argRefs+=ArgumentRef)*)? ')'
+;
+
+ArgumentRef:
+	{ArgumentRef} argRef=[ArgumentDefinition] (options?='?')?
+;
+
 
 TypeSpec:
-	{TypeSpec} typeName=TYPE_NAME ('[' elementType=TypeSpec ']'|'[[' cellType=TypeSpec ']]')?
+	{TypeSpec} '::' typeName=[TypeDefinition] ('[' elementType=TypeSpec ']'|'[[' cellType=TypeSpec ']]')?
 ;
 
-terminal TYPE_NAME:
-	'::' + ('A'..'Z')('a'..'z'|'A'..'Z'| '0'..'9')+
-;
+
+//TypeName:
+//	'::' TYPE_NAME
+//;
+
+//terminal TYPE_NAME:
+//	('A'..'Z')('a'..'z'|'A'..'Z'| '0'..'9')+
+//;
+
+enum TypeClass:
+		ENUM='_enum'| SUBLIST='_sublist'| SCALAR='_scalar'|VECTOR='_vector'|MATRIX='_matrix' 
+	;

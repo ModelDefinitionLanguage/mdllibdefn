@@ -2,32 +2,62 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="mdlLib" nsURI="http://www.ddmore.eu/mdl/mdllib/MdlLib" nsPrefix="mdlLib">
   <eClassifiers xsi:type="ecore:EClass" name="Library">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typeDefns" upperBound="-1"
+        eType="#//TypeDefinition" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="funcDefns" upperBound="-1"
         eType="#//FunctionDefinition" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FunctionDefinition">
+  <eClassifiers xsi:type="ecore:EClass" name="TypeDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="fType" eType="#//TypeSpec"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="argument" eType="#//FuncArgDefns"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="#//TypeClass"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FunctionDefinition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="defns" upperBound="-1"
+        eType="#//FunctionDefnBody" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FunctionDefnBody">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="descn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="argument" eType="#//FuncArgs"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="returnType" eType="#//TypeSpec"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FuncArgDefns">
+  <eClassifiers xsi:type="ecore:EClass" name="FuncArgs">
     <eStructuralFeatures xsi:type="ecore:EReference" name="arguments" upperBound="-1"
         eType="#//ArgumentDefinition" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UnnamedFuncArgs" eSuperTypes="#//FuncArgs"/>
   <eClassifiers xsi:type="ecore:EClass" name="ArgumentDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="typeSpec" eType="#//TypeSpec"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="descn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NamedFuncArgs" eSuperTypes="#//FuncArgs">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sigLists" upperBound="-1"
+        eType="#//SignatureList" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SignatureList">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="argRefs" upperBound="-1"
+        eType="#//ArgumentRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ArgumentRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="argRef" eType="#//ArgumentDefinition"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="options" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeSpec">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typeName" eType="#//TypeDefinition"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="elementType" eType="#//TypeSpec"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="cellType" eType="#//TypeSpec"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TypeClass">
+    <eLiterals name="ENUM" literal="_enum"/>
+    <eLiterals name="SUBLIST" value="1" literal="_sublist"/>
+    <eLiterals name="SCALAR" value="2" literal="_scalar"/>
+    <eLiterals name="VECTOR" value="3" literal="_vector"/>
+    <eLiterals name="MATRIX" value="4" literal="_matrix"/>
   </eClassifiers>
 </ecore:EPackage>
