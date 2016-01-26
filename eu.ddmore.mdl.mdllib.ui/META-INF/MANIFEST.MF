@@ -6,7 +6,6 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: eu.ddmore.mdl.mdllib.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: eu.ddmore.mdl.mdllib,
- eu.ddmore.mdl.mdllib.ide,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.ui.codetemplates.ui,

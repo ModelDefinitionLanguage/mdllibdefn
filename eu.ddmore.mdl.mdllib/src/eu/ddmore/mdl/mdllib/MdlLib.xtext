@@ -1,6 +1,6 @@
 grammar eu.ddmore.mdl.mdllib.MdlLib with org.eclipse.xtext.common.Terminals
 
-generate mdlLib "http://www.ddmore.eu/mdl/mdllib/MdlLib"
+generate mdlLib "http://eu.ddmore.mdl.mdllib/mdl/mdllib/MdlLib"
 
 
 Library:
