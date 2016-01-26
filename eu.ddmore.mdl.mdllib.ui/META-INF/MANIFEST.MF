@@ -19,7 +19,8 @@ Require-Bundle: eu.ddmore.mdl.mdllib,
  org.eclipse.xtend,
  org.eclipse.xpand,
  org.eclipse.xtext.common.types.ui,
- org.eclipse.compare
+ org.eclipse.compare,
+ org.antlr.runtime
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: eu.ddmore.mdl.mdllib.ui.quickfix,

@@ -3,8 +3,8 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/eu.ddmore.mdl.mdllib/src-gen" editDirectory="/eu.ddmore.mdl.mdllib.edit/src"
     editorDirectory="/eu.ddmore.mdl.mdllib.editor/src" modelPluginID="eu.ddmore.mdl.mdllib"
     forceOverwrite="true" modelName="MdlLib" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    complianceLevel="6.0" copyrightFields="false" editPluginID="eu.ddmore.mdl.mdllib.edit"
-    editorPluginID="eu.ddmore.mdl.mdllib.editor" runtimeVersion="2.11">
+    complianceLevel="5.0" copyrightFields="false" editPluginID="eu.ddmore.mdl.mdllib.edit"
+    editorPluginID="eu.ddmore.mdl.mdllib.editor" runtimeVersion="2.10">
   <genPackages prefix="MdlLib" basePackage="eu.ddmore.mdl.mdllib" disposableProviderFactory="true"
       fileExtensions="mlib" ecorePackage="MdlLib.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="MdlLib.ecore#//TypeClass">
