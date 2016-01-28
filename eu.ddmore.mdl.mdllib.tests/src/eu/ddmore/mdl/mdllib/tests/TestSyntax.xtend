@@ -2,14 +2,14 @@ package eu.ddmore.mdl.mdllib.tests
 
 import com.google.inject.Inject
 import eu.ddmore.mdl.mdllib.MdlLibInjectorProvider
-import eu.ddmore.mdl.mdllib.mdlLib.Library
+import eu.ddmore.mdl.mdllib.mdllib.Library
+import eu.ddmore.mdl.mdllib.scoping.MdlLibLib
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
 import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.junit.Test
 import org.junit.runner.RunWith
-import eu.ddmore.mdl.mdllib.scoping.MdlLibLib
 
 @RunWith(XtextRunner)
 @InjectWith(MdlLibInjectorProvider)

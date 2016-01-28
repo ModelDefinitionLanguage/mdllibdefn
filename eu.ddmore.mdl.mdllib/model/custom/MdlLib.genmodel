@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/eu.ddmore.mdl.mdllib/emf-gen" editDirectory="/eu.ddmore.mdl.mdllib.edit/src"
+    editorDirectory="/eu.ddmore.mdl.mdllib.editor/src" modelPluginID="eu.ddmore.mdl.mdllib"
+    forceOverwrite="true" modelName="MdlLib" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="eu.ddmore.mdl.mdllib.edit"
+    editorPluginID="eu.ddmore.mdl.mdllib.editor" runtimeVersion="2.10">
+  <genPackages prefix="MdlLib" basePackage="eu.ddmore.mdl.mdllib" disposableProviderFactory="true"
+      fileExtensions="mlib" ecorePackage="MdlLib.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="MdlLib.ecore#//TypeClass">
+      <genEnumLiterals ecoreEnumLiteral="MdlLib.ecore#//TypeClass/ENUM"/>
+      <genEnumLiterals ecoreEnumLiteral="MdlLib.ecore#//TypeClass/SUBLIST"/>
+      <genEnumLiterals ecoreEnumLiteral="MdlLib.ecore#//TypeClass/SCALAR"/>
+      <genEnumLiterals ecoreEnumLiteral="MdlLib.ecore#//TypeClass/VECTOR"/>
+      <genEnumLiterals ecoreEnumLiteral="MdlLib.ecore#//TypeClass/MATRIX"/>
+    </genEnums>
+    <genClasses ecoreClass="MdlLib.ecore#//Library">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//Library/typeDefns"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//Library/funcDefns"/>
+    </genClasses>
+    <genClasses ecoreClass="MdlLib.ecore#//SymbolDefinition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MdlLib.ecore#//SymbolDefinition/name"/>
+    </genClasses>
+    <genClasses ecoreClass="MdlLib.ecore#//TypeDefinition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MdlLib.ecore#//TypeDefinition/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MdlLib.ecore#//TypeDefinition/class"/>
+    </genClasses>
+    <genClasses ecoreClass="MdlLib.ecore#//FunctionDefinition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//FunctionDefinition/defns"/>
+    </genClasses>
+    <genClasses ecoreClass="MdlLib.ecore#//FunctionSpec">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MdlLib.ecore#//FunctionSpec/descn"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//FunctionSpec/argument"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//FunctionSpec/returnType"/>
+    </genClasses>
+    <genClasses ecoreClass="MdlLib.ecore#//FuncArgs">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//FuncArgs/arguments"/>
+    </genClasses>
+    <genClasses ecoreClass="MdlLib.ecore#//FuncArgumentDefinition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//FuncArgumentDefinition/typeSpec"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MdlLib.ecore#//FuncArgumentDefinition/descn"/>
+    </genClasses>
+    <genClasses ecoreClass="MdlLib.ecore#//SignatureList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//SignatureList/argRefs"/>
+    </genClasses>
+    <genClasses ecoreClass="MdlLib.ecore#//ArgumentRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MdlLib.ecore#//ArgumentRef/argRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MdlLib.ecore#//ArgumentRef/options"/>
+    </genClasses>
+    <genClasses ecoreClass="MdlLib.ecore#//TypeSpec">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MdlLib.ecore#//TypeSpec/typeName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//TypeSpec/elementType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//TypeSpec/cellType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//TypeSpec/functionSpec"/>
+    </genClasses>
+    <genClasses ecoreClass="MdlLib.ecore#//FunctionDefnBody">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//FunctionDefnBody/funcSpec"/>
+    </genClasses>
+    <genClasses ecoreClass="MdlLib.ecore#//UnnamedFuncArgs"/>
+    <genClasses ecoreClass="MdlLib.ecore#//NamedFuncArgs">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//NamedFuncArgs/sigLists"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

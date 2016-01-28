@@ -1,6 +1,7 @@
 grammar eu.ddmore.mdl.mdllib.MdlLib with org.eclipse.xtext.common.Terminals
 
-generate mdlLib "http://eu.ddmore.mdl.mdllib/mdl/mdllib/MdlLib"
+//generate mdlLib "http://eu.ddmore.mdl.mdllib/mdl/mdllib/MdlLib"
+import "http://eu.ddmore.mdl.mdllib/mdl/mdllib/MdlLib"
 
 
 Library:
@@ -8,9 +9,9 @@ Library:
 	funcDefns += FunctionDefinition* 	
 ;
 	
-SymbolDefinition:
-	FunctionDefnBody|FuncArgumentDefinition
-;
+//SymbolDefinition:
+//	FunctionDefnBody|FuncArgumentDefinition
+//;
 
 	
 TypeDefinition:
@@ -58,7 +59,7 @@ ArgumentRef:
 
 
 TypeSpec:
-	{TypeSpec} '::' typeName=[TypeDefinition] ('[' elementType=TypeSpec ']'|'[[' cellType=TypeSpec ']]'| functionSpec=FunctionSpec)?
+	{TypeSpec} '::' typeName=[TypeDefinition] ('[' elementType=TypeSpec ']'|'[[' cellType=TypeSpec ']]')? //| functionSpec=FunctionSpec)?
 ;
 
 

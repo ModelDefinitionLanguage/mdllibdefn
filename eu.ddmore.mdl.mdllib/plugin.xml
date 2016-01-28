@@ -3,14 +3,15 @@
 
 <plugin>
 
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "http://www.ddmore.eu/mdl/mdllib/MdlLib" 
-       class = "eu.ddmore.mdl.mdllib.mdlLib.MdlLibPackage"
-       genModel = "model/generated/MdlLib.genmodel" /> 
-	
-  </extension>
 
 
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated MdlLib -->
+      <package
+            uri="http://eu.ddmore.mdl.mdllib/mdl/mdllib/MdlLib"
+            class="eu.ddmore.mdl.mdllib.mdllib.MdlLibPackage"
+            genModel="model/custom/MdlLib.genmodel"/>
+   </extension>
 
 </plugin>

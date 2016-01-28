@@ -14,11 +14,24 @@ Workflow {
     bean = StandaloneSetup {
     	scanClassPath = true
     	platformUri = "${runtimeProject}/.."
+		registerGeneratedEPackage = 
+				"eu.ddmore.mdl.mdllib.mdllib.MdlLibPackage"
+		registerGenModelFile = 
+				"platform:/resource/${projectName}/model/custom/MdlLib.genmodel"    	
     	// The following two lines can be removed, if Xbase is not used.
 //    	registerGeneratedEPackage = "org.eclipse.xtext.xbase.XbasePackage"
 //    	registerGenModelFile = "platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel"
     }
     
+		component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
+	        genModel = "platform:/resource/${projectName}/model/custom/MdlLib.genmodel"
+	        srcPath = "platform:/resource/${projectName}/src"
+		}
+
+//	    component = DirectoryCleaner {
+//	        directory = "${runtimeProject}/emf-gen"
+//	    }
+
         component = DirectoryCleaner {
             directory = "${runtimeProject}/src-gen"
         }
@@ -44,18 +57,25 @@ Workflow {
     	language = auto-inject {
     		uri = grammarURI
     		fileExtensions = fileExtensions
-    
+			loadedResource = "platform:/resource/${projectName}/model/custom/MdlLib.ecore"
+			    
     		// Java API to access grammar elements (required by several other fragments)
     		fragment = grammarAccess.GrammarAccessFragment auto-inject {}
     
     		// generates Java API for the generated EPackages
-    		fragment = ecore.EMFGeneratorFragment auto-inject {
-    		// referencedGenModels = "
-    		//  platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel,
-    		//  platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel
-    		// "
-    		}
+//    		fragment = ecore.EMFGeneratorFragment auto-inject {
+//    		// referencedGenModels = "
+//    		//  platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel,
+//    		//  platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel
+//    		// "
+//    		}
     
+//    		fragment = ecore.EMFGeneratorFragment auto-inject {
+//    			genModel = "platform:/resource/eu.ddmore.mdl.mdllib/model/custom/MdlLib.genmodel"
+//    			javaModelDirectory = "emf-gen"
+//    			basePackage = "eu.ddmore.mdl.mdllib.mdlLib"
+//    		}
+
     		// the old serialization component
     		// fragment = parseTreeConstructor.ParseTreeConstructorFragment auto-inject {}    
     
@@ -125,11 +145,11 @@ Workflow {
     		// rename refactoring
     		fragment = refactoring.RefactorElementNameFragment auto-inject {}
     
-    		// provides the necessary bindings for java types integration
-    		fragment = types.TypesGeneratorFragment auto-inject {}
-    
-    		// generates the required bindings only if the grammar inherits from Xbase
-    		fragment = xbase.XbaseGeneratorFragment auto-inject {}
+//    		// provides the necessary bindings for java types integration
+//    		fragment = types.TypesGeneratorFragment auto-inject {}
+//    
+//    		// generates the required bindings only if the grammar inherits from Xbase
+//    		fragment = xbase.XbaseGeneratorFragment auto-inject {}
     
     		// provides a preference page for template proposals
     		fragment = templates.CodetemplatesGeneratorFragment auto-inject {}
