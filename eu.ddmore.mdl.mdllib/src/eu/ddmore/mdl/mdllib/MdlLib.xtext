@@ -8,6 +8,10 @@ Library:
 	funcDefns += FunctionDefinition* 	
 ;
 	
+SymbolDefinition:
+	FunctionDefnBody|FuncArgumentDefinition
+;
+
 	
 TypeDefinition:
 	'type' name=ID class=TypeClass ';'
@@ -17,25 +21,30 @@ FunctionDefinition:
 	{FunctionDefinition} 'func'  defns+= FunctionDefnBody (',' defns+=FunctionDefnBody)* ';'
 ;
 
-FunctionDefnBody:
-	{FunctionDefnBody} name = ID descn=STRING? argument=FuncArgs 
+FunctionDefnBody returns SymbolDefinition:
+	{FunctionDefnBody} name = ID funcSpec=FunctionSpec
+;
+
+FunctionSpec:
+	{FunctionSpec}descn=STRING? argument=FuncArgs 
 			'returns' returnType=TypeSpec
 ;
+
 
 FuncArgs:
 	UnnamedFuncArgs|NamedFuncArgs
 ;
 
-UnnamedFuncArgs:
-	{UnnamedFuncArgs} '(' (arguments += ArgumentDefinition (=> ',' arguments += ArgumentDefinition)*)? ')'
+UnnamedFuncArgs returns FuncArgs:
+	{UnnamedFuncArgs} '(' (arguments += FuncArgumentDefinition (=> ',' arguments += FuncArgumentDefinition)*)? ')'
 ;
 
-ArgumentDefinition:
-	{ArgumentDefinition} name=ID typeSpec=TypeSpec descn=STRING? 
+FuncArgumentDefinition:
+	{FuncArgumentDefinition} name=ID typeSpec=TypeSpec descn=STRING? 
 ;
 
-NamedFuncArgs:
-	{NamedFuncArgs} 'named' '(' arguments += ArgumentDefinition (=> ',' arguments += ArgumentDefinition)* ')'
+NamedFuncArgs returns FuncArgs:
+	{NamedFuncArgs} 'named' '(' arguments += FuncArgumentDefinition (=> ',' arguments += FuncArgumentDefinition)* ')'
 					('sig' (sigLists+= SignatureList (',' sigLists+= SignatureList)*))? 
 ;
 
@@ -44,12 +53,12 @@ SignatureList:
 ;
 
 ArgumentRef:
-	{ArgumentRef} argRef=[ArgumentDefinition] (options?='?')?
+	{ArgumentRef} argRef=[FuncArgumentDefinition] (options?='?')?
 ;
 
 
 TypeSpec:
-	{TypeSpec} '::' typeName=[TypeDefinition] ('[' elementType=TypeSpec ']'|'[[' cellType=TypeSpec ']]')?
+	{TypeSpec} '::' typeName=[TypeDefinition] ('[' elementType=TypeSpec ']'|'[[' cellType=TypeSpec ']]'| functionSpec=FunctionSpec)?
 ;
 
 
