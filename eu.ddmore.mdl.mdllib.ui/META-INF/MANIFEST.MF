@@ -5,7 +5,7 @@ Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: eu.ddmore.mdl.mdllib.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: eu.ddmore.mdl.mdllib,
+Require-Bundle: eu.ddmore.mdl.mdllib;visibility:=reexport,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.ui.codetemplates.ui,
@@ -23,9 +23,13 @@ Require-Bundle: eu.ddmore.mdl.mdllib,
  org.antlr.runtime
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: eu.ddmore.mdl.mdllib.ui.quickfix,
+Export-Package: eu.ddmore.mdl.mdllib.ui,
  eu.ddmore.mdl.mdllib.ui.contentassist,
- eu.ddmore.mdl.mdllib.ui.internal,
  eu.ddmore.mdl.mdllib.ui.contentassist.antlr,
- eu.ddmore.mdl.mdllib.ui.contentassist.antlr.internal
+ eu.ddmore.mdl.mdllib.ui.contentassist.antlr.internal,
+ eu.ddmore.mdl.mdllib.ui.internal,
+ eu.ddmore.mdl.mdllib.ui.labeling,
+ eu.ddmore.mdl.mdllib.ui.outline,
+ eu.ddmore.mdl.mdllib.ui.quickfix,
+ eu.ddmore.mdl.mdllib.ui.wizard
 Bundle-Activator: eu.ddmore.mdl.mdllib.ui.internal.MdlLibActivator

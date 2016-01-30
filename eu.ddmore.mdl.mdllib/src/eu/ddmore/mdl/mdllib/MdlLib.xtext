@@ -72,5 +72,5 @@ TypeSpec:
 //;
 
 enum TypeClass:
-		ENUM='_enum'| SUBLIST='_sublist'| SCALAR='_scalar'|VECTOR='_vector'|MATRIX='_matrix' 
+		ENUM='_enum'| SUBLIST='_sublist'| SCALAR='_scalar'|VECTOR='_vector'|MATRIX='_matrix'|FUNCTION='_function'|REFERENCE='_reference'
 	;

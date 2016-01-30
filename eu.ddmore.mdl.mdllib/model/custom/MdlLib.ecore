@@ -58,6 +58,8 @@
     <eLiterals name="SCALAR" value="2" literal="_scalar"/>
     <eLiterals name="VECTOR" value="3" literal="_vector"/>
     <eLiterals name="MATRIX" value="4" literal="_matrix"/>
+    <eLiterals name="FUNCTION" value="5" literal="_function"/>
+    <eLiterals name="REFERENCE" value="6" literal="_reference"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionDefnBody" eSuperTypes="#//SymbolDefinition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="funcSpec" eType="#//FunctionSpec"
