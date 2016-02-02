@@ -23,12 +23,6 @@ class TestSyntax {
 	@Test 
 	def void testFunctionDeclnSyntax() {
 		val result = '''
-«««			type Int scalar;
-«««			type Real scalar;
-«««			type Boolean scalar;
-«««			type String scalar;
-«««			type Vector vector;
-			
 			func foo named (Arg1::Int, arg2::Int) 
 				returns::Real;
 			func bar "A basic function" (a1::Int "The argument 1", a2::Real "Arg 2")
@@ -115,7 +109,7 @@ class TestSyntax {
 	@Test
 	def void testNamedFuncLib(){
 		val result = '''
-		type TransType _enum;
+		type TransType _enum (ln, logit, probit);
 		type FixEffectSublist _sublist;
 		
 		func Normal named

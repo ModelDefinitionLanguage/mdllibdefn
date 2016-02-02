@@ -1,6 +1,5 @@
 grammar eu.ddmore.mdl.mdllib.MdlLib with org.eclipse.xtext.common.Terminals
 
-//generate mdlLib "http://eu.ddmore.mdl.mdllib/mdl/mdllib/MdlLib"
 import "http://eu.ddmore.mdl.mdllib/mdl/mdllib/MdlLib"
 
 
@@ -15,7 +14,7 @@ Library:
 
 	
 TypeDefinition:
-	'type' name=ID class=TypeClass ';'
+	'type' name=ID class=TypeClass ('(' enumArgs+=ID (',' enumArgs+=ID)* ')')? ';'
 ;
 	
 FunctionDefinition:
@@ -54,7 +53,7 @@ SignatureList:
 ;
 
 ArgumentRef:
-	{ArgumentRef} argRef=[FuncArgumentDefinition] (options?='?')?
+	{ArgumentRef} argRef=[FuncArgumentDefinition] (optional?='?')?
 ;
 
 

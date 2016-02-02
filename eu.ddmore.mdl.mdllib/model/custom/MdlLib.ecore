@@ -14,6 +14,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="TypeDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="class" eType="#//TypeClass"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="enumArgs" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionDefinition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="defns" upperBound="-1"
@@ -41,7 +43,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ArgumentRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="argRef" eType="#//FuncArgumentDefinition"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="options" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeSpec">
     <eStructuralFeatures xsi:type="ecore:EReference" name="typeName" eType="#//TypeDefinition"/>
