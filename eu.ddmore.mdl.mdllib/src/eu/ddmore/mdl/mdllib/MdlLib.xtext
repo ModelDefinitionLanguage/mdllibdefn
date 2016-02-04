@@ -14,7 +14,7 @@ Library:
 
 	
 TypeDefinition:
-	'type' name=ID class=TypeClass ('(' enumArgs+=ID (',' enumArgs+=ID)* ')')? ';'
+	'type' name=ID typeClass=TypeClass ('(' enumArgs+=ID (',' enumArgs+=ID)* ')')? ';'
 ;
 	
 FunctionDefinition:
@@ -71,5 +71,6 @@ TypeSpec:
 //;
 
 enum TypeClass:
-		ENUM='_enum'| SUBLIST='_sublist'| SCALAR='_scalar'|VECTOR='_vector'|MATRIX='_matrix'|FUNCTION='_function'|REFERENCE='_reference'
+		ENUM='_enum'| SUBLIST='_sublist'| SCALAR='_scalar'|VECTOR='_vector'|MATRIX='_matrix'|FUNCTION='_function'|REFERENCE='_reference'|
+		CATEGORY='_category' | LIST='_list'
 	;
