@@ -97,7 +97,7 @@ ruleLibrary returns [EObject current=null]
        			$current, 
        			"typeDefns",
         		lv_typeDefns_1_0, 
-        		"eu.ddmore.mdllib.MdlLib.TypeDefinition");
+        		"TypeDefinition");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -115,7 +115,7 @@ ruleLibrary returns [EObject current=null]
        			$current, 
        			"funcDefns",
         		lv_funcDefns_2_0, 
-        		"eu.ddmore.mdllib.MdlLib.FunctionDefinition");
+        		"FunctionDefinition");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -159,7 +159,7 @@ ruleTypeDefinition returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"org.eclipse.xtext.common.Terminals.ID");
+        		"ID");
 	    }
 
 )
@@ -176,7 +176,7 @@ ruleTypeDefinition returns [EObject current=null]
        			$current, 
        			"typeClass",
         		lv_typeClass_2_0, 
-        		"eu.ddmore.mdllib.MdlLib.TypeClass");
+        		"TypeClass");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -199,7 +199,7 @@ ruleTypeDefinition returns [EObject current=null]
        			$current, 
        			"enumArgs",
         		lv_enumArgs_4_0, 
-        		"org.eclipse.xtext.common.Terminals.ID");
+        		"ID");
 	    }
 
 )
@@ -221,7 +221,7 @@ ruleTypeDefinition returns [EObject current=null]
        			$current, 
        			"enumArgs",
         		lv_enumArgs_6_0, 
-        		"org.eclipse.xtext.common.Terminals.ID");
+        		"ID");
 	    }
 
 )
@@ -277,7 +277,7 @@ ruleFunctionDefinition returns [EObject current=null]
        			$current, 
        			"defns",
         		lv_defns_2_0, 
-        		"eu.ddmore.mdllib.MdlLib.FunctionDefnBody");
+        		"FunctionDefnBody");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -299,7 +299,7 @@ ruleFunctionDefinition returns [EObject current=null]
        			$current, 
        			"defns",
         		lv_defns_4_0, 
-        		"eu.ddmore.mdllib.MdlLib.FunctionDefnBody");
+        		"FunctionDefnBody");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -349,7 +349,7 @@ ruleFunctionDefnBody returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"org.eclipse.xtext.common.Terminals.ID");
+        		"ID");
 	    }
 
 )
@@ -366,7 +366,7 @@ ruleFunctionDefnBody returns [EObject current=null]
        			$current, 
        			"funcSpec",
         		lv_funcSpec_2_0, 
-        		"eu.ddmore.mdllib.MdlLib.FunctionSpec");
+        		"FunctionSpec");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -412,7 +412,7 @@ ruleFunctionSpec returns [EObject current=null]
        			$current, 
        			"descn",
         		lv_descn_1_0, 
-        		"org.eclipse.xtext.common.Terminals.STRING");
+        		"STRING");
 	    }
 
 )
@@ -429,7 +429,7 @@ ruleFunctionSpec returns [EObject current=null]
        			$current, 
        			"argument",
         		lv_argument_2_0, 
-        		"eu.ddmore.mdllib.MdlLib.FuncArgs");
+        		"FuncArgs");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -451,7 +451,7 @@ ruleFunctionSpec returns [EObject current=null]
        			$current, 
        			"returnType",
         		lv_returnType_4_0, 
-        		"eu.ddmore.mdllib.MdlLib.TypeSpec");
+        		"TypeSpec");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -540,7 +540,7 @@ ruleUnnamedFuncArgs returns [EObject current=null]
        			$current, 
        			"arguments",
         		lv_arguments_2_0, 
-        		"eu.ddmore.mdllib.MdlLib.FuncArgumentDefinition");
+        		"FuncArgumentDefinition");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -563,7 +563,7 @@ ruleUnnamedFuncArgs returns [EObject current=null]
        			$current, 
        			"arguments",
         		lv_arguments_4_0, 
-        		"eu.ddmore.mdllib.MdlLib.FuncArgumentDefinition");
+        		"FuncArgumentDefinition");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -613,7 +613,7 @@ ruleFuncArgumentDefinition returns [EObject current=null]
        			$current, 
        			"name",
         		lv_name_1_0, 
-        		"org.eclipse.xtext.common.Terminals.ID");
+        		"ID");
 	    }
 
 )
@@ -630,7 +630,7 @@ ruleFuncArgumentDefinition returns [EObject current=null]
        			$current, 
        			"typeSpec",
         		lv_typeSpec_2_0, 
-        		"eu.ddmore.mdllib.MdlLib.TypeSpec");
+        		"TypeSpec");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -649,7 +649,7 @@ ruleFuncArgumentDefinition returns [EObject current=null]
        			$current, 
        			"descn",
         		lv_descn_3_0, 
-        		"org.eclipse.xtext.common.Terminals.STRING");
+        		"STRING");
 	    }
 
 )
@@ -701,7 +701,7 @@ ruleNamedFuncArgs returns [EObject current=null]
        			$current, 
        			"arguments",
         		lv_arguments_3_0, 
-        		"eu.ddmore.mdllib.MdlLib.FuncArgumentDefinition");
+        		"FuncArgumentDefinition");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -724,7 +724,7 @@ ruleNamedFuncArgs returns [EObject current=null]
        			$current, 
        			"arguments",
         		lv_arguments_5_0, 
-        		"eu.ddmore.mdllib.MdlLib.FuncArgumentDefinition");
+        		"FuncArgumentDefinition");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -750,7 +750,7 @@ ruleNamedFuncArgs returns [EObject current=null]
        			$current, 
        			"sigLists",
         		lv_sigLists_8_0, 
-        		"eu.ddmore.mdllib.MdlLib.SignatureList");
+        		"SignatureList");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -772,7 +772,7 @@ ruleNamedFuncArgs returns [EObject current=null]
        			$current, 
        			"sigLists",
         		lv_sigLists_10_0, 
-        		"eu.ddmore.mdllib.MdlLib.SignatureList");
+        		"SignatureList");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -821,7 +821,7 @@ ruleSignatureList returns [EObject current=null]
        			$current, 
        			"argRefs",
         		lv_argRefs_2_0, 
-        		"eu.ddmore.mdllib.MdlLib.ArgumentRef");
+        		"ArgumentRef");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -843,7 +843,7 @@ ruleSignatureList returns [EObject current=null]
        			$current, 
        			"argRefs",
         		lv_argRefs_4_0, 
-        		"eu.ddmore.mdllib.MdlLib.ArgumentRef");
+        		"ArgumentRef");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -968,7 +968,7 @@ ruleTypeSpec returns [EObject current=null]
        			$current, 
        			"elementType",
         		lv_elementType_4_0, 
-        		"eu.ddmore.mdllib.MdlLib.TypeSpec");
+        		"TypeSpec");
 	        afterParserOrEnumRuleCall();
 	    }
 
@@ -995,7 +995,7 @@ ruleTypeSpec returns [EObject current=null]
        			$current, 
        			"cellType",
         		lv_cellType_7_0, 
-        		"eu.ddmore.mdllib.MdlLib.TypeSpec");
+        		"TypeSpec");
 	        afterParserOrEnumRuleCall();
 	    }
 

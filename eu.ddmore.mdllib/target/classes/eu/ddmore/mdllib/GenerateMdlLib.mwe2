@@ -4,9 +4,9 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/eu/ddmore/mdllib/MdlLib.xtext"
-var fileExtensions = "mlib"
 var projectName = "eu.ddmore.mdllib"
+var grammarURI = "platform:/resource/${projectName}/src/eu/ddmore/mdllib/MdlLib.xtext"
+var fileExtensions = "mlib"
 var runtimeProject = "../${projectName}"
 var generateXtendStub = true
 
@@ -21,6 +21,19 @@ Workflow {
     	// The following two lines can be removed, if Xbase is not used.
 //    	registerGeneratedEPackage = "org.eclipse.xtext.xbase.XbasePackage"
 //    	registerGenModelFile = "platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel"
+
+    	resourceSet = org.eclipse.xtext.resource.XtextResourceSet:theResourceSet {}
+    	
+    	// add mappings from platform:/resource to classpath:/
+    	uriMap = {
+    		from = "platform:/resource/org.eclipse.xtext.xbase/"
+    		to = "classpath:/"
+    	}
+    	uriMap = {
+    		from = "platform:/resource/org.eclipse.xtext.common.types/"
+    		to = "classpath:/"
+    	}
+
     }
     
 	    component = DirectoryCleaner {
@@ -56,6 +69,8 @@ Workflow {
     	projectNameUi = "${projectName}.ui"
     	language = auto-inject {
 			loadedResource = "platform:/resource/${projectName}/model/custom/MdlLib.ecore"
+
+			forcedResourceSet = theResourceSet	
 
     		uri = grammarURI
     		fileExtensions = fileExtensions
