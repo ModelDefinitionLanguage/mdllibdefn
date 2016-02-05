@@ -1,6 +1,6 @@
 grammar eu.ddmore.mdl.mdllib.MdlLib with org.eclipse.xtext.common.Terminals
 
-import "http://eu.ddmore.mdl.mdllib/mdl/mdllib/MdlLib"
+import "http://eu.ddmore.mdllib/mdl/mdllib/MdlLib"
 
 
 Library:

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/eu.ddmore.mdl.mdllib/emf-gen" editDirectory="/eu.ddmore.mdl.mdllib.edit/src"
-    editorDirectory="/eu.ddmore.mdl.mdllib.editor/src" modelPluginID="eu.ddmore.mdl.mdllib"
-    forceOverwrite="true" modelName="MdlLib" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    complianceLevel="5.0" copyrightFields="false" editPluginID="eu.ddmore.mdl.mdllib.edit"
-    editorPluginID="eu.ddmore.mdl.mdllib.editor" runtimeVersion="2.10">
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/eu.ddmore.mdllib/emf-gen" editDirectory="/eu.ddmore.mdllib.edit/src"
+    editorDirectory="/eu.ddmore.mdllib.editor/src" modelPluginID="eu.ddmore.mdllib"
+    forceOverwrite="true" modelName="MdlLib" editPluginClass="eu.ddmore.mdl.mdllib.mdllib.provider.MdlLibEditPlugin"
+    editorPluginClass="eu.ddmore.mdl.mdllib.mdllib.presentation.MdlLibEditorPlugin"
+    updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="eu.ddmore.mdllib.edit"
+    editorPluginID="eu.ddmore.mdllib.editor" runtimeVersion="2.10">
   <genPackages prefix="MdlLib" basePackage="eu.ddmore.mdl.mdllib" disposableProviderFactory="true"
       fileExtensions="mlib" ecorePackage="MdlLib.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="MdlLib.ecore#//TypeClass">
@@ -13,6 +15,10 @@
       <genEnumLiterals ecoreEnumLiteral="MdlLib.ecore#//TypeClass/SCALAR"/>
       <genEnumLiterals ecoreEnumLiteral="MdlLib.ecore#//TypeClass/VECTOR"/>
       <genEnumLiterals ecoreEnumLiteral="MdlLib.ecore#//TypeClass/MATRIX"/>
+      <genEnumLiterals ecoreEnumLiteral="MdlLib.ecore#//TypeClass/FUNCTION"/>
+      <genEnumLiterals ecoreEnumLiteral="MdlLib.ecore#//TypeClass/REFERENCE"/>
+      <genEnumLiterals ecoreEnumLiteral="MdlLib.ecore#//TypeClass/CATEGORY"/>
+      <genEnumLiterals ecoreEnumLiteral="MdlLib.ecore#//TypeClass/LIST"/>
     </genEnums>
     <genClasses ecoreClass="MdlLib.ecore#//Library">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//Library/typeDefns"/>
@@ -23,7 +29,8 @@
     </genClasses>
     <genClasses ecoreClass="MdlLib.ecore#//TypeDefinition">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MdlLib.ecore#//TypeDefinition/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MdlLib.ecore#//TypeDefinition/class"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MdlLib.ecore#//TypeDefinition/typeClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MdlLib.ecore#//TypeDefinition/enumArgs"/>
     </genClasses>
     <genClasses ecoreClass="MdlLib.ecore#//FunctionDefinition">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MdlLib.ecore#//FunctionDefinition/defns"/>
@@ -45,7 +52,7 @@
     </genClasses>
     <genClasses ecoreClass="MdlLib.ecore#//ArgumentRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MdlLib.ecore#//ArgumentRef/argRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MdlLib.ecore#//ArgumentRef/options"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MdlLib.ecore#//ArgumentRef/optional"/>
     </genClasses>
     <genClasses ecoreClass="MdlLib.ecore#//TypeSpec">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MdlLib.ecore#//TypeSpec/typeName"/>

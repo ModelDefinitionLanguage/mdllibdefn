@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: eu.ddmore.mdllib
 Bundle-Vendor: Pfizer
 Bundle-Version: 1.0.0.qualifier
-Bundle-SymbolicName: eu.ddmore.mdlib;singleton:=true
+Bundle-SymbolicName: eu.ddmore.mdllib;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.xbase,

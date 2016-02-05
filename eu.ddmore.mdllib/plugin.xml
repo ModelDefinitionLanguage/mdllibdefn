@@ -9,7 +9,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated MdlLib -->
       <package
-            uri="http://eu.ddmore.mdl.mdllib/mdl/mdllib/MdlLib"
+            uri="http://eu.ddmore.mdllib/mdl/mdllib/MdlLib"
             class="eu.ddmore.mdl.mdllib.mdllib.MdlLibPackage"
             genModel="model/custom/MdlLib.genmodel"/>
    </extension>

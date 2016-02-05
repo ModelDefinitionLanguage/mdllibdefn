@@ -5,7 +5,7 @@ Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: eu.ddmore.mdllib.tests;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: eu.ddmore.mdlib,
+Require-Bundle: eu.ddmore.mdllib,
  org.junit;bundle-version="4.7.0",
  org.eclipse.xtext.junit4,
  org.eclipse.xtext.xbase.junit,

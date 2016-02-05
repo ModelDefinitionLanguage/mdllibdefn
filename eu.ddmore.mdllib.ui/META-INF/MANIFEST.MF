@@ -5,7 +5,7 @@ Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: eu.ddmore.mdllib.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: eu.ddmore.mdlib;visibility:=reexport,
+Require-Bundle: eu.ddmore.mdllib;visibility:=reexport,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.ui.codetemplates.ui,
