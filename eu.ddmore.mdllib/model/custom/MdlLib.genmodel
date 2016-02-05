@@ -2,12 +2,12 @@
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/eu.ddmore.mdllib/emf-gen" editDirectory="/eu.ddmore.mdllib.edit/src"
     editorDirectory="/eu.ddmore.mdllib.editor/src" modelPluginID="eu.ddmore.mdllib"
-    forceOverwrite="true" modelName="MdlLib" editPluginClass="eu.ddmore.mdl.mdllib.mdllib.provider.MdlLibEditPlugin"
-    editorPluginClass="eu.ddmore.mdl.mdllib.mdllib.presentation.MdlLibEditorPlugin"
+    forceOverwrite="true" modelName="MdlLib" editPluginClass="eu.ddmore.mdllib.mdllib.provider.MdlLibEditPlugin"
+    editorPluginClass="eu.ddmore.mdllib.mdllib.presentation.MdlLibEditorPlugin"
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="eu.ddmore.mdllib.edit"
     editorPluginID="eu.ddmore.mdllib.editor" runtimeVersion="2.10">
-  <genPackages prefix="MdlLib" basePackage="eu.ddmore.mdl.mdllib" disposableProviderFactory="true"
+  <genPackages prefix="MdlLib" basePackage="eu.ddmore.mdllib" disposableProviderFactory="true"
       fileExtensions="mlib" ecorePackage="MdlLib.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="MdlLib.ecore#//TypeClass">
       <genEnumLiterals ecoreEnumLiteral="MdlLib.ecore#//TypeClass/ENUM"/>

@@ -1,0 +1,76 @@
+grammar eu.ddmore.mdllib.MdlLib with org.eclipse.xtext.common.Terminals
+
+import "http://eu.ddmore.mdllib/mdllib/MdlLib"
+
+
+Library:
+	{Library} typeDefns += TypeDefinition* 
+	funcDefns += FunctionDefinition* 	
+;
+	
+//SymbolDefinition:
+//	FunctionDefnBody|FuncArgumentDefinition
+//;
+
+	
+TypeDefinition:
+	'type' name=ID typeClass=TypeClass ('(' enumArgs+=ID (',' enumArgs+=ID)* ')')? ';'
+;
+	
+FunctionDefinition:
+	{FunctionDefinition} 'func'  defns+= FunctionDefnBody (',' defns+=FunctionDefnBody)* ';'
+;
+
+FunctionDefnBody returns SymbolDefinition:
+	{FunctionDefnBody} name = ID funcSpec=FunctionSpec
+;
+
+FunctionSpec:
+	{FunctionSpec}descn=STRING? argument=FuncArgs 
+			'returns' returnType=TypeSpec
+;
+
+
+FuncArgs:
+	UnnamedFuncArgs|NamedFuncArgs
+;
+
+UnnamedFuncArgs returns FuncArgs:
+	{UnnamedFuncArgs} '(' (arguments += FuncArgumentDefinition (=> ',' arguments += FuncArgumentDefinition)*)? ')'
+;
+
+FuncArgumentDefinition:
+	{FuncArgumentDefinition} name=ID typeSpec=TypeSpec descn=STRING? 
+;
+
+NamedFuncArgs returns FuncArgs:
+	{NamedFuncArgs} 'named' '(' arguments += FuncArgumentDefinition (=> ',' arguments += FuncArgumentDefinition)* ')'
+					('sig' (sigLists+= SignatureList (',' sigLists+= SignatureList)*))? 
+;
+
+SignatureList:
+	{SignatureList} '(' (argRefs+=ArgumentRef (',' argRefs+=ArgumentRef)*)? ')'
+;
+
+ArgumentRef:
+	{ArgumentRef} argRef=[FuncArgumentDefinition] (optional?='?')?
+;
+
+
+TypeSpec:
+	{TypeSpec} '::' typeName=[TypeDefinition] ('[' elementType=TypeSpec ']'|'[[' cellType=TypeSpec ']]')? //| functionSpec=FunctionSpec)?
+;
+
+
+//TypeName:
+//	'::' TYPE_NAME
+//;
+
+//terminal TYPE_NAME:
+//	('A'..'Z')('a'..'z'|'A'..'Z'| '0'..'9')+
+//;
+
+enum TypeClass:
+		ENUM='_enum'| SUBLIST='_sublist'| SCALAR='_scalar'|VECTOR='_vector'|MATRIX='_matrix'|FUNCTION='_function'|REFERENCE='_reference'|
+		CATEGORY='_category' | LIST='_list'
+	;

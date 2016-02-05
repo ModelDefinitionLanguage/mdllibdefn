@@ -6,48 +6,48 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="mlib"
-            id="eu.ddmore.mdl.mdllib.MdlLib"
+            id="eu.ddmore.mdllib.MdlLib"
             name="MdlLib Editor">
         </editor>
     </extension>
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
-                    definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened">
+                    definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
         <handler
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-            commandId="eu.ddmore.mdl.mdllib.MdlLib.validate">
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="eu.ddmore.mdllib.MdlLib.validate">
          <activeWhen>
             <reference
-                    definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened">
+                    definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened">
             </reference>
          </activeWhen>
       	</handler>
       	<!-- copy qualified name -->
         <handler
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
             <activeWhen>
-				<reference definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened" />
+				<reference definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened" />
             </activeWhen>
         </handler>
         <handler
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
             <activeWhen>
             	<and>
-            		<reference definitionId="eu.ddmore.mdl.mdllib.MdlLib.XtextEditor.opened" />
+            		<reference definitionId="eu.ddmore.mdllib.MdlLib.XtextEditor.opened" />
 	                <iterate>
 						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 					</iterate>
@@ -56,22 +56,22 @@
         </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
-        <definition id="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened">
+        <definition id="eu.ddmore.mdllib.MdlLib.Editor.opened">
             <and>
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="eu.ddmore.mdl.mdllib.MdlLib" 
+                        value="eu.ddmore.mdllib.MdlLib" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
         </definition>
-        <definition id="eu.ddmore.mdl.mdllib.MdlLib.XtextEditor.opened">
+        <definition id="eu.ddmore.mdllib.MdlLib.XtextEditor.opened">
             <and>
                 <reference definitionId="isXtextEditorActive"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="eu.ddmore.mdl.mdllib.MdlLib" 
+                        value="eu.ddmore.mdllib.MdlLib" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
@@ -80,33 +80,33 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="eu.ddmore.mdl.mdllib.MdlLib"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="eu.ddmore.mdllib.MdlLib"
             name="MdlLib">
-            <keywordReference id="eu.ddmore.mdl.mdllib.ui.keyword_MdlLib"/>
+            <keywordReference id="eu.ddmore.mdllib.ui.keyword_MdlLib"/>
         </page>
         <page
-            category="eu.ddmore.mdl.mdllib.MdlLib"
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="eu.ddmore.mdl.mdllib.MdlLib.coloring"
+            category="eu.ddmore.mdllib.MdlLib"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="eu.ddmore.mdllib.MdlLib.coloring"
             name="Syntax Coloring">
-            <keywordReference id="eu.ddmore.mdl.mdllib.ui.keyword_MdlLib"/>
+            <keywordReference id="eu.ddmore.mdllib.ui.keyword_MdlLib"/>
         </page>
         <page
-            category="eu.ddmore.mdl.mdllib.MdlLib"
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="eu.ddmore.mdl.mdllib.MdlLib.templates"
+            category="eu.ddmore.mdllib.MdlLib"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="eu.ddmore.mdllib.MdlLib.templates"
             name="Templates">
-            <keywordReference id="eu.ddmore.mdl.mdllib.ui.keyword_MdlLib"/>
+            <keywordReference id="eu.ddmore.mdllib.ui.keyword_MdlLib"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="eu.ddmore.mdl.mdllib.MdlLib"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="eu.ddmore.mdllib.MdlLib"
             name="MdlLib">
-            <keywordReference id="eu.ddmore.mdl.mdllib.ui.keyword_MdlLib"/>
+            <keywordReference id="eu.ddmore.mdllib.ui.keyword_MdlLib"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -116,14 +116,14 @@
     <extension
         point="org.eclipse.ui.keywords">
         <keyword
-            id="eu.ddmore.mdl.mdllib.ui.keyword_MdlLib"
+            id="eu.ddmore.mdllib.ui.keyword_MdlLib"
             label="MdlLib"/>
     </extension>
     <extension
          point="org.eclipse.ui.commands">
       <command
             description="Trigger expensive validation"
-            id="eu.ddmore.mdl.mdllib.MdlLib.validate"
+            id="eu.ddmore.mdllib.MdlLib.validate"
             name="Validate">
       </command>
       <!-- copy qualified name -->
@@ -144,12 +144,12 @@
         <menuContribution
             locationURI="popup:#TextEditorContext?after=group.edit">
              <command
-                 commandId="eu.ddmore.mdl.mdllib.MdlLib.validate"
+                 commandId="eu.ddmore.mdllib.MdlLib.validate"
                  style="push"
                  tooltip="Trigger expensive validation">
             <visibleWhen checkEnabled="false">
                 <reference
-                    definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened">
+                    definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened">
                 </reference>
             </visibleWhen>
          </command>  
@@ -159,7 +159,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName" 
          		style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened" />
+                	<reference definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -167,7 +167,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
             	style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened" />
+                	<reference definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -176,7 +176,7 @@
 				style="push" tooltip="Copy Qualified Name">
          		<visibleWhen checkEnabled="false">
 	            	<and>
-	            		<reference definitionId="eu.ddmore.mdl.mdllib.MdlLib.XtextEditor.opened" />
+	            		<reference definitionId="eu.ddmore.mdllib.MdlLib.XtextEditor.opened" />
 						<iterate>
 							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 						</iterate>
@@ -189,7 +189,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-                	<reference definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened">
+                	<reference definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened">
                 	</reference>
             	</visibleWhen>
 			</command>
@@ -197,11 +197,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
-                    definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened">
+                    definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
@@ -212,19 +212,19 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="mlib">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="mlib">
         </resourceServiceProvider>
     </extension>
 
 
-	<!-- marker definitions for eu.ddmore.mdl.mdllib.MdlLib -->
+	<!-- marker definitions for eu.ddmore.mdllib.MdlLib -->
 	<extension
 	        id="mdllib.check.fast"
 	        name="MdlLib Problem"
@@ -250,7 +250,7 @@
    <extension
          point="org.eclipse.xtext.builder.participant">
       <participant
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
             fileExtensions="mlib"
             >
       </participant>
@@ -258,21 +258,21 @@
    <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            category="eu.ddmore.mdl.mdllib.MdlLib"
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="eu.ddmore.mdl.mdllib.MdlLib.compiler.preferencePage"
+            category="eu.ddmore.mdllib.MdlLib"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="eu.ddmore.mdllib.MdlLib.compiler.preferencePage"
             name="Compiler">
-            <keywordReference id="eu.ddmore.mdl.mdllib.ui.keyword_MdlLib"/>
+            <keywordReference id="eu.ddmore.mdllib.ui.keyword_MdlLib"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            category="eu.ddmore.mdl.mdllib.MdlLib"
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-            id="eu.ddmore.mdl.mdllib.MdlLib.compiler.propertyPage"
+            category="eu.ddmore.mdllib.MdlLib"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+            id="eu.ddmore.mdllib.MdlLib.compiler.propertyPage"
             name="Compiler">
-            <keywordReference id="eu.ddmore.mdl.mdllib.ui.keyword_MdlLib"/>
+            <keywordReference id="eu.ddmore.mdllib.ui.keyword_MdlLib"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -283,20 +283,20 @@
 		<menuContribution locationURI="popup:#TextEditorContext?after=xtext.ui.openDeclaration">
 			<command
 				commandId="org.eclipse.xtext.ui.OpenGeneratedFileCommand"
-				id="eu.ddmore.mdl.mdllib.MdlLib.OpenGeneratedCode"
+				id="eu.ddmore.mdllib.MdlLib.OpenGeneratedCode"
 				style="push">
 					<visibleWhen checkEnabled="false">
-						<reference definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened" />
+						<reference definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened" />
 					</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 		<handler
-			class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.generator.trace.OpenGeneratedFileHandler"
+			class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.generator.trace.OpenGeneratedFileHandler"
 			commandId="org.eclipse.xtext.ui.OpenGeneratedFileCommand">
 				<activeWhen>
-					<reference definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened" />
+					<reference definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened" />
 				</activeWhen>
 		</handler>
 	</extension>
@@ -305,11 +305,11 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened">
+					definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -329,33 +329,33 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened"/>
+					<reference definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
-    <!-- quickfix marker resolution generator for eu.ddmore.mdl.mdllib.MdlLib -->
+    <!-- quickfix marker resolution generator for eu.ddmore.mdllib.MdlLib -->
     <extension
             point="org.eclipse.ui.ide.markerResolution">
         <markerResolutionGenerator
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="eu.ddmore.mdl.mdllib.ui.mdllib.check.fast">
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="eu.ddmore.mdllib.ui.mdllib.check.fast">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="eu.ddmore.mdl.mdllib.ui.mdllib.check.normal">
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="eu.ddmore.mdllib.ui.mdllib.check.normal">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="eu.ddmore.mdl.mdllib.ui.mdllib.check.expensive">
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="eu.ddmore.mdllib.ui.mdllib.check.expensive">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
@@ -367,8 +367,8 @@
          point="org.eclipse.ui.newWizards">
       <wizard
             category="org.eclipse.xtext.projectwiz"
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:eu.ddmore.mdl.mdllib.ui.wizard.MdlLibNewProjectWizard"
-            id="eu.ddmore.mdl.mdllib.ui.wizard.MdlLibNewProjectWizard"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:eu.ddmore.mdllib.ui.wizard.MdlLibNewProjectWizard"
+            id="eu.ddmore.mdllib.ui.wizard.MdlLibNewProjectWizard"
             name="MdlLib Project"
             project="true">
       </wizard>
@@ -376,11 +376,11 @@
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
-			class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+			class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
-					definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened">
+					definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -392,7 +392,7 @@
                style="push">
             <visibleWhen checkEnabled="false">
                <reference
-                     definitionId="eu.ddmore.mdl.mdllib.MdlLib.Editor.opened">
+                     definitionId="eu.ddmore.mdllib.MdlLib.Editor.opened">
                </reference>
             </visibleWhen>
          </command>
@@ -400,29 +400,29 @@
    </extension>
    <extension point="org.eclipse.ui.preferencePages">
 	    <page
-	        category="eu.ddmore.mdl.mdllib.MdlLib"
-	        class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
-	        id="eu.ddmore.mdl.mdllib.MdlLib.refactoring"
+	        category="eu.ddmore.mdllib.MdlLib"
+	        class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="eu.ddmore.mdllib.MdlLib.refactoring"
 	        name="Refactoring">
-	        <keywordReference id="eu.ddmore.mdl.mdllib.ui.keyword_MdlLib"/>
+	        <keywordReference id="eu.ddmore.mdllib.ui.keyword_MdlLib"/>
 	    </page>
 	</extension>
 
   <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="eu.ddmore.mdl.mdllib.MdlLib.compare.contentViewers"
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+    <viewer id="eu.ddmore.mdllib.MdlLib.compare.contentViewers"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
             extensions="mlib">
     </viewer>
   </extension>
   <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="eu.ddmore.mdl.mdllib.MdlLib.compare.contentMergeViewers"
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+    <viewer id="eu.ddmore.mdllib.MdlLib.compare.contentMergeViewers"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
             extensions="mlib" label="MdlLib Compare">
      </viewer>
   </extension>
   <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="eu.ddmore.mdl.mdllib.MdlLib.editors.documentProviders"
-            class="eu.ddmore.mdl.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+    <provider id="eu.ddmore.mdllib.MdlLib.editors.documentProviders"
+            class="eu.ddmore.mdllib.ui.MdlLibExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
             extensions="mlib">
     </provider>
   </extension>
