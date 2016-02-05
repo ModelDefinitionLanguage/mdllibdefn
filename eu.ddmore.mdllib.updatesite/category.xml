@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/eu.ddmore.mdllib.sdk_1.0.0.qualifier.jar" id="eu.ddmore.mdllib.sdk" version="1.0.0.qualifier">
+      <category name="eu.ddmore.mdllib"/>
+   </feature>
+   <category-def name="eu.ddmore.mdllib" label="MDL Library Language"/>
+</site>
