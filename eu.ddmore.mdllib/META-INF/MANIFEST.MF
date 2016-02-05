@@ -17,7 +17,7 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.common.types,
  org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
  org.eclipse.xtext.ecore;bundle-version="2.7.3"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: eu.ddmore.mdllib.mdllib,
  eu.ddmore.mdllib.mdllib.impl,
  eu.ddmore.mdllib.mdllib.util,

@@ -14,7 +14,7 @@ Require-Bundle: eu.ddmore.mdllib,
  org.eclipse.core.runtime,
  org.eclipse.ui.workbench;resolution:=optional,
  org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: eu.ddmore.mdllib
 Import-Package: org.junit.runner;version="4.5.0",
  org.junit.runner.manipulation;version="4.5.0",

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: eu.ddmore.mdllib.ui.tests
-Bundle-Vendor: My Company
+Bundle-Vendor: DDMoRe Project
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: eu.ddmore.mdllib.ui.tests;singleton:=true
 Bundle-ActivationPolicy: lazy
@@ -9,4 +9,4 @@ Require-Bundle: eu.ddmore.mdllib.ui,
  org.junit;bundle-version="4.7.0",
  org.eclipse.xtext.junit4,
  org.eclipse.xtext.xbase.junit
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
