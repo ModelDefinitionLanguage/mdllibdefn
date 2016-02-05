@@ -1,16 +1,16 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: eu.ddmore.mdl.mdllib.tests
+Bundle-Name: eu.ddmore.mdllib.tests
 Bundle-Vendor: My Company
 Bundle-Version: 1.0.0.qualifier
-Bundle-SymbolicName: eu.ddmore.mdl.mdllib.tests; singleton:=true
+Bundle-SymbolicName: eu.ddmore.mdllib.tests;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: eu.ddmore.mdl.mdllib,
+Require-Bundle: eu.ddmore.mdlib,
  org.junit;bundle-version="4.7.0",
  org.eclipse.xtext.junit4,
  org.eclipse.xtext.xbase.junit,
  org.eclipse.xtext.xbase.lib,
- eu.ddmore.mdl.mdllib.ui,
+ eu.ddmore.mdllib.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.workbench;resolution:=optional,
  org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
