@@ -35,3 +35,5 @@ Export-Package: eu.ddmore.mdllib.mdllib,
  eu.ddmore.mdllib.parser.antlr,
  eu.ddmore.mdllib.parser.antlr.internal
 Import-Package: org.apache.log4j
+Bundle-ClassPath: .
+Bundle-Localization: plugin

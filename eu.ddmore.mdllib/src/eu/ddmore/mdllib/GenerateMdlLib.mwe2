@@ -12,8 +12,6 @@ var generateXtendStub = true
 
 Workflow {
     bean = StandaloneSetup {
-    	scanClassPath = true
-    	platformUri = "${runtimeProject}/.."
 //		registerGeneratedEPackage = 
 //				"eu.ddmore.mdllib.mdllib.MdlLibPackage"
 //		registerGenModelFile = 
@@ -25,14 +23,22 @@ Workflow {
     	resourceSet = org.eclipse.xtext.resource.XtextResourceSet:theResourceSet {}
     	
     	// add mappings from platform:/resource to classpath:/
-    	uriMap = {
-    		from = "platform:/resource/org.eclipse.xtext.xbase/"
-    		to = "classpath:/"
-    	}
-    	uriMap = {
-    		from = "platform:/resource/org.eclipse.xtext.common.types/"
-    		to = "classpath:/"
-    	}
+//    	uriMap = {
+//    		from = "platform:/resource/org.eclipse.xtext.xbase/"
+//    		to = "classpath:/"
+//    	}
+//    	uriMap = {
+//    		from = "platform:/resource/org.eclipse.xtext.common.types/"
+//    		to = "classpath:/"
+//    	}
+
+    	// for builds without .project file
+    	projectMapping = {
+			projectName = '${projectName}' 
+			path = '${runtimeProject}'
+		}
+//    	scanClassPath = true
+    	platformUri = "${runtimeProject}/.."
 
     }
     
