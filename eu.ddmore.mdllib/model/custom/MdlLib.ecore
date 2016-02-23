@@ -10,6 +10,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="SymbolDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expression"/>
   <eClassifiers xsi:type="ecore:EClass" name="TypeDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeClass" eType="#//TypeClass"/>
@@ -25,6 +26,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="argument" eType="#//FuncArgs"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="returnType" eType="#//TypeSpec"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FuncArgs">
@@ -61,8 +64,8 @@
     <eLiterals name="MATRIX" value="4" literal="_matrix"/>
     <eLiterals name="FUNCTION" value="5" literal="_function"/>
     <eLiterals name="REFERENCE" value="6" literal="_reference"/>
-    <eLiterals name="CATEGORY" value="7"/>
-    <eLiterals name="LIST" value="8"/>
+    <eLiterals name="CATEGORY" value="7" literal="_category"/>
+    <eLiterals name="LIST" value="8" literal="_list"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionDefnBody" eSuperTypes="#//SymbolDefinition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="funcSpec" eType="#//FunctionSpec"
