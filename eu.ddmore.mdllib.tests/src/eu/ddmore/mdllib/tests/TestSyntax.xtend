@@ -83,6 +83,42 @@ class TestSyntax {
 		result.assertNoErrors
 	}
 	
+	@Test 
+	def void testVectorOfVectorArgumentSyntax() {
+		val result = '''
+			func och "A test function" ( a1::Vector[::Vector[::Real]]) returns::String;
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
+	
+	@Test 
+	def void testVectorOfVectorArgumentSpacedSyntax() {
+		val result = '''
+			func och "A test function" ( a1::Vector[::Vector[::Real] ]) returns::String;
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
+	
+	@Test 
+	def void testVectorOfVectorReturnSyntax() {
+		val result = '''
+			func och "A test function" ( a1::Real) returns::Vector[::Vector[::Real]];
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
+	
+	@Test 
+	def void testVectorOfVectorReturnSpacedSyntax() {
+		val result = '''
+			func och "A test function" ( a1::Real) returns::Vector[::Vector[::Real] ];
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
+	
 	@Test
 	def void testUnnamedFuncLib(){
 		val result = '''

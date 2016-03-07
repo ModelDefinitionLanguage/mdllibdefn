@@ -58,7 +58,7 @@ ArgumentRef:
 
 
 TypeSpec:
-	{TypeSpec} '::' typeName=[TypeDefinition] ('[' elementType=TypeSpec ']'|'[[' cellType=TypeSpec ']]')? //| functionSpec=FunctionSpec)?
+	{TypeSpec} '::' typeName=[TypeDefinition] ('[' elementType=TypeSpec ']'|'[' '[' cellType=TypeSpec ']' ']')? //| functionSpec=FunctionSpec)?
 ;
 
 
