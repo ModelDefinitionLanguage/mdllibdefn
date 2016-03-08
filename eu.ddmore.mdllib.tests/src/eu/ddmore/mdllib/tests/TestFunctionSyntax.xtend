@@ -13,7 +13,7 @@ import org.junit.runner.RunWith
 
 @RunWith(XtextRunner)
 @InjectWith(MdlLibInjectorProvider)
-class TestSyntax {
+class TestFunctionSyntax {
 	
 	@Inject extension MdlLibLib
 	

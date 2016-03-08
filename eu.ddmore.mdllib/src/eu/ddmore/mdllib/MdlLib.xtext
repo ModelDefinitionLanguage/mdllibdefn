@@ -1,22 +1,45 @@
 grammar eu.ddmore.mdllib.MdlLib with org.eclipse.xtext.common.Terminals
 
 import "http://eu.ddmore.mdllib/mdllib/MdlLib"
+//generate mdlLib "http://eu.ddmore.mdllib/mdllib/MdlLib"
 
 
 Library:
-	{Library} typeDefns += TypeDefinition* 
+	{Library} typeDefns += TypeDefinition*
+	objectDefns += ObjectDefinition*
+	blockDefns += BlockDefinition*
+	containDefns += ContainmentDefn*
 	funcDefns += FunctionDefinition* 	
 ;
-	
-//SymbolDefinition:
-//	FunctionDefnBody|FuncArgumentDefinition
-//;
-
 	
 TypeDefinition:
 	'type' name=ID typeClass=TypeClass ('(' enumArgs+=ID (',' enumArgs+=ID)* ')')? ';'
 ;
-	
+
+ObjectDefinition:
+	{ObjectDefinition} 'object' name=ID ';'
+;
+
+BlockDefinition:
+	{BlockDefinition} 'block' name=ID '(' minNum=INT? ',' maxNum=INT? ')'
+			'statements' '(' minStmtNum=INT? ',' maxStmtNum=INT? ')'
+			stmtTypes+=StatementTypeDefn (','  stmtTypes+=StatementTypeDefn)* ';' 
+;
+
+
+StatementTypeDefn:
+	stmtType=StatementType hasRhs?='+'?
+;
+
+enum StatementType:
+		EQN_DEFN='_eqnDefn'| LIST_DEFN='_listDefn'| ANON_LIST_STMT='_anonList'|ENUM_DEFN='_enumDefn'|
+		RV_DEFN='_rvDefn'|PROP_STMT='_propStmt'|CAT_PROP_ASSIGN='_catPropStmt'
+;
+
+ContainmentDefn:
+	'container' parentRef=[BlockContainer] 'has' blkRefs+=[BlockDefinition] (',' blkRefs+=[BlockDefinition])* ';'
+;
+
 FunctionDefinition:
 	{FunctionDefinition} 'func'  defns+= FunctionDefnBody (',' defns+=FunctionDefnBody)* ';'
 ;
@@ -29,7 +52,6 @@ FunctionSpec:
 	{FunctionSpec}descn=STRING? argument=FuncArgs 
 			'returns' returnType=TypeSpec
 ;
-
 
 FuncArgs:
 	UnnamedFuncArgs|NamedFuncArgs
@@ -61,14 +83,6 @@ TypeSpec:
 	{TypeSpec} '::' typeName=[TypeDefinition] ('[' elementType=TypeSpec ']'|'[' '[' cellType=TypeSpec ']' ']')? //| functionSpec=FunctionSpec)?
 ;
 
-
-//TypeName:
-//	'::' TYPE_NAME
-//;
-
-//terminal TYPE_NAME:
-//	('A'..'Z')('a'..'z'|'A'..'Z'| '0'..'9')+
-//;
 
 enum TypeClass:
 		ENUM='_enum'| SUBLIST='_sublist'| SCALAR='_scalar'|VECTOR='_vector'|MATRIX='_matrix'|FUNCTION='_function'|REFERENCE='_reference'|
