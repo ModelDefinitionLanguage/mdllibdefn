@@ -13,7 +13,7 @@ Library:
 ;
 	
 TypeDefinition:
-	'type' name=ID typeClass=TypeClass ('(' enumArgs+=ID (',' enumArgs+=ID)* ')')? ';'
+	'type' name=ID typeClass=TypeClass ('(' enumArgs+=ID (',' enumArgs+=ID)* ')' | 'alt' altType=[TypeDefinition])? ';'
 ;
 
 ObjectDefinition:
@@ -29,7 +29,7 @@ BlockDefinition:
 
 
 ArgumentDefinition:
-	name=ID argType=TypeSpec
+	name=ID argType=TypeSpec (optional?='?')?
 ;
 
 StatementTypeDefn:

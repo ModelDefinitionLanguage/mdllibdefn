@@ -41,7 +41,7 @@ class TestBlockSyntax {
 	@Test 
 	def void testBlockDeclnWith2ArgDefnSyntax() {
 		val result = '''
-			block DATA_INPUT_VARIABLES (0, 1) arguments level::Int, another::Real statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn;
+			block DATA_INPUT_VARIABLES (0, 1) arguments level::Int, another::Real? statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
