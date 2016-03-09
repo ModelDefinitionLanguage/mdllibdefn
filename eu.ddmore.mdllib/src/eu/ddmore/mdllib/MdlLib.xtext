@@ -9,6 +9,7 @@ Library:
 	objectDefns += ObjectDefinition*
 	blockDefns += BlockDefinition*
 	containDefns += ContainmentDefn*
+	listDefns += ListDefinition*
 	funcDefns += FunctionDefinition* 	
 ;
 	
@@ -43,6 +44,24 @@ enum StatementType:
 
 ContainmentDefn:
 	'container' parentRef=[BlockContainer] 'has' blkRefs+=[BlockDefinition] (',' blkRefs+=[BlockDefinition])* ';'
+;
+
+ListDefinition:
+	'list' name=ID listType=TypeSpec  'key' '=' keyVal=[AttributeDefn]
+		'atts' attributes+=AttributeDefn (',' attributes+=AttributeDefn)*
+		'sig' (sigLists+= ListSignature (',' sigLists+= ListSignature)*)? ';'
+;
+
+AttributeDefn:
+	name=ID  attType=TypeSpec ('catMap' catMapType=TypeSpec catMappingOptional?='?'?)?
+;
+
+ListSignature:
+	{ListSignature} '(' (attRefs+=ListAttributeRef (',' attRefs+=ListAttributeRef)*)? ')'
+;
+
+ListAttributeRef:
+	attRef=[AttributeDefn] optional?='?'? 
 ;
 
 FunctionDefinition:

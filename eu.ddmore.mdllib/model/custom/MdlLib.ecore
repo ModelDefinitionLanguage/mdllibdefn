@@ -12,6 +12,8 @@
         eType="#//ObjectDefinition" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="containDefns" upperBound="-1"
         eType="#//ContainmentDefn" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listDefns" upperBound="-1"
+        eType="#//ListDefinition" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SymbolDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -123,5 +125,32 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListDefinition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyVal" eType="#//AttributeDefn"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//AttributeDefn" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sigLists" upperBound="-1"
+        eType="#//ListSignature" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listType" eType="#//TypeSpec"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttributeDefn">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attType" eType="#//TypeSpec"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="catMappingOptional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="catMapType" eType="#//TypeSpec"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListSignature">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attRefs" upperBound="-1"
+        eType="#//ListAttributeRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListAttributeRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attRef" eType="#//AttributeDefn"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
 </ecore:EPackage>
