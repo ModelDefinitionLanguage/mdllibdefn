@@ -30,6 +30,24 @@ class TestBlockSyntax {
 	}
 
 	@Test 
+	def void testBlockDeclnWithArgDefnSyntax() {
+		val result = '''
+			block DATA_INPUT_VARIABLES (0, 1) arguments level::Int statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn;
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
+
+	@Test 
+	def void testBlockDeclnWith2ArgDefnSyntax() {
+		val result = '''
+			block DATA_INPUT_VARIABLES (0, 1) arguments level::Int, another::Real statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn;
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
+
+	@Test 
 	def void testBlockDeclnMissingLimitsSyntax() {
 		val result = '''
 			block DATA_INPUT_VARIABLES (, ) statements (, ) _eqnDefn;

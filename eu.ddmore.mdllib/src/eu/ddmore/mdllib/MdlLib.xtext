@@ -22,10 +22,15 @@ ObjectDefinition:
 
 BlockDefinition:
 	{BlockDefinition} 'block' name=ID '(' minNum=INT? ',' maxNum=INT? ')'
+			('arguments' arguments+=ArgumentDefinition (',' arguments+=ArgumentDefinition)* )?
 			'statements' '(' minStmtNum=INT? ',' maxStmtNum=INT? ')'
 			stmtTypes+=StatementTypeDefn (','  stmtTypes+=StatementTypeDefn)* ';' 
 ;
 
+
+ArgumentDefinition:
+	name=ID argType=TypeSpec
+;
 
 StatementTypeDefn:
 	stmtType=StatementType hasRhs?='+'?
@@ -33,7 +38,7 @@ StatementTypeDefn:
 
 enum StatementType:
 		EQN_DEFN='_eqnDefn'| LIST_DEFN='_listDefn'| ANON_LIST_STMT='_anonList'|ENUM_DEFN='_enumDefn'|
-		RV_DEFN='_rvDefn'|PROP_STMT='_propStmt'|CAT_PROP_ASSIGN='_catPropStmt'
+		RV_DEFN='_rvDefn'|PROP_STMT='_propStmt'|CAT_PROP_ASSIGN='_catPropStmt'|TRANS_DEFN='_transDefn'
 ;
 
 ContainmentDefn:
