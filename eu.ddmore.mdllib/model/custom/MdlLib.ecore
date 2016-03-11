@@ -13,7 +13,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="containDefns" upperBound="-1"
         eType="#//ContainmentDefn" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listDefns" upperBound="-1"
-        eType="#//ListDefinition" containment="true"/>
+        eType="#//ListTypeDefinition" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SymbolDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -21,10 +21,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="Expression"/>
   <eClassifiers xsi:type="ecore:EClass" name="TypeDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeClass" eType="#//TypeClass"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="enumArgs" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="altType" eType="#//TypeDefinition"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeClass" eType="#//TypeClass"
+        defaultValueLiteral="_list"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="enumArgs" upperBound="-1"
+        eType="#//EnumValue" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionDefinition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="defns" upperBound="-1"
@@ -68,13 +68,20 @@
   <eClassifiers xsi:type="ecore:EEnum" name="TypeClass">
     <eLiterals name="ENUM" literal="_enum"/>
     <eLiterals name="SUBLIST" value="1" literal="_sublist"/>
-    <eLiterals name="SCALAR" value="2" literal="_scalar"/>
+    <eLiterals name="INT" value="2" literal="_int"/>
     <eLiterals name="VECTOR" value="3" literal="_vector"/>
     <eLiterals name="MATRIX" value="4" literal="_matrix"/>
     <eLiterals name="FUNCTION" value="5" literal="_function"/>
     <eLiterals name="REFERENCE" value="6" literal="_reference"/>
     <eLiterals name="CATEGORY" value="7" literal="_category"/>
+    <eLiterals name="REAL" value="9" literal="_real"/>
+    <eLiterals name="STRING" value="10" literal="_str"/>
+    <eLiterals name="DERIV" value="11" literal="_deriv"/>
+    <eLiterals name="PDF" value="12" literal="_pdf"/>
+    <eLiterals name="PMF" value="13" literal="_pmf"/>
+    <eLiterals name="BOOLEAN" value="14" literal="_bool"/>
     <eLiterals name="LIST" value="8" literal="_list"/>
+    <eLiterals name="MAPPING" value="15" literal="_mapping"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionDefnBody" eSuperTypes="#//SymbolDefinition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="funcSpec" eType="#//FunctionSpec"
@@ -94,6 +101,11 @@
         eType="#//StatementTypeDefn" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="arguments" upperBound="-1"
         eType="#//ArgumentDefinition" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyAttName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyType" eType="#//TypeDefinition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listTypeMappings" upperBound="-1"
+        eType="#//AttValListMap" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listType" eType="#//ListTypeDefinition"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StatementTypeDefn">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasRhs" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -126,31 +138,42 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ListDefinition">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="keyVal" eType="#//AttributeDefn"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ListTypeDefinition" eSuperTypes="#//TypeDefinition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
-        eType="#//AttributeDefn" containment="true"/>
+        eType="#//ListAttributeDefn" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="sigLists" upperBound="-1"
         eType="#//ListSignature" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listType" eType="#//TypeSpec"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owners" upperBound="-1"
+        eType="#//BlockDefinition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="altType" eType="#//TypeDefinition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="superRef" eType="#//TypeDefinition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="catMapType" eType="#//TypeSpec"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="catMappingOptional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="catAtt" eType="#//ListAttributeDefn"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSuper" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AttributeDefn">
+  <eClassifiers xsi:type="ecore:EClass" name="ListAttributeDefn">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attType" eType="#//TypeSpec"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="catMappingOptional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="catMapType" eType="#//TypeSpec"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListSignature">
     <eStructuralFeatures xsi:type="ecore:EReference" name="attRefs" upperBound="-1"
         eType="#//ListAttributeRef" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListAttributeRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attRef" eType="#//AttributeDefn"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attRef" eType="#//ListAttributeDefn"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttValListMap">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attDefn" eType="#//EnumValue"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attType" eType="#//ListTypeDefinition"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EnumValue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

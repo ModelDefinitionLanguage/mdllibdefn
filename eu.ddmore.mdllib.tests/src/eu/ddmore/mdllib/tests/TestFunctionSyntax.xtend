@@ -23,12 +23,12 @@ class TestFunctionSyntax {
 	@Test 
 	def void testFunctionDeclnSyntax() {
 		val result = '''
-			func foo named (Arg1::Int, arg2::Int) 
-				returns::Real;
-			func bar "A basic function" (a1::Int "The argument 1", a2::Real "Arg 2")
-				returns ::Real;
-			func och "A test function" named (arg1::Int) returns::String;
-			func aye named (arg1::Boolean) returns::Vector;
+			_func foo _named (Arg1::Int, arg2::Int) 
+				_returns::Real;
+			_func bar "A basic function" (a1::Int "The argument 1", a2::Real "Arg 2")
+				_returns ::Real;
+			_func och "A test function" _named (arg1::Int) _returns::String;
+			_func aye _named (arg1::Boolean) _returns::Vector;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -37,10 +37,10 @@ class TestFunctionSyntax {
 	@Test 
 	def void testNamedFunctionDeclnSyntax() {
 		val result = '''
-			func foo named (arg1::Int, arg2::Int , arg3::String)
-					sig (arg1, arg2),
+			_func foo _named (arg1::Int, arg2::Int , arg3::String)
+					_sig (arg1, arg2),
 						(arg1, arg3?)
-				returns::Real;
+				_returns::Real;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -49,7 +49,7 @@ class TestFunctionSyntax {
 	@Test 
 	def void testUnnamedFunctionDeclnSyntax() {
 		val result = '''
-			func och "A test function" ( a1::Int ) returns::String;
+			_func och "A test function" ( a1::Int ) _returns::String;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -58,7 +58,7 @@ class TestFunctionSyntax {
 	@Test 
 	def void testUnnamedFunctionNoDocsNoArgsDeclnSyntax() {
 		val result = '''
-			func och () returns::String;
+			_func och () _returns::String;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -67,7 +67,7 @@ class TestFunctionSyntax {
 	@Test 
 	def void testUnnamedFunctionNoDocsNoArgsNoReturnDeclnSyntax() {
 		val result = '''
-			func och () returns ::Real;
+			_func och () _returns ::Real;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -76,8 +76,8 @@ class TestFunctionSyntax {
 	@Test 
 	def void testMultiLineUnnamedFunctionsDeclnsSyntax() {
 		val result = '''
-			func och "A test function" ( a1::Int ) returns::String,
-				aye "A test function" ( a1::Int ) returns::String;
+			_func och "A test function" ( a1::Int ) _returns::String,
+				aye "A test function" ( a1::Int ) _returns::String;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -86,7 +86,7 @@ class TestFunctionSyntax {
 	@Test 
 	def void testVectorOfVectorArgumentSyntax() {
 		val result = '''
-			func och "A test function" ( a1::Vector[::Vector[::Real]]) returns::String;
+			_func och "A test function" ( a1::Vector[::Vector[::Real]]) _returns::String;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -95,7 +95,7 @@ class TestFunctionSyntax {
 	@Test 
 	def void testVectorOfVectorArgumentSpacedSyntax() {
 		val result = '''
-			func och "A test function" ( a1::Vector[::Vector[::Real] ]) returns::String;
+			_func och "A test function" ( a1::Vector[::Vector[::Real] ]) _returns::String;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -104,7 +104,7 @@ class TestFunctionSyntax {
 	@Test 
 	def void testVectorOfVectorReturnSyntax() {
 		val result = '''
-			func och "A test function" ( a1::Real) returns::Vector[::Vector[::Real]];
+			_func och "A test function" ( a1::Real) _returns::Vector[::Vector[::Real]];
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -113,7 +113,7 @@ class TestFunctionSyntax {
 	@Test 
 	def void testVectorOfVectorReturnSpacedSyntax() {
 		val result = '''
-			func och "A test function" ( a1::Real) returns::Vector[::Vector[::Real] ];
+			_func och "A test function" ( a1::Real) _returns::Vector[::Vector[::Real] ];
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -122,21 +122,21 @@ class TestFunctionSyntax {
 	@Test
 	def void testUnnamedFuncLib(){
 		val result = '''
-			func log "Log of x to base y"
+			_func log "Log of x to base y"
 					(
 						x::Real "the value",
 						y::Real "the base"
 					)
-					returns ::Real,
+					_returns ::Real,
 				log2 
 					(x::Real)
-					returns ::Real,
+					_returns ::Real,
 				log10
 					(x::Real)
-					returns ::Real,
+					_returns ::Real,
 				ln(
 					x::Real
-					) returns ::Real
+					) _returns ::Real
 				;
 		'''.loadLibAndParse
 		result.assertNoErrors
@@ -145,40 +145,40 @@ class TestFunctionSyntax {
 	@Test
 	def void testNamedFuncLib(){
 		val result = '''
-		type TransType _enum (ln, logit, probit);
-		type FixEffectSublist _sublist;
+		_type TransType _enum (ln, logit, probit);
+		_type FixEffectSublist _sublist;
 		
-		func Normal named
+		_func Normal _named
 						(mean::Real,
 						sd::Real,
 						var::Real
 					)
-					sig (mean, sd),
+					_sig (mean, sd),
 						(mean, var)
-					returns ::Pdf,
-			MultivariateNormal named
+					_returns ::Pdf,
+			MultivariateNormal _named
 					(
 						mean::Vector,
 						cov::Matrix
 					)
-					returns ::Vector[::Pdf],
-			matrix named
+					_returns ::Vector[::Pdf],
+			matrix _named
 					(
 						vector::Vector,
 						ncol::Real,
 						byRow::Boolean
 					)
-					returns ::Matrix,
-			linear named
+					_returns ::Matrix,
+			linear _named
 					( 
 						trans::TransType,
 						pop::Real,
 						fixEff::Vector[::FixEffectSublist],
 						ranEff::Vector
 					)
-					sig(trans?, pop, fixEff?, ranEff) 
-					returns ::Real,
-			combinedError1 named
+					_sig(trans?, pop, fixEff?, ranEff) 
+					_returns ::Real,
+			combinedError1 _named
 					( 
 						trans::TransType,
 						additive::Real,
@@ -186,8 +186,8 @@ class TestFunctionSyntax {
 						prediction::Real,
 						eps::Real
 					)
-					sig(trans?, additive, proportional, prediction, eps)
-					returns ::Real
+					_sig(trans?, additive, proportional, prediction, eps)
+					_returns ::Real
 			;
 		'''.loadLibAndParse
 		result.assertNoErrors

@@ -21,12 +21,17 @@ class TestListSyntax {
 	@Inject	extension ValidationTestHelper
 
 	@Test 
-	def void testListDeclnSyntax() {
+	def void testListDeclnWithKeyValSyntax() {
 		val result = '''
-			type VarLevel _list;
-			list myList::VarLevel key=use
-				atts use::Int , foo::Real
-				sig (use, foo?);
+			_type divUse _enum (covariate, amt, dv, dvid, cmt, mdv, idv, id, rate, ignore, varLevel, catCov, ss, ii, addl);
+			_list covList _alt Real _atts use::divUse
+				_sig (use);
+			_list catCovList _atts use::divUse
+				_cat use::Int
+			 	_sig (use);
+			
+			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
+				_list _key=use::divUse divUse.covariate->covList, divUse.catCov->catCovList;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -35,15 +40,73 @@ class TestListSyntax {
 	@Test 
 	def void testListDecln2SigsSyntax() {
 		val result = '''
-			type VarLevel _list;
-			list myList::VarLevel key=use
-				atts use::Int , foo::Real, anot::String
-				sig (use, foo?), (anot, foo?);
+			_list VarLevel 
+				_atts use::Int , foo::Real, anot::String
+				_sig (use, foo?), (anot, foo?);
+			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
+				_list _key=use::Int VarLevel;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
 	}
 
+	@Test 
+	def void testListDecln2SigsWithKeyValSyntax() {
+		val result = '''
+			_list VarLevel
+				_atts use::Int , foo::Real, anot::String
+				_sig (use, foo?), (anot, foo?);
+			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
+				_list  _key=use::Int VarLevel;
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
+
+	@Test 
+	def void testListDeclnWithBlockOwners() {
+		val result = '''
+			_list VarLevel
+				_atts type::Int , foo::Real, anot::String
+				_sig (type, foo?), (anot, foo?);
+			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
+				_list _key=type::Int VarLevel;
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
+
+	@Test 
+	def void testListDeclnWithSuperList() {
+		val result = '''
+			_list DerivSuper _super;
+			_list myList _alt Deriv _extends DerivSuper
+				_atts deriv::Real, foo::Reference[::Real], anot::String
+				_sig (deriv, foo?), (anot, foo?)
+				;
+			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
+				_list _key=deriv::Real myList;
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
+
+	@Test 
+	def void testListDeclnWithCatMappings() {
+		val result = '''
+			_type divUse _enum (covariate, amt, dv, dvid, cmt, mdv, idv, id, rate, ignore, varLevel, catCov, ss, ii, addl);
+			_list DerivSuper _super;
+			_list VarLevel _alt Real _extends DerivSuper
+				_atts use::divUse , foo::Real, anot::String
+				_cat use::Int
+				_sig (use, foo?), (anot, foo?)
+				;
+			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
+				_list _key=use::divUse divUse.covariate->VarLevel;
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
 
 	def private loadLibAndParse(CharSequence p) {
 		p.parse(loadLibrary)

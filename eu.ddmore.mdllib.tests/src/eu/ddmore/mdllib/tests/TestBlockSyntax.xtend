@@ -23,7 +23,7 @@ class TestBlockSyntax {
 	@Test 
 	def void testBlockDeclnSyntax() {
 		val result = '''
-			block DATA_INPUT_VARIABLES (0, 1) statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn;
+			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -32,7 +32,7 @@ class TestBlockSyntax {
 	@Test 
 	def void testBlockDeclnWithArgDefnSyntax() {
 		val result = '''
-			block DATA_INPUT_VARIABLES (0, 1) arguments level::Int statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn;
+			_block DATA_INPUT_VARIABLES (0, 1) _arguments level::Int _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -41,7 +41,7 @@ class TestBlockSyntax {
 	@Test 
 	def void testBlockDeclnWith2ArgDefnSyntax() {
 		val result = '''
-			block DATA_INPUT_VARIABLES (0, 1) arguments level::Int, another::Real? statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn;
+			_block DATA_INPUT_VARIABLES (0, 1) _arguments level::Int, another::Real? _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -50,7 +50,7 @@ class TestBlockSyntax {
 	@Test 
 	def void testBlockDeclnMissingLimitsSyntax() {
 		val result = '''
-			block DATA_INPUT_VARIABLES (, ) statements (, ) _eqnDefn;
+			_block DATA_INPUT_VARIABLES (, ) _statements (, ) _eqnDefn;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -59,7 +59,7 @@ class TestBlockSyntax {
 	@Test 
 	def void testObjectDeclnSyntax() {
 		val result = '''
-			object dataObj;
+			_object dataObj;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -68,12 +68,12 @@ class TestBlockSyntax {
 	@Test 
 	def void testObjectContentDefns() {
 		val result = '''
-			object dataObj;
-			block DATA_INPUT_VARIABLES (0, 1) statements (0,) _listDefn;
-			block MODEL_PREDICTION (0, ) statements (0,) _eqnDefn, _eqnDefn+, _listDefn;						
-			block DEQ (0, ) statements (0,) _eqnDefn, _eqnDefn+, _listDefn;
-			container dataObj has DATA_INPUT_VARIABLES, MODEL_PREDICTION;
-			container MODEL_PREDICTION has DEQ; 			
+			_object dataObj;
+			_block DATA_INPUT_VARIABLES (0, 1) _statements (0,) _listDefn;
+			_block MODEL_PREDICTION (0, ) _statements (0,) _eqnDefn, _eqnDefn+, _listDefn;						
+			_block DEQ (0, ) _statements (0,) _eqnDefn, _eqnDefn+, _listDefn;
+			_container dataObj _has DATA_INPUT_VARIABLES, MODEL_PREDICTION;
+			_container MODEL_PREDICTION _has DEQ; 			
 		'''.loadLibAndParse
 
 		result.assertNoErrors

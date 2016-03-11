@@ -5,29 +5,40 @@ import "http://eu.ddmore.mdllib/mdllib/MdlLib"
 
 
 Library:
-	{Library} typeDefns += TypeDefinition*
+	{Library} typeDefns += (TypeDefinition|ListDefinition)*
 	objectDefns += ObjectDefinition*
 	blockDefns += BlockDefinition*
 	containDefns += ContainmentDefn*
-	listDefns += ListDefinition*
-	funcDefns += FunctionDefinition* 	
+	funcDefns += FunctionDefinition*
 ;
 	
 TypeDefinition:
-	'type' name=ID typeClass=TypeClass ('(' enumArgs+=ID (',' enumArgs+=ID)* ')' | 'alt' altType=[TypeDefinition])? ';'
+	'_type' name=ID typeClass=TypeClass ('(' enumArgs+=EnumValue (',' enumArgs+=EnumValue)* ')' )? ';'
+;
+
+EnumValue:
+	name=ID
 ;
 
 ObjectDefinition:
-	{ObjectDefinition} 'object' name=ID ';'
+	{ObjectDefinition} '_object' name=ID ';'
 ;
 
 BlockDefinition:
-	{BlockDefinition} 'block' name=ID '(' minNum=INT? ',' maxNum=INT? ')'
-			('arguments' arguments+=ArgumentDefinition (',' arguments+=ArgumentDefinition)* )?
-			'statements' '(' minStmtNum=INT? ',' maxStmtNum=INT? ')'
-			stmtTypes+=StatementTypeDefn (','  stmtTypes+=StatementTypeDefn)* ';' 
+	{BlockDefinition} '_block' name=ID '(' minNum=INT? ',' maxNum=INT? ')'
+			('_arguments' arguments+=ArgumentDefinition (',' arguments+=ArgumentDefinition)* )?
+			'_statements' '(' minStmtNum=INT? ',' maxStmtNum=INT? ')'
+			stmtTypes+=StatementTypeDefn (','  stmtTypes+=StatementTypeDefn)*
+			('_list' '_key' '=' keyAttName=ID '::' keyType=[TypeDefinition] (
+								 listTypeMappings+=AttValListMap (',' listTypeMappings+=AttValListMap)*
+								|listType=[ListTypeDefinition]
+								)
+			)? ';' 
 ;
 
+AttValListMap:
+	attDefn=[EnumValue|QualifiedName] '->' attType=[ListTypeDefinition]
+;
 
 ArgumentDefinition:
 	name=ID argType=TypeSpec (optional?='?')?
@@ -43,17 +54,22 @@ enum StatementType:
 ;
 
 ContainmentDefn:
-	'container' parentRef=[BlockContainer] 'has' blkRefs+=[BlockDefinition] (',' blkRefs+=[BlockDefinition])* ';'
+	'_container' parentRef=[BlockContainer] '_has' blkRefs+=[BlockDefinition] (',' blkRefs+=[BlockDefinition])* ';'
 ;
 
-ListDefinition:
-	'list' name=ID listType=TypeSpec  'key' '=' keyVal=[AttributeDefn]
-		'atts' attributes+=AttributeDefn (',' attributes+=AttributeDefn)*
-		'sig' (sigLists+= ListSignature (',' sigLists+= ListSignature)*)? ';'
+ListDefinition returns TypeDefinition:
+	{ListTypeDefinition} '_list' name=ID (
+			('_alt' altType=[TypeDefinition])? ('_extends' superRef=[TypeDefinition])?
+			'_atts' attributes+=ListAttributeDefn (',' attributes+=ListAttributeDefn)*
+			('_cat' catAtt=[ListAttributeDefn] catMapType=TypeSpec catMappingOptional?='?'? )?
+			'_sig' (sigLists+= ListSignature (',' sigLists+= ListSignature)*)? 
+			| isSuper?='_super'
+			) 
+		';'
 ;
 
-AttributeDefn:
-	name=ID  attType=TypeSpec ('catMap' catMapType=TypeSpec catMappingOptional?='?'?)?
+ListAttributeDefn:
+	name=ID  attType=TypeSpec
 ;
 
 ListSignature:
@@ -61,11 +77,11 @@ ListSignature:
 ;
 
 ListAttributeRef:
-	attRef=[AttributeDefn] optional?='?'? 
+	attRef=[ListAttributeDefn] optional?='?'? 
 ;
 
 FunctionDefinition:
-	{FunctionDefinition} 'func'  defns+= FunctionDefnBody (',' defns+=FunctionDefnBody)* ';'
+	{FunctionDefinition} '_func'  defns+= FunctionDefnBody (',' defns+=FunctionDefnBody)* ';'
 ;
 
 FunctionDefnBody returns SymbolDefinition:
@@ -74,7 +90,7 @@ FunctionDefnBody returns SymbolDefinition:
 
 FunctionSpec:
 	{FunctionSpec}descn=STRING? argument=FuncArgs 
-			'returns' returnType=TypeSpec
+			'_returns' returnType=TypeSpec
 ;
 
 FuncArgs:
@@ -90,8 +106,8 @@ FuncArgumentDefinition:
 ;
 
 NamedFuncArgs returns FuncArgs:
-	{NamedFuncArgs} 'named' '(' arguments += FuncArgumentDefinition (=> ',' arguments += FuncArgumentDefinition)* ')'
-					('sig' (sigLists+= SignatureList (',' sigLists+= SignatureList)*))? 
+	{NamedFuncArgs} '_named' '(' arguments += FuncArgumentDefinition (=> ',' arguments += FuncArgumentDefinition)* ')'
+					('_sig' (sigLists+= SignatureList (',' sigLists+= SignatureList)*))? 
 ;
 
 SignatureList:
@@ -109,6 +125,10 @@ TypeSpec:
 
 
 enum TypeClass:
-		ENUM='_enum'| SUBLIST='_sublist'| SCALAR='_scalar'|VECTOR='_vector'|MATRIX='_matrix'|FUNCTION='_function'|REFERENCE='_reference'|
-		CATEGORY='_category' | LIST='_list'
+		ENUM='_enum'| SUBLIST='_sublist'| INT='_int'|VECTOR='_vector'|MATRIX='_matrix'|FUNCTION='_function'|REFERENCE='_reference'|
+		CATEGORY='_category' | REAL='_real'|STRING='_str' | BOOLEAN='_bool' |DERIV='_deriv'|PDF='_pdf'|PMF='_pmf'|MAPPING='_mapping'
 	;
+	
+QualifiedName:
+	ID ('.' ID)
+;
