@@ -31,7 +31,7 @@ class TestListSyntax {
 			 	_sig (use);
 			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
-				_list _key=use::divUse divUse.covariate->covList, divUse.catCov->catCovList;
+				_list _key=use divUse.covariate->covList, divUse.catCov->catCovList;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -44,7 +44,7 @@ class TestListSyntax {
 				_atts use::Int , foo::Real, anot::String
 				_sig (use, foo?), (anot, foo?);
 			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
-				_list _key=use::Int VarLevel;
+				_list _key=use VarLevel;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -57,7 +57,7 @@ class TestListSyntax {
 				_atts use::Int , foo::Real, anot::String
 				_sig (use, foo?), (anot, foo?);
 			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
-				_list  _key=use::Int VarLevel;
+				_list  _key=use VarLevel;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -70,7 +70,7 @@ class TestListSyntax {
 				_atts type::Int , foo::Real, anot::String
 				_sig (type, foo?), (anot, foo?);
 			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
-				_list _key=type::Int VarLevel;
+				_list _key=type VarLevel;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -85,7 +85,7 @@ class TestListSyntax {
 				_sig (deriv, foo?), (anot, foo?)
 				;
 			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
-				_list _key=deriv::Real myList;
+				_list _key=deriv myList;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -102,7 +102,7 @@ class TestListSyntax {
 				_sig (use, foo?), (anot, foo?)
 				;
 			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
-				_list _key=use::divUse divUse.covariate->VarLevel;
+				_list _key=use divUse.covariate->VarLevel;
 		'''.loadLibAndParse
 
 		result.assertNoErrors

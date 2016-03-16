@@ -12,8 +12,6 @@
         eType="#//ObjectDefinition" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="containDefns" upperBound="-1"
         eType="#//ContainmentDefn" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="listDefns" upperBound="-1"
-        eType="#//ListTypeDefinition" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SymbolDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -82,6 +80,7 @@
     <eLiterals name="BOOLEAN" value="14" literal="_bool"/>
     <eLiterals name="LIST" value="8" literal="_list"/>
     <eLiterals name="MAPPING" value="15" literal="_mapping"/>
+    <eLiterals name="UNDEFINED" value="16" literal="_undef"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionDefnBody" eSuperTypes="#//SymbolDefinition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="funcSpec" eType="#//FunctionSpec"
@@ -102,7 +101,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="arguments" upperBound="-1"
         eType="#//ArgumentDefinition" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyAttName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="keyType" eType="#//TypeDefinition"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listTypeMappings" upperBound="-1"
         eType="#//AttValListMap" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listType" eType="#//ListTypeDefinition"/>
@@ -154,6 +152,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="catMappingOptional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="catAtt" eType="#//ListAttributeDefn"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSuper" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isAnonymous" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isEnumList" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListAttributeDefn">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

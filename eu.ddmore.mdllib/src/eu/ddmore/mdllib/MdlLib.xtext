@@ -29,7 +29,7 @@ BlockDefinition:
 			('_arguments' arguments+=ArgumentDefinition (',' arguments+=ArgumentDefinition)* )?
 			'_statements' '(' minStmtNum=INT? ',' maxStmtNum=INT? ')'
 			stmtTypes+=StatementTypeDefn (','  stmtTypes+=StatementTypeDefn)*
-			('_list' '_key' '=' keyAttName=ID '::' keyType=[TypeDefinition] (
+			('_list' '_key' '=' keyAttName=ID (
 								 listTypeMappings+=AttValListMap (',' listTypeMappings+=AttValListMap)*
 								|listType=[ListTypeDefinition]
 								)
@@ -59,9 +59,10 @@ ContainmentDefn:
 
 ListDefinition returns TypeDefinition:
 	{ListTypeDefinition} '_list' name=ID (
-			('_alt' altType=[TypeDefinition])? ('_extends' superRef=[TypeDefinition])?
+			('_alt' altType=[TypeDefinition]|isAnonymous?='_anon')?
+			('_extends' superRef=[TypeDefinition])?
 			'_atts' attributes+=ListAttributeDefn (',' attributes+=ListAttributeDefn)*
-			('_cat' catAtt=[ListAttributeDefn] catMapType=TypeSpec catMappingOptional?='?'? )?
+			(isEnumList?='_cat' catAtt=[ListAttributeDefn] catMapType=TypeSpec catMappingOptional?='?'? )?
 			'_sig' (sigLists+= ListSignature (',' sigLists+= ListSignature)*)? 
 			| isSuper?='_super'
 			) 
@@ -126,7 +127,8 @@ TypeSpec:
 
 enum TypeClass:
 		ENUM='_enum'| SUBLIST='_sublist'| INT='_int'|VECTOR='_vector'|MATRIX='_matrix'|FUNCTION='_function'|REFERENCE='_reference'|
-		CATEGORY='_category' | REAL='_real'|STRING='_str' | BOOLEAN='_bool' |DERIV='_deriv'|PDF='_pdf'|PMF='_pmf'|MAPPING='_mapping'
+		CATEGORY='_category' | REAL='_real'|STRING='_str' | BOOLEAN='_bool' |DERIV='_deriv'|PDF='_pdf'|PMF='_pmf'|MAPPING='_mapping'|
+		UNDEFINED='_undef'
 	;
 	
 QualifiedName:
