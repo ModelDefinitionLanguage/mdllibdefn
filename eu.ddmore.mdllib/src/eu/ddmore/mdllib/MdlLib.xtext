@@ -64,7 +64,7 @@ ListDefinition returns TypeDefinition:
 			'_atts' attributes+=ListAttributeDefn (',' attributes+=ListAttributeDefn)*
 			(isEnumList?='_cat' catAtt=[ListAttributeDefn] catMapType=TypeSpec catMappingOptional?='?'? )?
 			'_sig' (sigLists+= ListSignature (',' sigLists+= ListSignature)*)? 
-			| isSuper?='_super'
+			| ('_alt' altType=[TypeDefinition]) ? isSuper?='_super'
 			) 
 		';'
 ;
