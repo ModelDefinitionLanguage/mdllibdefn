@@ -31,7 +31,7 @@ BlockDefinition:
 			'_statements' '(' minStmtNum=INT? ',' maxStmtNum=INT? ')'
 			stmtTypes+=StatementTypeDefn (','  stmtTypes+=StatementTypeDefn)*
 			(
-				'_prop' propRefs+=PropertyReference (',' propRefs+=PropertyReference)*
+				'_prop' (propRefs+=PropertyReference (',' propRefs+=PropertyReference)*| freeProps?='_free')
 			)?
 			('_list' '_key' '=' keyAttName=ID (
 								 listTypeMappings+=AttValListMap (',' listTypeMappings+=AttValListMap)*

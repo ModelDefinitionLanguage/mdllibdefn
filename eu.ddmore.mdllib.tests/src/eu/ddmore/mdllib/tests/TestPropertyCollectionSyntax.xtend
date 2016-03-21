@@ -32,6 +32,16 @@ class TestPropertyCollectionSyntax {
 	}
 
 	@Test 
+	def void testFreePropSyntax() {
+		val result = '''
+			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
+				_prop _free;
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
+
+	@Test 
 	def void testPropCollOnlySyntax() {
 		val result = '''
 			_prop propOne::Real, propTwo::String;			
