@@ -12,6 +12,8 @@
         eType="#//ObjectDefinition" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="containDefns" upperBound="-1"
         eType="#//ContainmentDefn" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="propertyDefns" upperBound="-1"
+        eType="#//PropertyDefinitionStatement" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SymbolDefinition">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -102,6 +104,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="listTypeMappings" upperBound="-1"
         eType="#//AttValListMap" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="listType" eType="#//ListTypeDefinition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="propRefs" upperBound="-1"
+        eType="#//PropertyReference" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StatementTypeDefn">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasRhs" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -182,5 +186,18 @@
   <eClassifiers xsi:type="ecore:EClass" name="AbstractTypeDefinition" abstract="true">
     <eOperations name="getTypeClass" eType="#//TypeClass"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertyDefinition">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="propType" eType="#//TypeSpec"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertyReference">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="propRef" eType="#//PropertyDefinition"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertyDefinitionStatement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
+        eType="#//PropertyDefinition" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

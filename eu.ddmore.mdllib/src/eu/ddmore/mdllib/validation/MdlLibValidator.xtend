@@ -3,21 +3,13 @@
  */
 package eu.ddmore.mdllib.validation
 
-import org.eclipse.xtext.validation.Check
-import eu.ddmore.mdllib.mdllib.TypeClass
-import org.eclipse.xtext.EcoreUtil2
 import eu.ddmore.mdllib.mdllib.ListTypeDefinition
-import eu.ddmore.mdllib.mdllib.TypeDefinition
 import eu.ddmore.mdllib.mdllib.MdlLibPackage
-import eu.ddmore.mdllib.mdllib.SignatureList
-import java.util.ArrayList
-import eu.ddmore.mdllib.mdllib.SubListTypeDefinition
-import java.util.List
-import org.eclipse.emf.ecore.EObject
-import java.util.Collections
-import java.util.HashSet
-import eu.ddmore.mdllib.mdllib.FunctionDefnBody
 import eu.ddmore.mdllib.mdllib.NamedFuncArgs
+import eu.ddmore.mdllib.mdllib.SubListTypeDefinition
+import eu.ddmore.mdllib.mdllib.TypeDefinition
+import java.util.HashSet
+import org.eclipse.xtext.validation.Check
 
 //import org.eclipse.xtext.validation.Check
 

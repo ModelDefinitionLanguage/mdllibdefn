@@ -6,6 +6,7 @@ import "http://eu.ddmore.mdllib/mdllib/MdlLib"
 
 Library:
 	{Library} typeDefns += (TypeDefinition|ListTypeDefinition|SubListDefinition)*
+	propertyDefns += PropertyDefinitionStatement*
 	objectDefns += ObjectDefinition*
 	blockDefns += BlockDefinition*
 	containDefns += ContainmentDefn*
@@ -29,11 +30,15 @@ BlockDefinition:
 			('_arguments' arguments+=ArgumentDefinition (',' arguments+=ArgumentDefinition)* )?
 			'_statements' '(' minStmtNum=INT? ',' maxStmtNum=INT? ')'
 			stmtTypes+=StatementTypeDefn (','  stmtTypes+=StatementTypeDefn)*
+			(
+				'_prop' propRefs+=PropertyReference (',' propRefs+=PropertyReference)*
+			)?
 			('_list' '_key' '=' keyAttName=ID (
 								 listTypeMappings+=AttValListMap (',' listTypeMappings+=AttValListMap)*
 								|listType=[ListTypeDefinition]
 								)
-			)? ';' 
+			)?
+			';' 
 ;
 
 AttValListMap:
@@ -87,6 +92,19 @@ SubListDefinition returns AbstractTypeDefinition:
 			'_sig' (sigLists+= ListSignature (',' sigLists+= ListSignature)*)? 
 		';'
 ;
+
+PropertyReference:
+	propRef=[PropertyDefinition]  optional?='?'? 
+;
+
+PropertyDefinitionStatement:
+	'_prop' properties+=PropertyDefinition (',' properties+=PropertyDefinition)* ';'
+;
+
+PropertyDefinition:
+	name=ID  propType=TypeSpec
+;
+
 
 FunctionDefinition:
 	{FunctionDefinition} '_func'  defns+= FunctionDefnBody (',' defns+=FunctionDefnBody)* ';'
