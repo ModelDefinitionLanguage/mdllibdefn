@@ -3,6 +3,22 @@
  */
 package eu.ddmore.mdllib.validation
 
+import org.eclipse.xtext.validation.Check
+import eu.ddmore.mdllib.mdllib.TypeClass
+import org.eclipse.xtext.EcoreUtil2
+import eu.ddmore.mdllib.mdllib.ListTypeDefinition
+import eu.ddmore.mdllib.mdllib.TypeDefinition
+import eu.ddmore.mdllib.mdllib.MdlLibPackage
+import eu.ddmore.mdllib.mdllib.SignatureList
+import java.util.ArrayList
+import eu.ddmore.mdllib.mdllib.SubListTypeDefinition
+import java.util.List
+import org.eclipse.emf.ecore.EObject
+import java.util.Collections
+import java.util.HashSet
+import eu.ddmore.mdllib.mdllib.FunctionDefnBody
+import eu.ddmore.mdllib.mdllib.NamedFuncArgs
+
 //import org.eclipse.xtext.validation.Check
 
 /**
@@ -12,14 +28,76 @@ package eu.ddmore.mdllib.validation
  */
 class MdlLibValidator extends AbstractMdlLibValidator {
 
-//  public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					MyDslPackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
+	public static val INCORRECT_TYPE_CLASS = "incorrect.type.class.mdllib.ddmore.eu"
+	public static val MALFORMED_TYPE_CLASS = "malformed.type.class.mdllib.ddmore.eu"
+	public static val UNUSED_ATT_NAME = "unused.name.attribute.mdllib.ddmore.eu"
+
+	@Check
+	def void checkTypeDefinitionWellFormed(TypeDefinition it) {
+		switch(typeClass){
+			case LIST,
+			case SUBLIST:
+				error("Type class '" + typeClass.literal + "' cannot be used in a type definition",
+						MdlLibPackage.eINSTANCE.typeDefinition_TypeClass, INCORRECT_TYPE_CLASS)
+			case ENUM:
+				if(enumArgs == null || enumArgs.isEmpty){
+					error("Type class '" + typeClass.literal + "' must have enumerations values defined",
+							MdlLibPackage.eINSTANCE.typeDefinition_TypeClass, MALFORMED_TYPE_CLASS)
+				}
+			default:{}
+		}		
+	}
+
+
+	@Check
+	def void checkListSignatureComplete(ListTypeDefinition it) {
+		val attNames = new HashSet<String>
+		attributes.forEach[
+			attNames.add(name)
+		]
+		sigLists.forEach[sl|
+			sl.attRefs.forEach[ar|
+				attNames.remove(ar.attRef.name)
+			]
+		]
+		for(unusedName : attNames){
+			error("Attribute name '" + unusedName + "' is not used in list signature.",
+						MdlLibPackage.eINSTANCE.listTypeDefinition_SigLists, UNUSED_ATT_NAME)
+		}
+	}
+
+	@Check
+	def void checkSublistSignatureComplete(SubListTypeDefinition it) {
+		val attNames = new HashSet<String>
+		attributes.forEach[
+			attNames.add(name)
+		]
+		sigLists.forEach[sl|
+			sl.attRefs.forEach[ar|
+				attNames.remove(ar.attRef.name)
+			]
+		]
+		for(unusedName : attNames){
+			error("Attribute name '" + unusedName + "' is not used in sublist signature.",
+						MdlLibPackage.eINSTANCE.subListTypeDefinition_SigLists, UNUSED_ATT_NAME)
+		}
+	}
+
+	@Check
+	def void checkNamedFunctionSignatureComplete(NamedFuncArgs it) {
+		val attNames = new HashSet<String>
+		arguments.forEach[
+			attNames.add(name)
+		]
+		sigLists.forEach[sl|
+			sl.argRefs.forEach[ar|
+				attNames.remove(ar.argRef.name)
+			]
+		]
+		for(unusedName : attNames){
+			error("Argument name '" + unusedName + "' is not used in named function signature.",
+						MdlLibPackage.eINSTANCE.namedFuncArgs_SigLists, UNUSED_ATT_NAME)
+		}
+	}
+
 }

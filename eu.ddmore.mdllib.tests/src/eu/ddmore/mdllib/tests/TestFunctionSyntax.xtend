@@ -23,12 +23,12 @@ class TestFunctionSyntax {
 	@Test 
 	def void testFunctionDeclnSyntax() {
 		val result = '''
-			_func foo _named (Arg1::Int, arg2::Int) 
+			_func foo _named (Arg1::Int, arg2::Int) _sig(Arg1), (arg2)
 				_returns::Real;
 			_func bar "A basic function" (a1::Int "The argument 1", a2::Real "Arg 2")
 				_returns ::Real;
-			_func och "A test function" _named (arg1::Int) _returns::String;
-			_func aye _named (arg1::Boolean) _returns::Vector;
+			_func och "A test function" _named (arg1::Int) _sig(arg1) _returns::String;
+			_func aye _named (arg1::Boolean)_sig(arg1)  _returns::Vector;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -146,8 +146,9 @@ class TestFunctionSyntax {
 	def void testNamedFuncLib(){
 		val result = '''
 		_type TransType _enum (ln, logit, probit);
-		_type FixEffectSublist _sublist;
-		
+		_sublist FixEffectSublist _atts cov::Reference[::Real]
+					_sig (cov);
+							
 		_func Normal _named
 						(mean::Real,
 						sd::Real,
@@ -161,6 +162,7 @@ class TestFunctionSyntax {
 						mean::Vector,
 						cov::Matrix
 					)
+					_sig(mean, cov)
 					_returns ::Vector[::Pdf],
 			matrix _named
 					(
@@ -168,6 +170,7 @@ class TestFunctionSyntax {
 						ncol::Real,
 						byRow::Boolean
 					)
+					_sig(vector, ncol, byRow)
 					_returns ::Matrix,
 			linear _named
 					( 

@@ -5,7 +5,7 @@ import "http://eu.ddmore.mdllib/mdllib/MdlLib"
 
 
 Library:
-	{Library} typeDefns += (TypeDefinition|ListDefinition)*
+	{Library} typeDefns += (TypeDefinition|ListTypeDefinition|SubListDefinition)*
 	objectDefns += ObjectDefinition*
 	blockDefns += BlockDefinition*
 	containDefns += ContainmentDefn*
@@ -57,7 +57,7 @@ ContainmentDefn:
 	'_container' parentRef=[BlockContainer] '_has' blkRefs+=[BlockDefinition] (',' blkRefs+=[BlockDefinition])* ';'
 ;
 
-ListDefinition returns TypeDefinition:
+ListTypeDefinition returns AbstractTypeDefinition:
 	{ListTypeDefinition} '_list' name=ID (
 			('_alt' altType=[TypeDefinition]|isAnonymous?='_anon')?
 			('_extends' superRef=[TypeDefinition])?
@@ -79,6 +79,13 @@ ListSignature:
 
 ListAttributeRef:
 	attRef=[ListAttributeDefn] optional?='?'? 
+;
+
+SubListDefinition returns AbstractTypeDefinition:
+	{SubListTypeDefinition} '_sublist' name=ID
+			'_atts' attributes+=ListAttributeDefn (',' attributes+=ListAttributeDefn)*
+			'_sig' (sigLists+= ListSignature (',' sigLists+= ListSignature)*)? 
+		';'
 ;
 
 FunctionDefinition:
