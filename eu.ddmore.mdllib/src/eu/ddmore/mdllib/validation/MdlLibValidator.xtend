@@ -3,13 +3,18 @@
  */
 package eu.ddmore.mdllib.validation
 
+import eu.ddmore.mdllib.mdllib.BlockDefinition
+import eu.ddmore.mdllib.mdllib.EnumValue
 import eu.ddmore.mdllib.mdllib.ListTypeDefinition
 import eu.ddmore.mdllib.mdllib.MdlLibPackage
 import eu.ddmore.mdllib.mdllib.NamedFuncArgs
 import eu.ddmore.mdllib.mdllib.SubListTypeDefinition
 import eu.ddmore.mdllib.mdllib.TypeDefinition
+import eu.ddmore.mdllib.mdllib.TypeSpec
 import java.util.HashSet
+import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.validation.Check
+import eu.ddmore.mdllib.mdllib.AbstractTypeDefinition
 
 //import org.eclipse.xtext.validation.Check
 
@@ -23,6 +28,7 @@ class MdlLibValidator extends AbstractMdlLibValidator {
 	public static val INCORRECT_TYPE_CLASS = "incorrect.type.class.mdllib.ddmore.eu"
 	public static val MALFORMED_TYPE_CLASS = "malformed.type.class.mdllib.ddmore.eu"
 	public static val UNUSED_ATT_NAME = "unused.name.attribute.mdllib.ddmore.eu"
+	public static val MALFORMED_BLOCK_DEFINITION = "malformed.block.defn.mdllib.ddmore.eu"
 
 	@Check
 	def void checkTypeDefinitionWellFormed(TypeDefinition it) {
@@ -90,6 +96,74 @@ class MdlLibValidator extends AbstractMdlLibValidator {
 			error("Argument name '" + unusedName + "' is not used in named function signature.",
 						MdlLibPackage.eINSTANCE.namedFuncArgs_SigLists, UNUSED_ATT_NAME)
 		}
+	}
+
+	// all should contain the key attribute - DONE
+	// all matches should have the same enum type - DONE
+	// all key values should have the same type as the key in the list definition 
+
+	@Check
+	def void checkListKeyMappingConsistent(BlockDefinition it){
+		if(keyAttName != null){
+			if(listType == null){
+				var AbstractTypeDefinition firstAtt = null
+				var TypeDefinition firstValueType = null
+				for(lt : listTypeMappings){
+					// find key attribute in list type
+					val keyAtt = lt.attType.attributes.findFirst[at|
+						at.name == keyAttName
+					] 
+					if(keyAtt == null){
+						error("Key '" + keyAttName + "' not found in mapped list definitions.",
+									MdlLibPackage.eINSTANCE.blockDefinition_ListTypeMappings, MALFORMED_BLOCK_DEFINITION)
+					}
+					else{
+//						if(firstAtt == null){
+//							// found key att so if first time the store it's type.
+//							firstAtt = keyAtt.attType.typeName
+//						}
+//						if(firstAtt != keyAtt.attType.typeName){
+//							error("Mapped values must have the same type as the key '"  + keyAttName + "'.",
+//										MdlLibPackage.eINSTANCE.blockDefinition_ListTypeMappings, MALFORMED_BLOCK_DEFINITION)
+//						}
+						if(lt.attDefn.typeDefinition != keyAtt.attType.typeName){
+							error("Mapped value '" + lt.attDefn.name +"' must have the same type as the key '"  + keyAttName + "'.",
+										MdlLibPackage.eINSTANCE.blockDefinition_ListTypeMappings, MALFORMED_BLOCK_DEFINITION)
+						}
+					}
+					if(firstValueType == null){
+						firstValueType = lt.attDefn.typeDefinition
+					}
+					else if(lt.attDefn.typeDefinition != firstValueType){
+						error("Mapped list key values must be of the same type.",
+									MdlLibPackage.eINSTANCE.blockDefinition_ListTypeMappings, MALFORMED_BLOCK_DEFINITION)
+					}
+				}
+			}
+		}
+	}
+	
+	@Check
+	def void checkListKeyConsistentWithDefinition(BlockDefinition it){
+		if(keyAttName != null){
+			if(listType != null){
+				val keyAtt = listType.attributes.findFirst[at|
+					at.name == keyAttName
+				] 
+				if(keyAtt == null){
+					error("Key '" + keyAttName + "' not found in list definition.",
+								MdlLibPackage.eINSTANCE.blockDefinition_ListTypeMappings, MALFORMED_BLOCK_DEFINITION)
+				}
+			}
+		}
+	}
+	
+	private def TypeDefinition getTypeDefinition(EnumValue it){
+		EcoreUtil2.getContainerOfType(eContainer, TypeDefinition)
+	}
+	
+	def void check(){
+		
 	}
 
 }
