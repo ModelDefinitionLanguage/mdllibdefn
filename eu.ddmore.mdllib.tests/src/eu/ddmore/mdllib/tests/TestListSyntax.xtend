@@ -77,6 +77,19 @@ class TestListSyntax {
 	}
 
 	@Test 
+	def void testListFunctionRefSyntax() {
+		val result = '''
+			_list VarLevel
+				_atts type::Int , foo::Reference[::Function(::Int,::String)::Real], bar::String
+				_sig (type, foo?), (foo?, bar);
+			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
+				_list _key=type VarLevel;
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
+
+	@Test 
 	def void testListDeclnWithSuperList() {
 		val result = '''
 			_list DerivSuper _super;

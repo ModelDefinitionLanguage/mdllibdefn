@@ -62,6 +62,10 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="functionSpec" eType="#//FunctionSpec"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="argSpecs" upperBound="-1"
+        eType="#//TypeSpec" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rtnSpec" eType="#//TypeSpec"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="TypeClass">
     <eLiterals name="ENUM" literal="_enum"/>
