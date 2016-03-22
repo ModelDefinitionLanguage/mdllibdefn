@@ -10,11 +10,9 @@ import eu.ddmore.mdllib.mdllib.MdlLibPackage
 import eu.ddmore.mdllib.mdllib.NamedFuncArgs
 import eu.ddmore.mdllib.mdllib.SubListTypeDefinition
 import eu.ddmore.mdllib.mdllib.TypeDefinition
-import eu.ddmore.mdllib.mdllib.TypeSpec
 import java.util.HashSet
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.validation.Check
-import eu.ddmore.mdllib.mdllib.AbstractTypeDefinition
 
 //import org.eclipse.xtext.validation.Check
 
@@ -106,7 +104,6 @@ class MdlLibValidator extends AbstractMdlLibValidator {
 	def void checkListKeyMappingConsistent(BlockDefinition it){
 		if(keyAttName != null){
 			if(listType == null){
-				var AbstractTypeDefinition firstAtt = null
 				var TypeDefinition firstValueType = null
 				for(lt : listTypeMappings){
 					// find key attribute in list type
@@ -118,14 +115,6 @@ class MdlLibValidator extends AbstractMdlLibValidator {
 									MdlLibPackage.eINSTANCE.blockDefinition_ListTypeMappings, MALFORMED_BLOCK_DEFINITION)
 					}
 					else{
-//						if(firstAtt == null){
-//							// found key att so if first time the store it's type.
-//							firstAtt = keyAtt.attType.typeName
-//						}
-//						if(firstAtt != keyAtt.attType.typeName){
-//							error("Mapped values must have the same type as the key '"  + keyAttName + "'.",
-//										MdlLibPackage.eINSTANCE.blockDefinition_ListTypeMappings, MALFORMED_BLOCK_DEFINITION)
-//						}
 						if(lt.attDefn.typeDefinition != keyAtt.attType.typeName){
 							error("Mapped value '" + lt.attDefn.name +"' must have the same type as the key '"  + keyAttName + "'.",
 										MdlLibPackage.eINSTANCE.blockDefinition_ListTypeMappings, MALFORMED_BLOCK_DEFINITION)
