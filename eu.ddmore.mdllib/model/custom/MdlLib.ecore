@@ -124,7 +124,6 @@
     <eLiterals name="ENUM_DEFN" value="3" literal="_enumDefn"/>
     <eLiterals name="RV_DEFN" value="4" literal="_rvDefn"/>
     <eLiterals name="PROP_STMT" value="5" literal="_propStmt"/>
-    <eLiterals name="CAT_PROP_ASSIGN" value="6" literal="_catPropStmt"/>
     <eLiterals name="TRANS_DEFN" value="7" literal="_transDefn"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ObjectDefinition" eSuperTypes="#//BlockContainer"/>
