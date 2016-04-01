@@ -5,7 +5,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="typeDefns" upperBound="-1"
         eType="#//AbstractTypeDefinition" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="funcDefns" upperBound="-1"
-        eType="#//FunctionDefinition" containment="true"/>
+        eType="#//FunctionDefnBody" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="blockDefns" upperBound="-1"
         eType="#//BlockDefinition" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="objectDefns" upperBound="-1"
@@ -23,10 +23,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeClass" eType="#//TypeClass"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="enumArgs" upperBound="-1"
         eType="#//EnumValue" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FunctionDefinition">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="defns" upperBound="-1"
-        eType="#//SymbolDefinition" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionSpec">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="descn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

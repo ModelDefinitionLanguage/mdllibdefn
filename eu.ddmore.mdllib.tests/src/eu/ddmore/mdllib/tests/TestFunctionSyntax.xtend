@@ -76,8 +76,8 @@ class TestFunctionSyntax {
 	@Test 
 	def void testMultiLineUnnamedFunctionsDeclnsSyntax() {
 		val result = '''
-			_func och "A test function" ( a1::Int ) _returns::String,
-				aye "A test function" ( a1::Int ) _returns::String;
+			_func och "A test function" ( a1::Int ) _returns::String;
+			_func aye "A test function" ( a1::Int ) _returns::String;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -127,14 +127,14 @@ class TestFunctionSyntax {
 						x::Real "the value",
 						y::Real "the base"
 					)
-					_returns ::Real,
-				log2 
+					_returns ::Real;
+			_func log2 
 					(x::Real)
-					_returns ::Real,
-				log10
+					_returns ::Real;
+			_func	log10
 					(x::Real)
-					_returns ::Real,
-				ln(
+					_returns ::Real;
+			_func	ln(
 					x::Real
 					) _returns ::Real
 				;
@@ -156,23 +156,23 @@ class TestFunctionSyntax {
 					)
 					_sig (mean, sd),
 						(mean, var)
-					_returns ::Pdf,
-			MultivariateNormal _named
+					_returns ::Pdf;
+		_func MultivariateNormal _named
 					(
 						mean::Vector,
 						cov::Matrix
 					)
 					_sig(mean, cov)
-					_returns ::Vector[::Pdf],
-			matrix _named
+					_returns ::Vector[::Pdf];
+		_func	matrix _named
 					(
 						vector::Vector,
 						ncol::Real,
 						byRow::Boolean
 					)
 					_sig(vector, ncol, byRow)
-					_returns ::Matrix,
-			linear _named
+					_returns ::Matrix;
+		_func	linear _named
 					( 
 						trans::TransType,
 						pop::Real,
@@ -180,8 +180,8 @@ class TestFunctionSyntax {
 						ranEff::Vector
 					)
 					_sig(trans?, pop, fixEff?, ranEff) 
-					_returns ::Real,
-			combinedError1 _named
+					_returns ::Real;
+		_func	combinedError1 _named
 					( 
 						trans::TransType,
 						additive::Real,
