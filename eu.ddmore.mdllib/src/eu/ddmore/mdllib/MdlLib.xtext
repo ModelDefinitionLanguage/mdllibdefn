@@ -158,7 +158,7 @@ TypeSpec:
 enum TypeClass:
 		ENUM='_enum'| SUBLIST='_sublist'| INT='_int'|VECTOR='_vector'|MATRIX='_matrix'|FUNCTION='_function'|REFERENCE='_reference'|
 		CATEGORY='_category' | REAL='_real'|STRING='_str' | BOOLEAN='_bool' |DERIV='_deriv'|PDF='_pdf'|PMF='_pmf'|MAPPING='_mapping'|
-		UNDEFINED='_undef'
+		UNDEFINED='_undef' | CATEGORY_VALUE="_categoryValue"
 	;
 	
 QualifiedName:

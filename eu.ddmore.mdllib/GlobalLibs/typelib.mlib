@@ -11,3 +11,5 @@ _type Function _function;
 _type Reference _reference;
 _type Mapping _mapping;
 _type Undefined _undef;
+_type Category _category;
+_type CategoryValue _categoryValue;
