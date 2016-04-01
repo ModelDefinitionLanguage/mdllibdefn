@@ -86,6 +86,7 @@
     <eLiterals name="MAPPING" value="15" literal="_mapping"/>
     <eLiterals name="UNDEFINED" value="16" literal="_undef"/>
     <eLiterals name="CATEGORY_VALUE" value="17" literal="_categoryValue"/>
+    <eLiterals name="RV" value="18" literal="_rv"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionDefnBody" eSuperTypes="#//SymbolDefinition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="funcSpec" eType="#//FunctionSpec"

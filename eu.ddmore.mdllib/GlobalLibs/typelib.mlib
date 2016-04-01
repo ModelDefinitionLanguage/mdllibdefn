@@ -13,3 +13,4 @@ _type Mapping _mapping;
 _type Undefined _undef;
 _type Category _category;
 _type CategoryValue _categoryValue;
+_type Randomvariable _rv;

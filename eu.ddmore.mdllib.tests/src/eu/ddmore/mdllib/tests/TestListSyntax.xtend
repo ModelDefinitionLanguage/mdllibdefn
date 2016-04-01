@@ -121,6 +121,24 @@ class TestListSyntax {
 		result.assertNoErrors
 	}
 
+	@Test 
+	def void testListDeclnWithRVAtt() {
+		val result = '''
+			_type divUse _enum (covariate, amt, dv, dvid, cmt, mdv, idv, id, rate, ignore, varLevel, catCov, ss, ii, addl);
+			_type RandomVariable _rv;
+			_list DerivSuper _super;
+			_list VarLevel _alt Real _extends DerivSuper
+				_atts use::divUse , foo::Real, anot::RandomVariable[::Real]
+				_cat use::Int
+				_sig (use, foo?), (anot, foo?)
+				;
+			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
+				_list _key=use divUse.covariate->VarLevel;
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
+
 	def private loadLibAndParse(CharSequence p) {
 		p.parse(loadLibrary)
 	}
