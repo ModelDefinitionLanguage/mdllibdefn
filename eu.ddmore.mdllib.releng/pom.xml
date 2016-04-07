@@ -22,6 +22,18 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<xtext.version>2.8.4</xtext.version>
 	</properties>
 
+	<distributionManagement>
+		<snapshotRepository>
+			<id>repo.mdlteam.ddmore.eu</id>
+			<url>s3://repo.mdlteam.ddmore.eu/snapshot</url>
+		</snapshotRepository>
+		<repository>
+			<id>repo.mdlteam.ddmore.eu</id>
+			<url>s3://repo.mdlteam.ddmore.eu/release</url>
+		</repository>
+	</distributionManagement>
+
+
 	<repositories>
 		<repository>
 			<id>eclipse</id>
@@ -35,6 +47,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		</repository>
 	</repositories>
 	<build>
+		<extensions>
+			<extension>
+				<groupId>org.kuali.maven.wagons</groupId>
+				<artifactId>maven-s3-wagon</artifactId>
+				<version>1.2.1</version>
+			</extension>
+		</extensions>
 		<pluginManagement>
 			<plugins>
 				<!-- xtend-maven-plugin is in pluginManagement instead of in plugins 
