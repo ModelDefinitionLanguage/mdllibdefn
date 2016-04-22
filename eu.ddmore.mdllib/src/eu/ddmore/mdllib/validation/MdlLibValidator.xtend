@@ -13,6 +13,8 @@ import eu.ddmore.mdllib.mdllib.TypeDefinition
 import java.util.HashSet
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.validation.Check
+import eu.ddmore.mdllib.mdllib.StatementTypeDefn
+import eu.ddmore.mdllib.mdllib.StatementType
 
 //import org.eclipse.xtext.validation.Check
 
@@ -27,6 +29,7 @@ class MdlLibValidator extends AbstractMdlLibValidator {
 	public static val MALFORMED_TYPE_CLASS = "malformed.type.class.mdllib.ddmore.eu"
 	public static val UNUSED_ATT_NAME = "unused.name.attribute.mdllib.ddmore.eu"
 	public static val MALFORMED_BLOCK_DEFINITION = "malformed.block.defn.mdllib.ddmore.eu"
+	public static val MALFORMED_STATEMENT_DEFINITION = "malformed.type.statement.mdllib.ddmore.eu"
 
 	@Check
 	def void checkTypeDefinitionWellFormed(TypeDefinition it) {
@@ -145,6 +148,13 @@ class MdlLibValidator extends AbstractMdlLibValidator {
 				}
 			}
 		}
+	}
+	
+	@Check
+	def void checkStatementDefinitionWellFormed(StatementTypeDefn it){
+		if(isHasRhs && !(stmtType == StatementType.EQN_DEFN || stmtType == StatementType.LIST_DEFN))
+			error("This statement type cannot use the '+' modifier.",
+						MdlLibPackage.eINSTANCE.statementTypeDefn_HasRhs, MALFORMED_STATEMENT_DEFINITION)
 	}
 	
 	private def TypeDefinition getTypeDefinition(EnumValue it){

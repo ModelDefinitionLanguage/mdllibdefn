@@ -116,6 +116,17 @@ class TestValidation {
 							"Key 'foo' not found in list definition.")
 	}
 
+	@Test 
+	def void testBlockDeclnWithHasMalformedStatementDefn() {
+		val result = '''
+			_block DATA_INPUT_VARIABLES (0, 1) _arguments level::Int, another::Real? _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn+, _rvDefn;
+		'''.loadLibAndParse
+
+		result.assertError(MdlLibPackage::eINSTANCE.statementTypeDefn, MdlLibValidator::MALFORMED_STATEMENT_DEFINITION, "This statement type cannot use the '+' modifier.")
+	}
+
+
+
 	def private loadLibAndParse(CharSequence p) {
 		p.parse(loadLibrary)
 	}

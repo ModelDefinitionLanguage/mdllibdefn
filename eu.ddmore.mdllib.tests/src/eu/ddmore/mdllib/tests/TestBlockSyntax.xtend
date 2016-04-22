@@ -23,7 +23,7 @@ class TestBlockSyntax {
 	@Test 
 	def void testBlockDeclnSyntax() {
 		val result = '''
-			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn;
+			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn, _listDefn+;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
