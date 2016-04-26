@@ -202,4 +202,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
         eType="#//PropertyDefinition" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MappingTypeDefinition" eSuperTypes="#//AbstractTypeDefinition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="asType" eType="#//TypeSpec"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="colType" eType="#//TypeSpec"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tgtType" eType="#//TypeSpec"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeClass" eType="#//TypeClass"
+        defaultValueLiteral="_mapping"/>
+  </eClassifiers>
 </ecore:EPackage>

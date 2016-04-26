@@ -5,13 +5,12 @@ import "http://eu.ddmore.mdllib/mdllib/MdlLib"
 
 
 Library:
-	{Library} typeDefns += (TypeDefinition|ListTypeDefinition|SubListDefinition)*
+	{Library} typeDefns += (TypeDefinition|ListTypeDefinition|SubListDefinition|MappingTypeDefinition)*
 	propertyDefns += PropertyDefinitionStatement*
 	objectDefns += ObjectDefinition*
 	blockDefns += BlockDefinition*
 	containDefns += ContainmentDefn*
 	funcDefns += FunctionDefnBody*
-//	funcDefns += FunctionDefinition*
 ;
 	
 TypeDefinition:
@@ -96,6 +95,12 @@ SubListDefinition returns AbstractTypeDefinition:
 		';'
 ;
 
+MappingTypeDefinition returns AbstractTypeDefinition:
+	{MappingTypeDefinition} '_mapping' name=ID
+			'_data' asType=TypeSpec '_col' colType=TypeSpec '_tgt' tgtType=TypeSpec 
+		';'
+;
+
 PropertyReference:
 	propRef=[PropertyDefinition]  optional?='?'? 
 ;
@@ -107,11 +112,6 @@ PropertyDefinitionStatement:
 PropertyDefinition:
 	name=ID  propType=TypeSpec
 ;
-
-
-//FunctionDefinition:
-//	{FunctionDefinition} '_func'  defns+= FunctionDefnBody (',' defns+=FunctionDefnBody)* ';'
-//;
 
 FunctionDefnBody returns FunctionDefnBody:
 	{FunctionDefnBody} '_func' name = ID funcSpec=FunctionSpec ';'
