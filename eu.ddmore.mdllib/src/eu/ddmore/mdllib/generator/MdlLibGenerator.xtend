@@ -21,9 +21,21 @@
  */
 package eu.ddmore.mdllib.generator
 
+import eu.ddmore.mdllib.mdllib.BlockDefinition
+import eu.ddmore.mdllib.mdllib.Library
+import eu.ddmore.mdllib.mdllib.ListTypeDefinition
+import eu.ddmore.mdllib.mdllib.NamedFuncArgs
+import eu.ddmore.mdllib.mdllib.ObjectDefinition
+import eu.ddmore.mdllib.mdllib.StatementTypeDefn
+import eu.ddmore.mdllib.mdllib.SubListTypeDefinition
+import eu.ddmore.mdllib.mdllib.TypeClass
+import eu.ddmore.mdllib.mdllib.TypeDefinition
+import eu.ddmore.mdllib.mdllib.TypeSpec
+import java.util.ArrayList
+import java.util.List
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.generator.IGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess
+import org.eclipse.xtext.generator.IGenerator
 
 /**
  * Generates code from your model files on save.
@@ -33,10 +45,426 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 class MdlLibGenerator implements IGenerator {
 	
 	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
-//		fsa.generateFile('greetings.txt', 'People to greet: ' + 
-//			resource.allContents
-//				.filter(typeof(Greeting))
-//				.map[name]
-//				.join(', '))
+		val content = resource.contents.head
+		if(content != null){
+			fsa.generateFile('mdl_reference.tex', writeDocument(content as Library))
+		}
 	}
+	
+	
+	def writeDocument(Library it)'''
+		\documentclass[a4wide,10pt]{article}
+		\usepackage{hyperref}
+		
+		\title{MDL Reference}
+		
+		\author{Stuart Moodie and Mike Smith}
+		
+		\setcounter{tocdepth}{2}
+		\setcounter{secnumdepth}{2}
+		
+		\begin{document}
+		
+		\maketitle 
+		
+		
+		\tableofcontents
+		
+		\newpage
+		
+		«writeObjects»
+		
+		«writeBlocks»
+		
+		«writeLists»
+		
+		«writeSubLists»
+		
+		«writeFunctions»
+		
+		«writeTypes»
+		
+		\end{document}
+	'''
+
+	def writeObjects(Library it)'''
+		\section{Objects}
+		\subsection{Summary}
+		%
+		«writeLatexTable(#['Name', 'Description'], #['l', 'l'], [
+			val retVal = new ArrayList<List<String>>
+			for(obj : objectDefns){
+				retVal.add(#[obj.name, ''])
+			}
+			retVal
+		])»
+
+		\newpage
+		«FOR obj : objectDefns»
+			«writeObjectContent(obj)»
+		«ENDFOR»
+	'''
+	
+	def private getStmtCode(StatementTypeDefn std)
+		'''
+			«switch(std.stmtType){
+				case EQN_DEFN:
+					'E'
+				case LIST_DEFN:	
+					'L'
+				case ANON_LIST_STMT:	
+					'A'
+				case ENUM_DEFN:	
+					'E'
+				case RV_DEFN:	
+					'R'
+				case PROP_STMT:	
+					'P'
+				case TRANS_DEFN:	
+					'T'
+			}»«IF std.hasRhs»+«ENDIF»
+		'''
+	
+	
+	def private String writeStmtTypes(BlockDefinition it)
+		'''«FOR st : stmtTypes SEPARATOR ' '»«st.stmtCode»«ENDFOR»
+		'''
+	
+	def writeObjectContent(Library lib, ObjectDefinition od)'''
+		\subsection{Object: «od.name»}
+
+		\subsubsection{Blocks}
+		%
+		«writeLatexTable(#['Name', 'Description'], #['l', 'l'],
+						[
+							val retVal = new ArrayList<List<String>>
+							for(cd : lib.containDefns){
+								if(cd.parentRef == od){
+									for(blkRef : cd.blkRefs){
+										val row = new ArrayList<String>
+										row.add(blkRef.name)
+										row.add('')
+										retVal.add(row)
+									}
+								}
+							}
+							retVal
+						]
+		)»
+		
+		
+«««		«writeLatexTable(#['Name', 'Description', 'Cardinality', 'Num Stmts', 'Stmt Type'],
+«««						#['l', 'l', 'c', 'c', 'l'],
+«««						[
+«««							val retVal = new ArrayList<List<String>>
+«««							for(cd : lib.containDefns){
+«««								if(cd.parentRef == od){
+«««									for(blkRef : cd.blkRefs){
+«««										val row = new ArrayList<String>
+«««										row.add(blkRef.name)
+«««										row.add('')
+«««										row.add(printRange(blkRef.minNum, blkRef.maxNum))
+«««										row.add(printRange(blkRef.minStmtNum, blkRef.maxStmtNum))
+«««										row.add(writeStmtTypes(blkRef))
+«««										retVal.add(row)
+«««									}
+«««								}
+«««							}
+«««							retVal
+«««						]
+«««		)»
+		
+		
+		\newpage
+	'''
+	
+	def writeBlocks(Library it)'''
+		\section{Block Definitions}
+		«FOR blk : blockDefns»
+			\subsection{«blk.name.protectString»}
+			\subsubsection{Arguments}
+			
+			«writeLatexTable(#['Attribute', 'Type', 'Optional', 'Description'], #['l','l','c', 'l'], [
+				val retVal = new ArrayList<List<String>>
+				for(arg: blk.arguments){
+					val row = new ArrayList<String>
+					row.add(arg.name)
+					row.add(arg.argType.writeTypeSpec)
+					row.add(if(arg.optional) 'true' else 'false')
+					row.add('')
+					retVal.add(row)
+				}
+				retVal
+			])»
+			
+			\subsubsection{Constraints}
+			%
+			\begin{description}
+				\item[Number of blocks in object] «printRange(blk.minNum, blk.maxNum)»
+				\item[Number of statements in block] «printRange(blk.minStmtNum, blk.maxStmtNum)»
+				\item[Permitted statement types] «writeStmtTypes(blk)»
+			\end{description}
+
+			\subsubsection{Sub-Blocks}
+			%
+			«writeLatexTable(#['Name', 'Description'], #['l', 'l'],
+				[
+					val retVal = new ArrayList<List<String>>
+					for(cd : containDefns){
+						if(cd.parentRef == blk){
+							for(blkRef : cd.blkRefs){
+								val row = new ArrayList<String>
+								row.add(blkRef.name)
+								row.add('')
+								retVal.add(row)
+							}
+						}
+					}
+					retVal
+				]
+			)»
+			
+			\subsubsection{Lists}
+			%
+			«writeLatexTable(#['List', 'Key Attribute', 'Key Value'], #['l', 'c', 'c'], [
+				val retVal = new ArrayList<List<String>>	
+				if(blk.listType != null){
+					val row = new ArrayList<String>
+					row.add(blk.listType.name)
+					row.add(blk.keyAttName)
+					row.add('N/A')
+					retVal.add(row)
+				}
+				else{
+					retVal.addAll(writeListsPerBlock(blk))
+				}
+				retVal
+			])»
+			
+			\subsubsection{Properties}
+			%
+			«writeLatexTable(#['Name', 'Type', 'Optional'], #['l', 'l', 'c'], [
+				val retVal = new ArrayList<List<String>>	
+				for(propRef : blk.propRefs){
+					val row = new ArrayList<String>
+					row.add(propRef.propRef.name)
+					row.add(propRef.propRef.propType.writeTypeSpec)
+					row.add(if(propRef.optional)'T'else 'F')
+					retVal.add(row)
+				}
+				retVal
+			])»
+			\newpage
+		«ENDFOR»
+	'''
+	
+	
+	def writeListsPerBlock(BlockDefinition blkRef){
+		val retVal = new ArrayList<List<String>>
+		for(listMap: blkRef.listTypeMappings){
+			val row = new ArrayList<String> 
+			row.add(listMap.attType.name)
+			row.add(blkRef.keyAttName)
+			row.add(listMap.attDefn.name)
+			retVal.add(row)
+		}
+		retVal
+	}
+
+	def writeFunctions(Library it)'''
+		\section{Function Definitions}
+		
+		«FOR func : funcDefns»
+			\subsection{«func.name»}
+			%
+			«IF func.funcSpec.descn != null»
+				«func.funcSpec.descn»
+			«ENDIF»
+			%
+			\begin{description}
+				\item[Returns] «func.funcSpec.returnType.writeTypeSpec.protectString»
+			\end{description}
+			
+			\subsubsection{«IF func.funcSpec.argument instanceof NamedFuncArgs»Named «ENDIF»Arguments}
+			%
+			«writeLatexTable(#['Attribute', 'Type', 'Description'], #['l','l','l'], [
+				val retVal = new ArrayList<List<String>>
+				for(att: func.funcSpec.argument.arguments){
+					val row = new ArrayList<String>
+					row.add(att.name)
+					row.add(att.typeSpec.writeTypeSpec)
+					row.add(att.descn)
+					retVal.add(row)
+				}
+				retVal
+			])»
+			«IF func.funcSpec.argument instanceof NamedFuncArgs»
+				\\
+				\\
+				\\
+				«writeLatexTable(#['Signatures'], #['l'], [
+					val retVal = new ArrayList<List<String>>
+					val args = func.funcSpec.argument as NamedFuncArgs
+					for(sig : args.sigLists){
+							val row = new ArrayList<String>
+							row.add('''«FOR att : sig.argRefs BEFORE '(' SEPARATOR ', ' AFTER ')'»«att.argRef.name»«IF att.optional»?«ENDIF»«ENDFOR»''')
+							retVal.add(row)
+					}
+					retVal
+				])»
+			«ENDIF»
+		«ENDFOR»
+		
+	'''
+
+	def writeLists(Library it)'''
+		\section{List Definitions}
+		«FOR listDefn : typeDefns»
+			«IF listDefn instanceof ListTypeDefinition»
+					\subsection{«listDefn.name.protectString»}
+					%
+					Options:
+					\begin{description}
+						«IF listDefn.superRef != null»
+							\item[extends] «listDefn.superRef.name.protectString»
+						«ENDIF»
+						\item[anonymous] «if(listDefn.isAnonymous) "true" else "false"»
+						\item[can define categories] «if(listDefn.isEnumList) "true" else "false"»
+						«IF listDefn.catMapType != null»
+							\item[supports category mapping with type] «listDefn.catMapType.writeTypeSpec.protectString»
+							\item[category mapping optional] «if(listDefn.isCatMappingOptional) "true" else "false"»
+						«ENDIF»
+						«IF listDefn.altType != null»
+							\item[alternate type] «listDefn.altType.name.protectString»
+						«ENDIF»
+					\end{description}
+				«IF !listDefn.isIsSuper»
+					%
+					«writeLatexTable(#['Attribute', 'Type', 'Description'], #['l','l','l'], [
+						val retVal = new ArrayList<List<String>>
+						for(att: listDefn.attributes){
+							val row = new ArrayList<String>
+							row.add(att.name)
+							row.add(att.attType.writeTypeSpec)
+							row.add('')
+							retVal.add(row)
+						}
+						retVal
+					])»
+					\\
+					\\
+					\\
+					«writeLatexTable(#['Signatures'], #['l'], [
+						val retVal = new ArrayList<List<String>>
+						for(sig : listDefn.sigLists){
+								val row = new ArrayList<String>
+								row.add('''«FOR att : sig.attRefs BEFORE '(' SEPARATOR ', ' AFTER ')'»«att.attRef.name»«IF att.optional»?«ENDIF»«ENDFOR»''')
+								retVal.add(row)
+						}
+						retVal
+					])»
+				«ELSE»
+					List Super Type
+				«ENDIF»
+			«ENDIF»
+		«ENDFOR»
+		\newpage
+	'''
+		
+	def writeSubLists(Library it)'''
+		\section{Sublist Definitions}
+		«FOR listDefn : typeDefns»
+			«IF listDefn instanceof SubListTypeDefinition»
+				\subsection{«listDefn.name.protectString»}
+				%
+				«writeLatexTable(#['Attribute', 'Type', 'Description'], #['l','l','l'], [
+					val retVal = new ArrayList<List<String>>
+					for(att: listDefn.attributes){
+						val row = new ArrayList<String>
+						row.add(att.name)
+						row.add(att.attType.writeTypeSpec)
+						row.add('')
+						retVal.add(row)
+					}
+					retVal
+				])»
+				\\
+				\\
+				\\
+				«writeLatexTable(#['Signatures'], #['l'], [
+					val retVal = new ArrayList<List<String>>
+					for(sig : listDefn.sigLists){
+						val row = new ArrayList<String>
+						row.add('''«FOR att : sig.attRefs BEFORE '(' SEPARATOR ', ' AFTER ')'»«att.attRef.name»«IF att.optional»?«ENDIF»«ENDFOR»''')
+						retVal.add(row)
+					}
+					retVal
+				])»
+			«ENDIF»
+		«ENDFOR»
+		\newpage
+	'''
+
+	def writeTypes(Library it)'''
+		\section{Type Definitions}
+		
+		\subsection{Standard}
+		%
+		«writeLatexTable(#['Name', 'Type Class'], #['l', 'l'], [
+			val retVal = new ArrayList<List<String>>
+			for(td: typeDefns){
+				if(td instanceof TypeDefinition){
+					if(td.typeClass != TypeClass.ENUM){
+						val row = new ArrayList<String>
+						row.add(td.name)
+						row.add(td.typeClass.toString)
+						retVal.add(row)
+					}
+				}
+			}
+			retVal
+		])»
+
+		\subsection{Enumeration Types}
+		%
+		«writeLatexTable(#['Name', 'Enumerations'], #['l', 'p{8cm}'], [
+			val retVal = new ArrayList<List<String>>
+			for(td: typeDefns){
+				if(td instanceof TypeDefinition){
+					if(td.typeClass == TypeClass.ENUM){
+						val row = new ArrayList<String>
+						row.add(td.name)
+						row.add('''«FOR ev : td.enumArgs SEPARATOR ', '»«ev.name»«ENDFOR»''')
+						retVal.add(row)
+					}
+				}
+			}
+			retVal
+		])»	'''
+
+	def String writeTypeSpec(TypeSpec it)'''
+		«typeName.name»«IF elementType != null»[«elementType.writeTypeSpec»]«ENDIF»«IF cellType != null»[[«cellType.writeTypeSpec»]]«ENDIF»«FOR a : argSpecs BEFORE '(' SEPARATOR ',' AFTER ')'»«a.writeTypeSpec»«ENDFOR»«IF rtnSpec != null»«rtnSpec.writeTypeSpec ?: ''»«ENDIF»
+	'''
+	
+
+	def private String printRange(int val1, int val2)'''
+		(«val1», «if(val2 == 0) "$\\infty$" else val2»)
+	'''
+
+	def static protectString(String name){
+		name?.replace("_", "\\_")
+	}
+
+	def private writeLatexTable(List<String> header, List<String> columnFormat, () => List<List<String>> columnLambda)
+		'''
+		\begin{tabular}{«FOR c : columnFormat» «c» «ENDFOR»}
+		«FOR h : header SEPARATOR ' & ' AFTER '\\\\\\hline'»«h»«ENDFOR»
+		«FOR row : columnLambda.apply»
+			«FOR colVal : row SEPARATOR ' & ' AFTER '\\\\'»«colVal.protectString»«ENDFOR»
+		«ENDFOR»
+		\end{tabular}
+		'''
+
 }
+
+

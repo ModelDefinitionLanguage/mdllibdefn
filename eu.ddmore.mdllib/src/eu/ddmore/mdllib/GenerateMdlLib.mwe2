@@ -132,7 +132,7 @@ Workflow {
     
     		// generator API
     		fragment = generator.GeneratorFragment auto-inject {
-    			generateXtendMain = false
+    			generateXtendMain = true
     		}
     
     		// formatter API
