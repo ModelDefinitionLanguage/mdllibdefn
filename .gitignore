@@ -4,3 +4,4 @@
 */xtend-gen/
 */emf-gen/
 .classpath
+.DS_Store
