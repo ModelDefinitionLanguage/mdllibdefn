@@ -48,7 +48,7 @@ class TestSubListSyntax {
 			 	_sig (use, anAtt?);
 			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
-				_list _key=use testList;
+				_list testList;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
@@ -65,7 +65,7 @@ class TestSubListSyntax {
 			 		 (use, altAtt);
 			 				
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
-				_list _key=use testList;
+				_list testList;
 		'''.loadLibAndParse
 
 		result.assertNoErrors

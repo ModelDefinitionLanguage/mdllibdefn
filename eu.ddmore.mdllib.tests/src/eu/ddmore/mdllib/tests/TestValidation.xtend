@@ -31,6 +31,7 @@ import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.eclipse.xtext.diagnostics.Diagnostic
+import org.junit.Ignore
 
 @RunWith(XtextRunner)
 @InjectWith(MdlLibInjectorProvider)
@@ -45,7 +46,7 @@ class TestValidation {
 	def void testBlockKeyDefinitionOK() {
 		val result = '''
 			_type divUse _enum (covariate, amt, dv, dvid, cmt, mdv, idv, id, rate, ignore, varLevel, catCov, ss, ii, addl);
-			_list covList _alt Real _atts use::divUse
+			_list covList _alt ::Real _atts use::divUse
 				_sig (use);
 			_list catCovList _atts use::divUse
 				_cat use::Int
@@ -64,7 +65,7 @@ class TestValidation {
 		val result = '''
 			_type divUse _enum (covariate, catCov);
 			_type divUse2 _enum (covariate, catCov);
-			_list covList _alt Real _atts use::divUse
+			_list covList _alt ::Real _atts use::divUse
 				_sig (use);
 			_list catCovList _atts use::divUse2
 				_cat use::Int
@@ -82,7 +83,7 @@ class TestValidation {
 	def void testInvalidBlockKeyDefinitionWrongKey() {
 		val result = '''
 			_type divUse _enum (covariate, catCov);
-			_list covList _alt Real _atts use::divUse, tst::Real
+			_list covList _alt ::Real _atts use::divUse, tst::Real
 				_sig (use, tst);
 			_list catCovList _atts use::divUse, tst::Real
 				_cat use::Int
@@ -103,7 +104,7 @@ class TestValidation {
 	def void testInvalidBlockKeyDefinitionKeyMissing() {
 		val result = '''
 			_type divUse _enum (covariate, catCov);
-			_list covList _alt Real _atts use::divUse, tst::Real
+			_list covList _alt ::Real _atts use::divUse, tst::Real
 				_sig (use, tst);
 			_list catCovList _atts use::divUse, tst::Real
 				_cat use::Int
@@ -118,7 +119,7 @@ class TestValidation {
 							"Key 'foo' not found in mapped list definitions.")
 	}
 
-	@Test 
+	@Ignore("Changed syntax so key is no longer needed if not mapped")
 	def void testInvalidBlockKeyDefinitionMissingKeyNoMapping() {
 		val result = '''
 			_type divUse _enum (covariate, catCov);
@@ -126,7 +127,7 @@ class TestValidation {
 				_sig (use, tst);
 			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
-				_list _key=foo covList;
+				_list covList;
 		'''.loadLibAndParse
 
 		result.assertNoErrors(Diagnostic.SYNTAX_DIAGNOSTIC)

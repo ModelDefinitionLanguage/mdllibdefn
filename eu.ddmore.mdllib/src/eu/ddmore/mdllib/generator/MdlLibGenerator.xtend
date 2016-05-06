@@ -335,7 +335,7 @@ class MdlLibGenerator implements IGenerator {
 							\item[category mapping optional] «if(listDefn.isCatMappingOptional) "true" else "false"»
 						«ENDIF»
 						«IF listDefn.altType != null»
-							\item[alternate type] «listDefn.altType.name.protectString»
+							\item[alternate type] «listDefn.altType.writeTypeSpec.protectString»
 						«ENDIF»
 					\end{description}
 				«IF !listDefn.isIsSuper»

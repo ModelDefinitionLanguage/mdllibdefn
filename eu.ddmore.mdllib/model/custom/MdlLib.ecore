@@ -109,6 +109,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="propRefs" upperBound="-1"
         eType="#//PropertyReference" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="freeProps" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="listAttMappings" upperBound="-1"
+        eType="#//AttNameListMap" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StatementTypeDefn">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasRhs" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -145,7 +147,8 @@
         eType="#//ListAttributeDefn" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="sigLists" upperBound="-1"
         eType="#//ListSignature" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="altType" eType="#//AbstractTypeDefinition"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="altType" eType="#//TypeSpec"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="superRef" eType="#//AbstractTypeDefinition"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="catMapType" eType="#//TypeSpec"
         containment="true"/>
@@ -211,5 +214,9 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeClass" eType="#//TypeClass"
         defaultValueLiteral="_mapping"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttNameListMap">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attDefn" eType="#//ListAttributeDefn"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attType" eType="#//ListTypeDefinition"/>
   </eClassifiers>
 </ecore:EPackage>

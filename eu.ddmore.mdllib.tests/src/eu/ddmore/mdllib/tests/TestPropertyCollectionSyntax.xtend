@@ -83,7 +83,7 @@ class TestPropertyCollectionSyntax {
 			_prop propOne::Real, propTwo::String;			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
 				_prop propOne, propTwo?
-				_list _key=use testList;
+				_list testList;
 		'''.loadLibAndParse
 
 		result.assertNoErrors

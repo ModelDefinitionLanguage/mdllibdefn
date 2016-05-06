@@ -2,18 +2,41 @@
 <feature
       id="eu.ddmore.mdllib.sdk"
       label="MDL Lib SDK Feature"
-      version="1.2.1.qualifier">
+      version="1.2.2.qualifier">
 
    <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+      This is the MDL Library Eclipse Plugin.
+
+It provides language definitions for the MDL Language and has been developed as part of the
+DDMoRe project (www.ddmore.eu).
    </description>
 
    <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+      This software is Copyright (c) 2016 Pfizer Ltd.
    </copyright>
 
    <license url="http://www.example.com/license">
-      [Enter License Description here.]
+      This is the MDL Library Eclipse Plugin.
+
+It provides language definitions for the MDL Language and has been developed as part of the
+DDMoRe project (www.ddmore.eu).
+
+This software is Copyright (c) 2016 Pfizer Ltd.
+
+It is maintained by Stuart Moodie on behalf of Pfizer Ltd.
+
+The MDL Library is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+ 
+The MDL Library is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with The MDL Library.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
    </license>
 
    <requires>

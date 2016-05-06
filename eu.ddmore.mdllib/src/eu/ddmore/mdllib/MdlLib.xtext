@@ -33,13 +33,18 @@ BlockDefinition:
 			(
 				'_prop' (propRefs+=PropertyReference (',' propRefs+=PropertyReference)*| freeProps?='_free')
 			)?
-			('_list' '_key' '=' keyAttName=ID (
-								 listTypeMappings+=AttValListMap (',' listTypeMappings+=AttValListMap)*
-								|listType=[ListTypeDefinition]
-								)
+			('_list' ('_key' '=' keyAttName=ID listTypeMappings+=AttValListMap (',' listTypeMappings+=AttValListMap)*
+						| '_map' listAttMappings+=AttNameListMap (',' listAttMappings+=AttNameListMap)*
+						|listType=[ListTypeDefinition]
+					)
 			)?
 			';' 
 ;
+
+AttNameListMap:
+	attDefn=[ListAttributeDefn|QualifiedName] '->' attType=[ListTypeDefinition]
+;
+
 
 AttValListMap:
 	attDefn=[EnumValue|QualifiedName] '->' attType=[ListTypeDefinition]
@@ -66,12 +71,12 @@ ContainmentDefn:
 
 ListTypeDefinition returns AbstractTypeDefinition:
 	{ListTypeDefinition} '_list' name=ID (
-			('_alt' altType=[TypeDefinition]|isAnonymous?='_anon')?
+			('_alt' altType=TypeSpec|isAnonymous?='_anon')?
 			('_extends' superRef=[TypeDefinition])?
 			'_atts' attributes+=ListAttributeDefn (',' attributes+=ListAttributeDefn)*
 			(isEnumList?='_cat' catAtt=[ListAttributeDefn] catMapType=TypeSpec catMappingOptional?='?'? )?
 			'_sig' (sigLists+= ListSignature (',' sigLists+= ListSignature)*)? 
-			| ('_alt' altType=[TypeDefinition]) ? isSuper?='_super'
+			| isSuper?='_super' ('_alt' altType=TypeSpec) ? 
 			) 
 		';'
 ;
