@@ -41,7 +41,7 @@ class TestPropertyCollectionSyntax {
 	@Test 
 	def void testSinglePropSyntax() {
 		val result = '''
-			_prop propOne::Real;			
+			_prop propOne::real;			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
 				_prop propOne;
 		'''.loadLibAndParse
@@ -62,7 +62,7 @@ class TestPropertyCollectionSyntax {
 	@Test 
 	def void testPropCollOnlySyntax() {
 		val result = '''
-			_prop propOne::Real, propTwo::String;			
+			_prop propOne::real, propTwo::string;			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
 				_prop propOne, propTwo?;
 		'''.loadLibAndParse
@@ -76,11 +76,11 @@ class TestPropertyCollectionSyntax {
 			_type testEnum _enum (foo, bar);
 			_sublist aSubList _atts use::testEnum
 				_sig (use);
-			_list testList _atts use::testEnum, anAtt::aSubList, altAtt::Real
+			_list testList _atts use::testEnum, anAtt::aSubList, altAtt::real
 			 	_sig (use, anAtt?),
 			 		 (use, altAtt);
 			 				
-			_prop propOne::Real, propTwo::String;			
+			_prop propOne::real, propTwo::string;			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
 				_prop propOne, propTwo?
 				_list testList;

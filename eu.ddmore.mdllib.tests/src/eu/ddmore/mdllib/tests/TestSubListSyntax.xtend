@@ -60,7 +60,7 @@ class TestSubListSyntax {
 			_type testEnum _enum (foo, bar);
 			_sublist aSubList _atts use::testEnum
 				_sig (use);
-			_list testList _atts use::testEnum, anAtt::aSubList, altAtt::Real
+			_list testList _atts use::testEnum, anAtt::aSubList, altAtt::real
 			 	_sig (use, anAtt?),
 			 		 (use, altAtt);
 			 				

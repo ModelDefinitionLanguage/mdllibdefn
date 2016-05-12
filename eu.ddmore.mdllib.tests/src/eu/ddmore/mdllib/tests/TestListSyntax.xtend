@@ -42,10 +42,10 @@ class TestListSyntax {
 	def void testListDeclnWithKeyValSyntax() {
 		val result = '''
 			_type divUse _enum (covariate, amt, dv, dvid, cmt, mdv, idv, id, rate, ignore, varLevel, catCov, ss, ii, addl);
-			_list covList _alt ::Real _atts use::divUse
+			_list covList _alt ::real _atts use::divUse
 				_sig (use);
 			_list catCovList _atts use::divUse
-				_cat use::Int
+				_cat use::int
 			 	_sig (use);
 			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
@@ -59,9 +59,9 @@ class TestListSyntax {
 	def void testListDeclnWithKeysSyntax() {
 		val result = '''
 			_type Real _real;
-			_list list1 _atts att1::Real
+			_list list1 _atts att1::real
 				_sig (att1);
-			_list list2 _atts att2::Real
+			_list list2 _atts att2::real
 			 	_sig (att2);
 			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
@@ -75,7 +75,7 @@ class TestListSyntax {
 	def void testListDecln2SigsSyntax() {
 		val result = '''
 			_list VarLevel 
-				_atts use::Int , foo::Real, anot::String
+				_atts use::int , foo::real, anot::string
 				_sig (use, foo?), (anot, foo?);
 			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
 				_list VarLevel;
@@ -88,7 +88,7 @@ class TestListSyntax {
 	def void testListDecln2SigsWithKeyValSyntax() {
 		val result = '''
 			_list VarLevel
-				_atts use::Int , foo::Real, anot::String
+				_atts use::int , foo::real, anot::string
 				_sig (use, foo?), (anot, foo?);
 			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
 				_list  VarLevel;
@@ -101,7 +101,7 @@ class TestListSyntax {
 	def void testListDeclnWithBlockOwners() {
 		val result = '''
 			_list VarLevel
-				_atts type::Int , foo::Real, anot::String
+				_atts type::int , foo::real, anot::string
 				_sig (type, foo?), (anot, foo?);
 			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
 				_list VarLevel;
@@ -114,7 +114,7 @@ class TestListSyntax {
 	def void testListFunctionRefSyntax() {
 		val result = '''
 			_list VarLevel
-				_atts type::Int , foo::Reference[::Function(::Int,::String)::Real], bar::String
+				_atts type::int , foo::reference[::function(::int,::string)::real], bar::string
 				_sig (type, foo?), (foo?, bar);
 			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
 				_list VarLevel;
@@ -127,8 +127,8 @@ class TestListSyntax {
 	def void testListDeclnWithSuperList() {
 		val result = '''
 			_list DerivSuper _super;
-			_list myList _alt ::Deriv _extends DerivSuper
-				_atts deriv::Real, foo::Reference[::Real], anot::String
+			_list myList _alt ::deriv _extends DerivSuper
+				_atts deriv::real, foo::reference[::real], anot::string
 				_sig (deriv, foo?), (anot, foo?)
 				;
 			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
@@ -141,9 +141,9 @@ class TestListSyntax {
 	@Test 
 	def void testListDeclnWithSuperListAndAltType() {
 		val result = '''
-			_list DerivSuper _super _alt ::Matrix[[::Real]];
-			_list myList _alt ::Deriv _extends DerivSuper
-				_atts deriv::Real, foo::Reference[::Real], anot::String
+			_list DerivSuper _super _alt ::matrix[[::real]];
+			_list myList _alt ::deriv _extends DerivSuper
+				_atts deriv::real, foo::reference[::real], anot::string
 				_sig (deriv, foo?), (anot, foo?)
 				;
 			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
@@ -158,9 +158,9 @@ class TestListSyntax {
 		val result = '''
 			_type divUse _enum (covariate, amt, dv, dvid, cmt, mdv, idv, id, rate, ignore, varLevel, catCov, ss, ii, addl);
 			_list DerivSuper _super;
-			_list VarLevel _alt ::Real _extends DerivSuper
-				_atts use::divUse , foo::Real, anot::String
-				_cat use::Int
+			_list VarLevel _alt ::real _extends DerivSuper
+				_atts use::divUse , foo::real, anot::string
+				_cat use::int
 				_sig (use, foo?), (anot, foo?)
 				;
 			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
@@ -176,9 +176,9 @@ class TestListSyntax {
 			_type divUse _enum (covariate, amt, dv, dvid, cmt, mdv, idv, id, rate, ignore, varLevel, catCov, ss, ii, addl);
 			_type RandomVariable _rv;
 			_list DerivSuper _super;
-			_list VarLevel _alt ::Real _extends DerivSuper
-				_atts use::divUse , foo::Real, anot::RandomVariable[::Real]
-				_cat use::Int
+			_list VarLevel _alt ::real _extends DerivSuper
+				_atts use::divUse , foo::real, anot::RandomVariable[::real]
+				_cat use::int
 				_sig (use, foo?), (anot, foo?)
 				;
 			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn

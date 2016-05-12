@@ -46,10 +46,10 @@ class TestValidation {
 	def void testBlockKeyDefinitionOK() {
 		val result = '''
 			_type divUse _enum (covariate, amt, dv, dvid, cmt, mdv, idv, id, rate, ignore, varLevel, catCov, ss, ii, addl);
-			_list covList _alt ::Real _atts use::divUse
+			_list covList _alt ::real _atts use::divUse
 				_sig (use);
 			_list catCovList _atts use::divUse
-				_cat use::Int
+				_cat use::int
 			 	_sig (use);
 			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
@@ -65,10 +65,10 @@ class TestValidation {
 		val result = '''
 			_type divUse _enum (covariate, catCov);
 			_type divUse2 _enum (covariate, catCov);
-			_list covList _alt ::Real _atts use::divUse
+			_list covList _alt ::real _atts use::divUse
 				_sig (use);
 			_list catCovList _atts use::divUse2
-				_cat use::Int
+				_cat use::int
 			 	_sig (use);
 			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
@@ -83,10 +83,10 @@ class TestValidation {
 	def void testInvalidBlockKeyDefinitionWrongKey() {
 		val result = '''
 			_type divUse _enum (covariate, catCov);
-			_list covList _alt ::Real _atts use::divUse, tst::Real
+			_list covList _alt ::real _atts use::divUse, tst::real
 				_sig (use, tst);
-			_list catCovList _atts use::divUse, tst::Real
-				_cat use::Int
+			_list catCovList _atts use::divUse, tst::real
+				_cat use::int
 			 	_sig (use, tst);
 			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
@@ -104,10 +104,10 @@ class TestValidation {
 	def void testInvalidBlockKeyDefinitionKeyMissing() {
 		val result = '''
 			_type divUse _enum (covariate, catCov);
-			_list covList _alt ::Real _atts use::divUse, tst::Real
+			_list covList _alt ::real _atts use::divUse, tst::real
 				_sig (use, tst);
-			_list catCovList _atts use::divUse, tst::Real
-				_cat use::Int
+			_list catCovList _atts use::divUse, tst::real
+				_cat use::int
 			 	_sig (use, tst);
 			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
@@ -123,7 +123,7 @@ class TestValidation {
 	def void testInvalidBlockKeyDefinitionMissingKeyNoMapping() {
 		val result = '''
 			_type divUse _enum (covariate, catCov);
-			_list covList _alt Real _atts use::divUse, tst::Real
+			_list covList _alt Real _atts use::divUse, tst::real
 				_sig (use, tst);
 			
 			_block DATA_INPUT_VARIABLES (0,) _statements (1,) _listDefn
@@ -138,7 +138,7 @@ class TestValidation {
 	@Test 
 	def void testBlockDeclnWithHasMalformedStatementDefn() {
 		val result = '''
-			_block DATA_INPUT_VARIABLES (0, 1) _arguments level::Int, another::Real? _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn+, _rvDefn;
+			_block DATA_INPUT_VARIABLES (0, 1) _arguments level::int, another::real? _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn+, _rvDefn;
 		'''.loadLibAndParse
 
 		result.assertError(MdlLibPackage::eINSTANCE.statementTypeDefn, MdlLibValidator::MALFORMED_STATEMENT_DEFINITION, "This statement type cannot use the '+' modifier.")

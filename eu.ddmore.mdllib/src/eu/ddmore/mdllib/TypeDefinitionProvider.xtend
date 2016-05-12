@@ -19,5 +19,5 @@
 package eu.ddmore.mdllib
 
 class TypeDefinitionProvider {
-	public static val FUNCTION_TYPE = 'Function'  
+	public static val FUNCTION_TYPE = 'function'  
 }
