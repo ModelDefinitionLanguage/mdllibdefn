@@ -36,6 +36,17 @@ import java.util.List
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
+import java.util.Collections
+import java.util.Comparator
+import eu.ddmore.mdllib.mdllib.ArgumentDefinition
+import eu.ddmore.mdllib.mdllib.AttValListMap
+import eu.ddmore.mdllib.mdllib.FuncArgumentDefinition
+import eu.ddmore.mdllib.mdllib.ListAttributeDefn
+import eu.ddmore.mdllib.mdllib.AbstractTypeDefinition
+import eu.ddmore.mdllib.mdllib.PropertyReference
+import eu.ddmore.mdllib.mdllib.FunctionDefnBody
+import eu.ddmore.mdllib.mdllib.MappingTypeDefinition
+import eu.ddmore.mdllib.mdllib.AttNameListMap
 
 /**
  * Generates code from your model files on save.
@@ -50,6 +61,11 @@ class MdlLibGenerator implements IGenerator {
 			fsa.generateFile('mdl_reference.tex', writeDocument(content as Library))
 		}
 	}
+	
+	def private String hyperLink(String text, String type)'''
+		\hyperref[«type»:«text.protectRefString»]{«text»}
+	'''
+		
 	
 	
 	def writeDocument(Library it)'''
@@ -93,8 +109,14 @@ class MdlLibGenerator implements IGenerator {
 		%
 		«writeLatexTable(#['Name', 'Description'], #['l', 'l'], [
 			val retVal = new ArrayList<List<String>>
-			for(obj : objectDefns){
-				retVal.add(#[obj.name, ''])
+			for(obj : sort(objectDefns, new Comparator<ObjectDefinition>(){
+				
+				override compare(ObjectDefinition o1, ObjectDefinition o2) {
+					o1.name.compareTo(o2.name)
+				}
+				
+			})){
+				retVal.add(#[hyperLink(obj.name, 'obj'), ''])
 			}
 			retVal
 		])»
@@ -132,6 +154,7 @@ class MdlLibGenerator implements IGenerator {
 	
 	def writeObjectContent(Library lib, ObjectDefinition od)'''
 		\subsection{Object: «od.name»}
+		\label{obj:«od.name»}
 
 		\subsubsection{Blocks}
 		%
@@ -140,9 +163,15 @@ class MdlLibGenerator implements IGenerator {
 							val retVal = new ArrayList<List<String>>
 							for(cd : lib.containDefns){
 								if(cd.parentRef == od){
-									for(blkRef : cd.blkRefs){
+									for(blkRef : sort(cd.blkRefs, new Comparator<BlockDefinition>(){
+										
+										override compare(BlockDefinition o1, BlockDefinition o2) {
+											o1.name.compareTo(o2.name)
+										}
+										
+									})){
 										val row = new ArrayList<String>
-										row.add(blkRef.name)
+										row.add(hyperLink(blkRef.name, 'block'))
 										row.add('')
 										retVal.add(row)
 									}
@@ -178,25 +207,42 @@ class MdlLibGenerator implements IGenerator {
 		\newpage
 	'''
 	
+	
+	def private static <T> sort(List<T> lst, Comparator<T> cmp){
+		val retVal = new ArrayList<T>(lst)
+		Collections::sort(retVal, cmp)
+		retVal
+	} 
+	
 	def writeBlocks(Library it)'''
 		\section{Block Definitions}
-		«FOR blk : blockDefns»
+		«FOR blk : sort(blockDefns, new Comparator<BlockDefinition>(){
+			override compare(BlockDefinition o1, BlockDefinition o2) {
+				o1.name.compareTo(o2.name)
+			}
+		})»
 			\subsection{«blk.name.protectString»}
-			\subsubsection{Arguments}
-			
-			«writeLatexTable(#['Attribute', 'Type', 'Optional', 'Description'], #['l','l','c', 'l'], [
-				val retVal = new ArrayList<List<String>>
-				for(arg: blk.arguments){
-					val row = new ArrayList<String>
-					row.add(arg.name)
-					row.add(arg.argType.writeTypeSpec)
-					row.add(if(arg.optional) 'true' else 'false')
-					row.add('')
-					retVal.add(row)
-				}
-				retVal
-			])»
-			
+			\label{block:«blk.name.protectRefString»}
+			«IF !blk.arguments.isEmpty»
+				\subsubsection{Arguments}
+				
+				«writeLatexTable(#['Attribute', 'Type', 'Optional', 'Description'], #['l','l','c', 'l'], [
+					val retVal = new ArrayList<List<String>>
+					for(arg: sort(blk.arguments, new Comparator<ArgumentDefinition>(){
+						override compare(ArgumentDefinition o1, ArgumentDefinition o2) {
+							o1.name.compareTo(o2.name)
+						}
+					})){
+						val row = new ArrayList<String>
+						row.add(arg.name)
+						row.add(arg.argType.writeTypeSpec)
+						row.add(if(arg.optional) 'true' else 'false')
+						row.add('')
+						retVal.add(row)
+					}
+					retVal
+				])»
+			«ENDIF»
 			\subsubsection{Constraints}
 			%
 			\begin{description}
@@ -205,47 +251,65 @@ class MdlLibGenerator implements IGenerator {
 				\item[Permitted statement types] «writeStmtTypes(blk)»
 			\end{description}
 
-			\subsubsection{Sub-Blocks}
-			%
-			«writeLatexTable(#['Name', 'Description'], #['l', 'l'],
-				[
-					val retVal = new ArrayList<List<String>>
-					for(cd : containDefns){
-						if(cd.parentRef == blk){
-							for(blkRef : cd.blkRefs){
-								val row = new ArrayList<String>
-								row.add(blkRef.name)
-								row.add('')
-								retVal.add(row)
+			«IF containDefns.exists[if(parentRef == blk) !blkRefs.isEmpty else false]»
+				\subsubsection{Sub-Blocks}
+				%
+				«writeLatexTable(#['Name', 'Description'], #['l', 'l'],
+					[
+						val retVal = new ArrayList<List<String>>
+						for(cd : containDefns){
+							if(cd.parentRef == blk){
+								for(blkRef : sort(cd.blkRefs, new Comparator<BlockDefinition>(){
+									
+									override compare(BlockDefinition o1, BlockDefinition o2) {
+										o1.name.compareTo(o2.name)
+									}
+									
+								})){
+									val row = new ArrayList<String>
+									row.add(hyperLink(blkRef.name, 'block'))
+									row.add('')
+									retVal.add(row)
+								}
 							}
 						}
+						retVal
+					]
+				)»
+			«ENDIF»
+			«IF blk.listType != null || !blk.listTypeMappings.isEmpty || !blk.listAttMappings.isEmpty»
+				\subsubsection{Lists}
+				%
+				«writeLatexTable(#['List', 'Key Attribute', 'Key Value'], #['l', 'l', 'l'], [
+					val retVal = new ArrayList<List<String>>	
+					if(blk.listType != null){
+						val row = new ArrayList<String>
+						row.add(hyperLink(blk.listType.name, 'type'))
+						row.add('N/A')
+						row.add('N/A')
+						retVal.add(row)
+					}
+					else if(!blk.listAttMappings.isEmpty){
+						retVal.addAll(writeAttNameListsPerBlock(blk))
+					}
+					else{
+						retVal.addAll(writeListsPerBlock(blk))
 					}
 					retVal
-				]
-			)»
-			
-			\subsubsection{Lists}
-			%
-			«writeLatexTable(#['List', 'Key Attribute', 'Key Value'], #['l', 'c', 'c'], [
-				val retVal = new ArrayList<List<String>>	
-				if(blk.listType != null){
-					val row = new ArrayList<String>
-					row.add(blk.listType.name)
-					row.add(blk.keyAttName)
-					row.add('N/A')
-					retVal.add(row)
-				}
-				else{
-					retVal.addAll(writeListsPerBlock(blk))
-				}
-				retVal
-			])»
-			
+				])»
+			«ENDIF»
+			«IF !blk.propRefs.isEmpty»
 			\subsubsection{Properties}
 			%
 			«writeLatexTable(#['Name', 'Type', 'Optional'], #['l', 'l', 'c'], [
 				val retVal = new ArrayList<List<String>>	
-				for(propRef : blk.propRefs){
+				for(propRef : sort(blk.propRefs, new Comparator<PropertyReference>(){
+					
+					override compare(PropertyReference o1, PropertyReference o2) {
+						o1.propRef.name.compareTo(o2.propRef.name)
+					}
+					
+				})){
 					val row = new ArrayList<String>
 					row.add(propRef.propRef.name)
 					row.add(propRef.propRef.propType.writeTypeSpec)
@@ -254,16 +318,41 @@ class MdlLibGenerator implements IGenerator {
 				}
 				retVal
 			])»
+			«ENDIF»
 			\newpage
 		«ENDFOR»
 	'''
 	
 	
+	def writeAttNameListsPerBlock(BlockDefinition blkRef){
+		val retVal = new ArrayList<List<String>>
+		for(listMap: sort(blkRef.listAttMappings, new Comparator<AttNameListMap>(){
+			
+			override compare(AttNameListMap o1, AttNameListMap o2) {
+				o1.attType.name.compareTo(o2.attType.name)
+			}
+			
+		})){
+			val row = new ArrayList<String> 
+			row.add(hyperLink(listMap.attType.name, 'type'))
+			row.add(listMap.attDefn.name)
+			row.add('N/A')
+			retVal.add(row)
+		}
+		retVal
+	}
+
 	def writeListsPerBlock(BlockDefinition blkRef){
 		val retVal = new ArrayList<List<String>>
-		for(listMap: blkRef.listTypeMappings){
+		for(listMap: sort(blkRef.listTypeMappings, new Comparator<AttValListMap>(){
+			
+			override compare(AttValListMap o1, AttValListMap o2) {
+				o1.attType.name.compareTo(o2.attType.name)
+			}
+			
+		})){
 			val row = new ArrayList<String> 
-			row.add(listMap.attType.name)
+			row.add(hyperLink(listMap.attType.name, 'type'))
 			row.add(blkRef.keyAttName)
 			row.add(listMap.attDefn.name)
 			retVal.add(row)
@@ -274,7 +363,11 @@ class MdlLibGenerator implements IGenerator {
 	def writeFunctions(Library it)'''
 		\section{Function Definitions}
 		
-		«FOR func : funcDefns»
+		«FOR func : sort(funcDefns, new Comparator<FunctionDefnBody>(){
+			override compare(FunctionDefnBody o1, FunctionDefnBody o2) {
+				o1.name.compareTo(o2.name)
+			}
+		})»
 			\subsection{«func.name»}
 			%
 			«IF func.funcSpec.descn != null»
@@ -287,9 +380,13 @@ class MdlLibGenerator implements IGenerator {
 			
 			\subsubsection{«IF func.funcSpec.argument instanceof NamedFuncArgs»Named «ENDIF»Arguments}
 			%
-			«writeLatexTable(#['Attribute', 'Type', 'Description'], #['l','l','l'], [
+			«writeLatexTable(#['Argument', 'Type', 'Description'], #['l','l','l'], [
 				val retVal = new ArrayList<List<String>>
-				for(att: func.funcSpec.argument.arguments){
+				for(att: sort(func.funcSpec.argument.arguments, new Comparator<FuncArgumentDefinition>(){
+					override compare(FuncArgumentDefinition o1, FuncArgumentDefinition o2) {
+						o1.name.compareTo(o2.name)
+					}
+				})){
 					val row = new ArrayList<String>
 					row.add(att.name)
 					row.add(att.typeSpec.writeTypeSpec)
@@ -319,14 +416,21 @@ class MdlLibGenerator implements IGenerator {
 
 	def writeLists(Library it)'''
 		\section{List Definitions}
-		«FOR listDefn : typeDefns»
+		«FOR listDefn : sort(typeDefns, new Comparator<AbstractTypeDefinition>(){
+			
+			override compare(AbstractTypeDefinition o1, AbstractTypeDefinition o2) {
+				o1.name.compareTo(o2.name)
+			}
+			
+		})»
 			«IF listDefn instanceof ListTypeDefinition»
 					\subsection{«listDefn.name.protectString»}
+					\label{type:«listDefn.name.protectRefString»}
 					%
 					Options:
 					\begin{description}
 						«IF listDefn.superRef != null»
-							\item[extends] «listDefn.superRef.name.protectString»
+							\item[extends] «hyperLink(listDefn.superRef.name.protectString, 'type')»
 						«ENDIF»
 						\item[anonymous] «if(listDefn.isAnonymous) "true" else "false"»
 						\item[can define categories] «if(listDefn.isEnumList) "true" else "false"»
@@ -335,14 +439,18 @@ class MdlLibGenerator implements IGenerator {
 							\item[category mapping optional] «if(listDefn.isCatMappingOptional) "true" else "false"»
 						«ENDIF»
 						«IF listDefn.altType != null»
-							\item[alternate type] «listDefn.altType.writeTypeSpec.protectString»
+							\item[alternate type] «listDefn.altType.writeTypeSpec»
 						«ENDIF»
 					\end{description}
 				«IF !listDefn.isIsSuper»
 					%
 					«writeLatexTable(#['Attribute', 'Type', 'Description'], #['l','l','l'], [
 						val retVal = new ArrayList<List<String>>
-						for(att: listDefn.attributes){
+						for(att: sort(listDefn.attributes, new Comparator<ListAttributeDefn>(){
+							override compare(ListAttributeDefn o1, ListAttributeDefn o2) {
+								o1.name.compareTo(o2.name)
+							}
+						})){
 							val row = new ArrayList<String>
 							row.add(att.name)
 							row.add(att.attType.writeTypeSpec)
@@ -376,10 +484,17 @@ class MdlLibGenerator implements IGenerator {
 		«FOR listDefn : typeDefns»
 			«IF listDefn instanceof SubListTypeDefinition»
 				\subsection{«listDefn.name.protectString»}
+				\label{type:«listDefn.name.protectRefString»}
 				%
 				«writeLatexTable(#['Attribute', 'Type', 'Description'], #['l','l','l'], [
 					val retVal = new ArrayList<List<String>>
-					for(att: listDefn.attributes){
+					for(att: sort(listDefn.attributes, new Comparator<ListAttributeDefn>(){
+						
+						override compare(ListAttributeDefn o1, ListAttributeDefn o2) {
+							o1.name.compareTo(o2.name)
+						}
+						
+					})){
 						val row = new ArrayList<String>
 						row.add(att.name)
 						row.add(att.attType.writeTypeSpec)
@@ -412,14 +527,42 @@ class MdlLibGenerator implements IGenerator {
 		%
 		«writeLatexTable(#['Name', 'Type Class'], #['l', 'l'], [
 			val retVal = new ArrayList<List<String>>
-			for(td: typeDefns){
+			for(td: sort(typeDefns, new Comparator<AbstractTypeDefinition>(){
+				
+				override compare(AbstractTypeDefinition o1, AbstractTypeDefinition o2) {
+					o1.name.compareTo(o2.name)
+				}
+				
+			})){
 				if(td instanceof TypeDefinition){
 					if(td.typeClass != TypeClass.ENUM){
 						val row = new ArrayList<String>
-						row.add(td.name)
+						row.add(td.name + '\\label{type:' + td.name + '}')
 						row.add(td.typeClass.toString)
 						retVal.add(row)
 					}
+				}
+			}
+			retVal
+		])»
+
+		\subsection{Mapping Types}
+		%
+		«writeLatexTable(#['Name', 'Data Type', 'Variable Type'], #['l', 'l', 'l'], [
+			val retVal = new ArrayList<List<String>>
+			for(td: sort(typeDefns, new Comparator<AbstractTypeDefinition>(){
+				
+				override compare(AbstractTypeDefinition o1, AbstractTypeDefinition o2) {
+					o1.name.compareTo(o2.name)
+				}
+				
+			})){
+				if(td instanceof MappingTypeDefinition){
+					val row = new ArrayList<String>
+					row.add(td.name + '\\label{type:' + td.name + '}')
+					row.add(td.colType.writeTypeSpec)
+					row.add(td.asType.writeTypeSpec)
+					retVal.add(row)
 				}
 			}
 			retVal
@@ -429,21 +572,29 @@ class MdlLibGenerator implements IGenerator {
 		%
 		«writeLatexTable(#['Name', 'Enumerations'], #['l', 'p{8cm}'], [
 			val retVal = new ArrayList<List<String>>
-			for(td: typeDefns){
+			for(td: sort(typeDefns, new Comparator<AbstractTypeDefinition>(){
+				
+				override compare(AbstractTypeDefinition o1, AbstractTypeDefinition o2) {
+					o1.name.compareTo(o2.name)
+				}
+				
+			})){
 				if(td instanceof TypeDefinition){
 					if(td.typeClass == TypeClass.ENUM){
 						val row = new ArrayList<String>
-						row.add(td.name)
+						row.add(td.name + '\\label{type:' + td.name + '}')
 						row.add('''«FOR ev : td.enumArgs SEPARATOR ', '»«ev.name»«ENDFOR»''')
 						retVal.add(row)
 					}
 				}
 			}
 			retVal
-		])»	'''
+		])»
+
+	'''
 
 	def String writeTypeSpec(TypeSpec it)'''
-		«typeName.name»«IF elementType != null»[«elementType.writeTypeSpec»]«ENDIF»«IF cellType != null»[[«cellType.writeTypeSpec»]]«ENDIF»«FOR a : argSpecs BEFORE '(' SEPARATOR ',' AFTER ')'»«a.writeTypeSpec»«ENDFOR»«IF rtnSpec != null»«rtnSpec.writeTypeSpec ?: ''»«ENDIF»
+		«hyperLink(typeName.name, 'type')»«IF elementType != null»[«elementType.writeTypeSpec»]«ENDIF»«IF cellType != null»[[«cellType.writeTypeSpec»]]«ENDIF»«FOR a : argSpecs BEFORE '(' SEPARATOR ',' AFTER ')'»«a.writeTypeSpec»«ENDFOR»«IF rtnSpec != null»«rtnSpec.writeTypeSpec ?: ''»«ENDIF»
 	'''
 	
 
@@ -453,6 +604,10 @@ class MdlLibGenerator implements IGenerator {
 
 	def static protectString(String name){
 		name?.replace("_", "\\_")
+	}
+
+	def static protectRefString(String name){
+		name?.replace("_", "Dash")
 	}
 
 	def private writeLatexTable(List<String> header, List<String> columnFormat, () => List<List<String>> columnLambda)
