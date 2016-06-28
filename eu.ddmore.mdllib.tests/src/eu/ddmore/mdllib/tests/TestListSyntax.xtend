@@ -41,8 +41,8 @@ class TestListSyntax {
 	@Test 
 	def void testListDeclnWithKeyValSyntax() {
 		val result = '''
-			_type divUse _enum (covariate, amt, dv, dvid, cmt, mdv, idv, id, rate, ignore, varLevel, catCov, ss, ii, addl);
-			_list covList _alt ::real _atts use::divUse
+			_type divUse "an enum type" _enum (covariate, amt, dv, dvid, cmt, mdv, idv, id, rate, ignore, varLevel, catCov, ss, ii, addl);
+			_list covList "A list" _alt ::real _atts use::divUse
 				_sig (use);
 			_list catCovList _atts use::divUse
 				_cat use::int
@@ -58,7 +58,7 @@ class TestListSyntax {
 	@Test 
 	def void testListDeclnWithKeysSyntax() {
 		val result = '''
-			_type Real _real;
+			_type Real "a real type" _real;
 			_list list1 _atts att1::real
 				_sig (att1);
 			_list list2 _atts att2::real
@@ -75,9 +75,9 @@ class TestListSyntax {
 	def void testListDecln2SigsSyntax() {
 		val result = '''
 			_list VarLevel 
-				_atts use::int , foo::real, anot::string
+				_atts use::int "the use", foo::real "the foo", anot::string "the other"
 				_sig (use, foo?), (anot, foo?);
-			_block DATA_INPUT_VARIABLES (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
+			_block DATA_INPUT_VARIABLES "this is block docs" (0, 1) _statements (0, 2) _eqnDefn, _eqnDefn+, _enumDefn, _rvDefn
 				_list VarLevel;
 		'''.loadLibAndParse
 

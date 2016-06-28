@@ -14,19 +14,19 @@ Library:
 ;
 	
 TypeDefinition:
-	'_type' name=ID typeClass=TypeClass ('(' enumArgs+=EnumValue (',' enumArgs+=EnumValue)* ')' )? ';'
+	'_type' name=ID descn=STRING? typeClass=TypeClass ('(' enumArgs+=EnumValue (',' enumArgs+=EnumValue)* ')' )? ';'
 ;
 
 EnumValue:
-	name=ID
+	name=ID descn=STRING?
 ;
 
 ObjectDefinition:
-	{ObjectDefinition} '_object' name=ID ';'
+	{ObjectDefinition} '_object' name=ID descn=STRING?';'
 ;
 
 BlockDefinition:
-	{BlockDefinition} '_block' name=ID '(' minNum=INT? ',' maxNum=INT? ')'
+	{BlockDefinition} '_block' name=ID descn=STRING? '(' minNum=INT? ',' maxNum=INT? ')'
 			('_arguments' arguments+=ArgumentDefinition (',' arguments+=ArgumentDefinition)* )?
 			'_statements' '(' minStmtNum=INT? ',' maxStmtNum=INT? ')'
 			stmtTypes+=StatementTypeDefn (','  stmtTypes+=StatementTypeDefn)*
@@ -51,7 +51,7 @@ AttValListMap:
 ;
 
 ArgumentDefinition:
-	name=ID argType=TypeSpec (optional?='?')?
+	name=ID argType=TypeSpec (optional?='?')? descn=STRING?
 ;
 
 StatementTypeDefn:
@@ -70,7 +70,7 @@ ContainmentDefn:
 ;
 
 ListTypeDefinition returns AbstractTypeDefinition:
-	{ListTypeDefinition} '_list' name=ID (
+	{ListTypeDefinition} '_list' name=ID descn=STRING? (
 			('_alt' altType=TypeSpec|isAnonymous?='_anon')?
 			('_extends' superRef=[TypeDefinition])?
 			'_atts' attributes+=ListAttributeDefn (',' attributes+=ListAttributeDefn)*
@@ -82,7 +82,7 @@ ListTypeDefinition returns AbstractTypeDefinition:
 ;
 
 ListAttributeDefn:
-	name=ID  attType=TypeSpec
+	name=ID attType=TypeSpec descn=STRING?
 ;
 
 ListSignature:
@@ -94,14 +94,14 @@ ListAttributeRef:
 ;
 
 SubListDefinition returns AbstractTypeDefinition:
-	{SubListTypeDefinition} '_sublist' name=ID
+	{SubListTypeDefinition} '_sublist' name=ID descn=STRING?
 			'_atts' attributes+=ListAttributeDefn (',' attributes+=ListAttributeDefn)*
 			'_sig' (sigLists+= ListSignature (',' sigLists+= ListSignature)*)? 
 		';'
 ;
 
 MappingTypeDefinition returns AbstractTypeDefinition:
-	{MappingTypeDefinition} '_mapping' name=ID
+	{MappingTypeDefinition} '_mapping' name=ID descn=STRING?
 			'_data' asType=TypeSpec '_col' colType=TypeSpec '_tgt' tgtType=TypeSpec 
 		';'
 ;
@@ -115,7 +115,7 @@ PropertyDefinitionStatement:
 ;
 
 PropertyDefinition:
-	name=ID  propType=TypeSpec
+	name=ID propType=TypeSpec descn=STRING?
 ;
 
 FunctionDefnBody returns FunctionDefnBody:

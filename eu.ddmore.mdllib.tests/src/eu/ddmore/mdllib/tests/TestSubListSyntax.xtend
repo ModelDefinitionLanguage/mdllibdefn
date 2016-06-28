@@ -58,7 +58,7 @@ class TestSubListSyntax {
 	def void testSubListDeclnWith2SigSyntax() {
 		val result = '''
 			_type testEnum _enum (foo, bar);
-			_sublist aSubList _atts use::testEnum
+			_sublist aSubList "a sublist" _atts use::testEnum
 				_sig (use);
 			_list testList _atts use::testEnum, anAtt::aSubList, altAtt::real
 			 	_sig (use, anAtt?),

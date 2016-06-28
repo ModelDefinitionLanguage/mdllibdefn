@@ -43,8 +43,8 @@ class TestTypeSyntax {
 		val result = '''
 _type Deriv _deriv;
 
-_type divUse _enum (cov, amt, dv, dvid, cmt, mdv, idv, id, rate, ignore, varLevel, catCov, ss, ii, addl);
-_type ddvUse _enum (doseTime);
+_type divUse _enum (cov, amt, dv, dvid, cmt, mdv "missing dv", idv "individual", id, rate, ignore, varLevel, catCov, ss, ii, addl);
+_type ddvUse "An emum" _enum (doseTime "dose time");
 		'''.loadLibAndParse
 
 		result.assertNoErrors

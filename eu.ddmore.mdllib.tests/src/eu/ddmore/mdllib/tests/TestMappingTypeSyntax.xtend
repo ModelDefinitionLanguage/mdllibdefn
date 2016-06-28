@@ -41,7 +41,7 @@ class TestMappingTypeSyntax {
 	@Test 
 	def void testMappingSyntax() {
 		val result = '''
-			_mapping mapTest _data ::int _col::real _tgt ::reference[::real];
+			_mapping mapTest "A map doc" _data ::int _col::real _tgt ::reference[::real];
 			_list testList _atts  anAtt::mapTest
 			 	_sig (anAtt);
 		'''.loadLibAndParse

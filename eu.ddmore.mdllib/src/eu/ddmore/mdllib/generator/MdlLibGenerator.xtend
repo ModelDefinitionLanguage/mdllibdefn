@@ -69,8 +69,11 @@ class MdlLibGenerator implements IGenerator {
 	
 	
 	def writeDocument(Library it)'''
-		\documentclass[a4wide,10pt]{article}
+		\documentclass[a4wide,titlepage,10pt]{article}
 		\usepackage{hyperref}
+		\usepackage{enumitem}
+		\usepackage{longtable}
+		\usepackage{shorttoc}
 		
 		\title{MDL Reference}
 		
@@ -83,7 +86,9 @@ class MdlLibGenerator implements IGenerator {
 		
 		\maketitle 
 		
-		
+		\shorttableofcontents{Summary of Contents}{1}
+		\newpage
+		\renewcommand\contentsname{Detailed Contents}
 		\tableofcontents
 		
 		\newpage
@@ -116,7 +121,7 @@ class MdlLibGenerator implements IGenerator {
 				}
 				
 			})){
-				retVal.add(#[hyperLink(obj.name, 'obj'), ''])
+				retVal.add(#[hyperLink(obj.name, 'obj'), obj.descn])
 			}
 			retVal
 		])»
@@ -131,31 +136,34 @@ class MdlLibGenerator implements IGenerator {
 		'''
 			«switch(std.stmtType){
 				case EQN_DEFN:
-					'E'
-				case LIST_DEFN:	
-					'L'
+					'Variable definition ' + if(std.hasRhs)'(with RHS)' else '(no RHS)'
+				case LIST_DEFN:
+					'List definition' + if(std.hasRhs) ' (conditional lists permitted)' else ''
 				case ANON_LIST_STMT:	
-					'A'
+					'Anonymous list'
 				case ENUM_DEFN:	
-					'E'
+					'Categorical parameter definition'
 				case RV_DEFN:	
-					'R'
+					'Random variable definition'
 				case PROP_STMT:	
-					'P'
+					'Property statement'
 				case TRANS_DEFN:	
-					'T'
-			}»«IF std.hasRhs»+«ENDIF»
+					'Equation with LHS transformation and RHS'
+			}»
 		'''
 	
 	
 	def private String writeStmtTypes(BlockDefinition it)
-		'''«FOR st : stmtTypes SEPARATOR ' '»«st.stmtCode»«ENDFOR»
+		'''
+		«FOR st : stmtTypes»
+			\item «st.stmtCode»
+		«ENDFOR»
 		'''
 	
 	def writeObjectContent(Library lib, ObjectDefinition od)'''
 		\subsection{Object: «od.name»}
 		\label{obj:«od.name»}
-
+		«od.descn»
 		\subsubsection{Blocks}
 		%
 		«writeLatexTable(#['Name', 'Description'], #['l', 'l'],
@@ -172,7 +180,7 @@ class MdlLibGenerator implements IGenerator {
 									})){
 										val row = new ArrayList<String>
 										row.add(hyperLink(blkRef.name, 'block'))
-										row.add('')
+										row.add(blkRef.descn)
 										retVal.add(row)
 									}
 								}
@@ -223,6 +231,7 @@ class MdlLibGenerator implements IGenerator {
 		})»
 			\subsection{«blk.name.protectString»}
 			\label{block:«blk.name.protectRefString»}
+			«blk.descn»
 			«IF !blk.arguments.isEmpty»
 				\subsubsection{Arguments}
 				
@@ -237,7 +246,7 @@ class MdlLibGenerator implements IGenerator {
 						row.add(arg.name)
 						row.add(arg.argType.writeTypeSpec)
 						row.add(if(arg.optional) 'true' else 'false')
-						row.add('')
+						row.add(arg.descn)
 						retVal.add(row)
 					}
 					retVal
@@ -245,11 +254,16 @@ class MdlLibGenerator implements IGenerator {
 			«ENDIF»
 			\subsubsection{Constraints}
 			%
-			\begin{description}
+			\begin{description}[noitemsep]
 				\item[Number of blocks in object] «printRange(blk.minNum, blk.maxNum)»
 				\item[Number of statements in block] «printRange(blk.minStmtNum, blk.maxStmtNum)»
-				\item[Permitted statement types] «writeStmtTypes(blk)»
 			\end{description}
+
+			\subsubsection{Permitted statement types}
+			%
+			\begin{itemize}[noitemsep]
+				«writeStmtTypes(blk)»
+			\end{itemize}
 
 			«IF containDefns.exists[if(parentRef == blk) !blkRefs.isEmpty else false]»
 				\subsubsection{Sub-Blocks}
@@ -427,6 +441,8 @@ class MdlLibGenerator implements IGenerator {
 					\subsection{«listDefn.name.protectString»}
 					\label{type:«listDefn.name.protectRefString»}
 					%
+					«listDefn.descn»
+					%
 					Options:
 					\begin{description}
 						«IF listDefn.superRef != null»
@@ -454,7 +470,7 @@ class MdlLibGenerator implements IGenerator {
 							val row = new ArrayList<String>
 							row.add(att.name)
 							row.add(att.attType.writeTypeSpec)
-							row.add('')
+							row.add(att.descn)
 							retVal.add(row)
 						}
 						retVal
@@ -498,7 +514,7 @@ class MdlLibGenerator implements IGenerator {
 						val row = new ArrayList<String>
 						row.add(att.name)
 						row.add(att.attType.writeTypeSpec)
-						row.add('')
+						row.add(att.descn)
 						retVal.add(row)
 					}
 					retVal
@@ -521,11 +537,9 @@ class MdlLibGenerator implements IGenerator {
 	'''
 
 	def writeTypes(Library it)'''
-		\section{Type Definitions}
-		
-		\subsection{Standard}
+		\section{Standard Types}
 		%
-		«writeLatexTable(#['Name', 'Type Class'], #['l', 'l'], [
+		«writeLatexTable(#['Name', 'Type Class', 'Description'], #['l', 'l', 'l'], [
 			val retVal = new ArrayList<List<String>>
 			for(td: sort(typeDefns, new Comparator<AbstractTypeDefinition>(){
 				
@@ -539,16 +553,17 @@ class MdlLibGenerator implements IGenerator {
 						val row = new ArrayList<String>
 						row.add(td.name + '\\label{type:' + td.name + '}')
 						row.add(td.typeClass.toString)
+						row.add(td.descn)
 						retVal.add(row)
 					}
 				}
 			}
 			retVal
 		])»
-
-		\subsection{Mapping Types}
+		\newpage
+		\section{Mapping Types}
 		%
-		«writeLatexTable(#['Name', 'Data Type', 'Variable Type'], #['l', 'l', 'l'], [
+		«writeLatexTable(#['Name', 'Data Type', 'Variable Type', 'Description'], #['l', 'l', 'l', 'l'], [
 			val retVal = new ArrayList<List<String>>
 			for(td: sort(typeDefns, new Comparator<AbstractTypeDefinition>(){
 				
@@ -562,35 +577,73 @@ class MdlLibGenerator implements IGenerator {
 					row.add(td.name + '\\label{type:' + td.name + '}')
 					row.add(td.colType.writeTypeSpec)
 					row.add(td.asType.writeTypeSpec)
+					row.add(td.descn)
 					retVal.add(row)
 				}
 			}
 			retVal
 		])»
-
-		\subsection{Enumeration Types}
+		\newpage
+		\section{Builtin Enumeration Types}
 		%
-		«writeLatexTable(#['Name', 'Enumerations'], #['l', 'p{8cm}'], [
-			val retVal = new ArrayList<List<String>>
-			for(td: sort(typeDefns, new Comparator<AbstractTypeDefinition>(){
+		«FOR td : sort(typeDefns, new Comparator<AbstractTypeDefinition>(){
 				
 				override compare(AbstractTypeDefinition o1, AbstractTypeDefinition o2) {
 					o1.name.compareTo(o2.name)
 				}
 				
-			})){
-				if(td instanceof TypeDefinition){
-					if(td.typeClass == TypeClass.ENUM){
-						val row = new ArrayList<String>
-						row.add(td.name + '\\label{type:' + td.name + '}')
-						row.add('''«FOR ev : td.enumArgs SEPARATOR ', '»«ev.name»«ENDFOR»''')
-						retVal.add(row)
-					}
-				}
-			}
-			retVal
-		])»
-
+			})»
+			«IF td instanceof TypeDefinition»
+				«IF td.typeClass == TypeClass.ENUM»
+					\subsection{«td.name»}
+					\label{type:«td.name»}
+					
+					«td.descn»
+					
+					\begin{centering}
+					«writeLatexTable(#['Enumeration', 'Description'], #['l', 'l'], [
+						val retVal = new ArrayList<List<String>>
+						for(ev : td.enumArgs){
+							val row = new ArrayList<String>
+							row.add(ev.name)
+							row.add(ev.descn)
+							retVal.add(row)
+						}
+						retVal
+					])»
+					\end{centering}
+				«ENDIF»
+			«ENDIF»
+		«ENDFOR»
+«««		«writeMultipageLatexTable(#['Name', 'Enumerations', 'Description'], #['l', 'l', 'l'], [
+«««			val retVal = new ArrayList<List<String>>
+«««			for(td: sort(typeDefns, new Comparator<AbstractTypeDefinition>(){
+«««				
+«««				override compare(AbstractTypeDefinition o1, AbstractTypeDefinition o2) {
+«««					o1.name.compareTo(o2.name)
+«««				}
+«««				
+«««			})){
+«««				if(td instanceof TypeDefinition){
+«««					if(td.typeClass == TypeClass.ENUM){
+«««						var row = new ArrayList<String>
+«««						row.add(td.name + '\\label{type:' + td.name + '}')
+«««//						row.add('''«FOR ev : td.enumArgs SEPARATOR ', '»«ev.name»«ENDFOR»''')
+«««						row.add('')
+«««						row.add(td.descn)
+«««						retVal.add(row)
+«««						for(ev : td.enumArgs){
+«««							row = new ArrayList<String>
+«««							row.add('')
+«««							row.add(ev.name)
+«««							row.add(ev.descn)
+«««							retVal.add(row)
+«««						}
+«««					}
+«««				}
+«««			}
+«««			retVal
+«««		])»
 	'''
 
 	def String writeTypeSpec(TypeSpec it)'''
@@ -618,6 +671,16 @@ class MdlLibGenerator implements IGenerator {
 			«FOR colVal : row SEPARATOR ' & ' AFTER '\\\\'»«colVal.protectString»«ENDFOR»
 		«ENDFOR»
 		\end{tabular}
+		'''
+
+	def private writeMultipageLatexTable(List<String> header, List<String> columnFormat, () => List<List<String>> columnLambda)
+		'''
+		\begin{longtable}{«FOR c : columnFormat» «c» «ENDFOR»}
+		«FOR h : header SEPARATOR ' & ' AFTER '\\\\\\hline'»«h»«ENDFOR»
+		«FOR row : columnLambda.apply»
+			«FOR colVal : row SEPARATOR ' & ' AFTER '\\\\'»«colVal.protectString»«ENDFOR»
+		«ENDFOR»
+		\end{longtable}
 		'''
 
 }

@@ -86,12 +86,21 @@ class TestBlockSyntax {
 	@Test 
 	def void testObjectContentDefns() {
 		val result = '''
-			_object dataObj;
-			_block DATA_INPUT_VARIABLES (0, 1) _statements (0,) _listDefn;
+			_object dataObj "obj doc";
+			_block DATA_INPUT_VARIABLES "block doc" (0, 1) _statements (0,) _listDefn;
 			_block MODEL_PREDICTION (0, ) _statements (0,) _eqnDefn, _eqnDefn+, _listDefn;						
 			_block DEQ (0, ) _statements (0,) _eqnDefn, _eqnDefn+, _listDefn;
 			_container dataObj _has DATA_INPUT_VARIABLES, MODEL_PREDICTION;
 			_container MODEL_PREDICTION _has DEQ; 			
+		'''.loadLibAndParse
+
+		result.assertNoErrors
+	}
+
+	@Test 
+	def void testBlockArgumentDefns() {
+		val result = '''
+			_block DATA_INPUT_VARIABLES "block doc" (0, 1) _arguments level::string "Variability level" _statements (,) _eqnDefn;
 		'''.loadLibAndParse
 
 		result.assertNoErrors
