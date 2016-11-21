@@ -20,23 +20,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<tycho-version>0.24.0</tycho-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<xtext.version>2.8.4</xtext.version>
-	</properties>
-
-	<distributionManagement>
-		<snapshotRepository>
-			<id>repo.mdlteam.ddmore.eu</id>
-			<url>s3://repo.mdlteam.ddmore.eu/snapshot</url>
-		</snapshotRepository>
-		<repository>
-			<id>repo.mdlteam.ddmore.eu</id>
-			<url>s3://repo.mdlteam.ddmore.eu/release</url>
-		</repository>
-	</distributionManagement>
-
+        <tycho-extras-version>0.24.0</tycho-extras-version>
+        <maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
+        <platform-version>[3.9,4.0)</platform-version>
+ 	</properties>
 
 	<repositories>
 		<repository>
-			<id>eclipse</id>
+			<id>mars</id>
 			<layout>p2</layout>
 			<url>http://download.eclipse.org/releases/mars/</url>
 		</repository>
@@ -108,6 +99,62 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				<version>${tycho-version}</version>
 				<extensions>true</extensions>
 			</plugin>
+                       <plugin>
+                                <groupId>org.eclipse.tycho</groupId>
+                                <artifactId>tycho-source-plugin</artifactId>
+                                <version>${tycho-version}</version>
+                                <executions>
+                                        <execution>
+                                                <id>plugin-source</id>
+                                                <goals>
+                                                        <goal>plugin-source</goal>
+                                                </goals>
+                                        </execution>
+                                </executions>
+                        </plugin>
+                        <plugin>
+                                <groupId>org.eclipse.tycho.extras</groupId>
+                                <artifactId>tycho-source-feature-plugin</artifactId>
+                                <version>${tycho-extras-version}</version>
+                                <executions>
+                                        <execution>
+                                                <id>source-feature</id>
+                                                <phase>package</phase>
+                                                <goals>
+                                                        <goal>source-feature</goal>
+                                                </goals>
+                                        </execution>
+                                </executions>
+                        </plugin>
+
+                        <plugin>
+                                <groupId>org.eclipse.tycho</groupId>
+                                <artifactId>tycho-p2-plugin</artifactId>
+                                <version>${tycho-version}</version>
+                                <executions>
+                                        <execution>
+                                                <id>attach-p2-metadata</id>
+                                                <phase>package</phase>
+                                                <goals>
+                                                        <goal>p2-metadata</goal>
+                                                </goals>
+                                        </execution>
+                                </executions>
+                        </plugin>
+                        <plugin>
+                                <groupId>org.eclipse.tycho</groupId>
+                                <artifactId>tycho-packaging-plugin</artifactId>
+                                <version>${tycho-version}</version>
+                                <configuration>
+                                        <format>'v'yyyyMMdd'-'HHmm</format>
+                                </configuration>
+                        </plugin>
+                        
+                        <plugin>
+                                <groupId>org.eclipse.tycho</groupId>
+                                <artifactId>tycho-versions-plugin</artifactId>
+                                <version>${tycho-version}</version>
+                        </plugin>
 		</plugins>
 	</build>
 </project>
