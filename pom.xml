@@ -4,16 +4,16 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>eu.ddmore.mdllib</groupId>
-	<artifactId>parent</artifactId>
+	<artifactId>eu.ddmore.mdllib.parent</artifactId>
 	<version>1.3.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>../eu.ddmore.mdllib</module>
-		<module>../eu.ddmore.mdllib.ui</module>
-		<module>../eu.ddmore.mdllib.tests</module>
-		<module>../eu.ddmore.mdllib.sdk</module>
-		<module>../eu.ddmore.mdllib.updatesite</module>
+		<module>eu.ddmore.mdllib</module>
+		<module>eu.ddmore.mdllib.ui</module>
+		<module>eu.ddmore.mdllib.tests</module>
+		<module>eu.ddmore.mdllib.sdk</module>
+		<module>eu.ddmore.mdllib.updatesite</module>
 	</modules>
 
 	<properties>
@@ -88,6 +88,38 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 							</configuration>
 						</execution>
 					</executions>
+				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											exec-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.2.1,)
+										</versionRange>
+										<goals>
+											<goal>java</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
