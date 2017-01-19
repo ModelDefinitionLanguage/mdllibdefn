@@ -11,5 +11,4 @@
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="eu.ddmore.mdllib.generator.Main"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="${file_prompt}"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="eu.ddmore.mdllib"/>
-<stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
 </launchConfiguration>
