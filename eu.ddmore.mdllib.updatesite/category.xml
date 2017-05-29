@@ -4,4 +4,5 @@
       <category name="eu.ddmore.mdllib"/>
    </feature>
    <category-def name="eu.ddmore.mdllib" label="MDL Library Language"/>
+   <repository-reference location="http://downloads.mdl.community/repository/mdllib/updates/1.3/" enabled="true" />
 </site>
