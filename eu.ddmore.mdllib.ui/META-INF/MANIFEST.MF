@@ -22,7 +22,7 @@ Require-Bundle: eu.ddmore.mdllib;visibility:=reexport,
  org.eclipse.compare,
  org.antlr.runtime
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: eu.ddmore.mdllib.ui,
  eu.ddmore.mdllib.ui.contentassist,
  eu.ddmore.mdllib.ui.contentassist.antlr,
