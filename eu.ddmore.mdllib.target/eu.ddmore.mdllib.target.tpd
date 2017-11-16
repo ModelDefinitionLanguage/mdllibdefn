@@ -1,0 +1,26 @@
+target "eu.ddmore.mdllib.target"
+
+
+location "http://download.eclipse.org/releases/oxygen/" eclipse-repo  {
+org.eclipse.jdt.feature.group
+org.eclipse.platform.feature.group
+org.eclipse.equinox.executable.feature.group
+org.eclipse.pde.feature.group
+org.eclipse.draw2d.feature.group
+org.eclipse.emf.sdk.feature.group
+org.eclipse.xpand
+org.eclipse.xtend
+org.eclipse.xtend.typesystem.emf
+//	org.eclipse.emf.mwe2.launcher.feature.group
+	org.eclipse.xtext.sdk.feature.group
+} 
+
+location "http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.9.0/" mwe-repo  {
+	org.eclipse.emf.mwe2.launcher.feature.group
+} 
+
+//location "http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.11.0/" {
+//	org.eclipse.xtext.sdk.feature.group
+//}
+with source requirements
+
