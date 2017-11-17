@@ -12,15 +12,15 @@ Require-Bundle: eu.ddmore.mdllib;visibility:=reexport,
  org.eclipse.ui.editors;bundle-version="3.5.0",
  org.eclipse.ui.ide;bundle-version="3.5.0",
  org.eclipse.ui,
+ org.eclipse.compare,
  org.eclipse.xtext.builder,
- org.eclipse.xtext.xbase.lib,
- org.eclipse.core.runtime,
- org.eclipse.core.resources,
+ org.eclipse.xtend.lib;resolution:=optional,
  org.eclipse.xtend,
  org.eclipse.xpand,
  org.eclipse.xtext.common.types.ui,
- org.eclipse.compare,
- org.antlr.runtime
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: eu.ddmore.mdllib.ui,

@@ -6,17 +6,17 @@ Bundle-Version: 1.3.3.qualifier
 Bundle-SymbolicName: eu.ddmore.mdllib;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext,
- org.eclipse.xtext.xbase,
  org.eclipse.equinox.common,
- org.eclipse.xtext.generator,
  org.eclipse.xtext.util,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
+  org.eclipse.xtext.generator,
+ org.eclipse.xtext.xbase.lib,
  org.antlr.runtime,
  org.eclipse.xtext.common.types,
  org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
  org.eclipse.xtext.ecore,
- org.eclipse.xtext.xbase.lib
+ org.eclipse.xtend.lib
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: eu.ddmore.mdllib.mdllib,
  eu.ddmore.mdllib.mdllib.impl,
@@ -31,5 +31,3 @@ Export-Package: eu.ddmore.mdllib.mdllib,
  eu.ddmore.mdllib.scoping,
  eu.ddmore.mdllib.validation
 Import-Package: org.apache.log4j
-Bundle-ClassPath: .
-Bundle-Localization: plugin
