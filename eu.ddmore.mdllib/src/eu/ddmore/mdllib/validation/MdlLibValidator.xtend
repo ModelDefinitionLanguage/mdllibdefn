@@ -57,7 +57,7 @@ class MdlLibValidator extends AbstractMdlLibValidator {
 				error("Type class '" + typeClass.literal + "' cannot be used in a type definition",
 						MdlLibPackage.eINSTANCE.typeDefinition_TypeClass, INCORRECT_TYPE_CLASS)
 			case ENUM:
-				if(enumArgs == null || enumArgs.isEmpty){
+				if(enumArgs === null || enumArgs.isEmpty){
 					error("Type class '" + typeClass.literal + "' must have enumerations values defined",
 							MdlLibPackage.eINSTANCE.typeDefinition_TypeClass, MALFORMED_TYPE_CLASS)
 				}
@@ -123,28 +123,28 @@ class MdlLibValidator extends AbstractMdlLibValidator {
 
 	@Check
 	def void checkListKeyMappingConsistent(BlockDefinition it){
-		if(keyAttName != null){
-			if(listType == null){
+		if(keyAttName !== null){
+			if(listType === null){
 				var TypeDefinition firstValueType = null
 				for(lt : listTypeMappings){
 					// find key attribute in list type
 					val keyAtt = lt.attType.attributes.findFirst[at|
-						at.name == keyAttName
+						at.name === keyAttName
 					] 
-					if(keyAtt == null){
+					if(keyAtt === null){
 						error("Key '" + keyAttName + "' not found in mapped list definitions.",
 									MdlLibPackage.eINSTANCE.blockDefinition_ListTypeMappings, MALFORMED_BLOCK_DEFINITION)
 					}
 					else{
-						if(lt.attDefn.typeDefinition != keyAtt.attType.typeName){
+						if(lt.attDefn.typeDefinition !== keyAtt.attType.typeName){
 							error("Mapped value '" + lt.attDefn.name +"' must have the same type as the key '"  + keyAttName + "'.",
 										MdlLibPackage.eINSTANCE.blockDefinition_ListTypeMappings, MALFORMED_BLOCK_DEFINITION)
 						}
 					}
-					if(firstValueType == null){
+					if(firstValueType === null){
 						firstValueType = lt.attDefn.typeDefinition
 					}
-					else if(lt.attDefn.typeDefinition != firstValueType){
+					else if(lt.attDefn.typeDefinition !== firstValueType){
 						error("Mapped list key values must be of the same type.",
 									MdlLibPackage.eINSTANCE.blockDefinition_ListTypeMappings, MALFORMED_BLOCK_DEFINITION)
 					}
@@ -155,12 +155,12 @@ class MdlLibValidator extends AbstractMdlLibValidator {
 	
 	@Check
 	def void checkListKeyConsistentWithDefinition(BlockDefinition it){
-		if(keyAttName != null){
-			if(listType != null){
+		if(keyAttName !== null){
+			if(listType !== null){
 				val keyAtt = listType.attributes.findFirst[at|
-					at.name == keyAttName
+					at.name === keyAttName
 				] 
-				if(keyAtt == null){
+				if(keyAtt === null){
 					error("Key '" + keyAttName + "' not found in list definition.",
 								MdlLibPackage.eINSTANCE.blockDefinition_ListTypeMappings, MALFORMED_BLOCK_DEFINITION)
 				}
@@ -170,7 +170,7 @@ class MdlLibValidator extends AbstractMdlLibValidator {
 	
 	@Check
 	def void checkStatementDefinitionWellFormed(StatementTypeDefn it){
-		if(isHasRhs && !(stmtType == StatementType.EQN_DEFN || stmtType == StatementType.LIST_DEFN))
+		if(isHasRhs && !(stmtType === StatementType.EQN_DEFN || stmtType === StatementType.LIST_DEFN))
 			error("This statement type cannot use the '+' modifier.",
 						MdlLibPackage.eINSTANCE.statementTypeDefn_HasRhs, MALFORMED_STATEMENT_DEFINITION)
 	}

@@ -21,43 +21,44 @@
  */
 package eu.ddmore.mdllib.generator
 
+import eu.ddmore.mdllib.mdllib.AbstractTypeDefinition
+import eu.ddmore.mdllib.mdllib.ArgumentDefinition
+import eu.ddmore.mdllib.mdllib.AttNameListMap
+import eu.ddmore.mdllib.mdllib.AttValListMap
 import eu.ddmore.mdllib.mdllib.BlockDefinition
+import eu.ddmore.mdllib.mdllib.FuncArgumentDefinition
+import eu.ddmore.mdllib.mdllib.FunctionDefnBody
 import eu.ddmore.mdllib.mdllib.Library
+import eu.ddmore.mdllib.mdllib.ListAttributeDefn
 import eu.ddmore.mdllib.mdllib.ListTypeDefinition
+import eu.ddmore.mdllib.mdllib.MappingTypeDefinition
 import eu.ddmore.mdllib.mdllib.NamedFuncArgs
 import eu.ddmore.mdllib.mdllib.ObjectDefinition
+import eu.ddmore.mdllib.mdllib.PropertyReference
 import eu.ddmore.mdllib.mdllib.StatementTypeDefn
 import eu.ddmore.mdllib.mdllib.SubListTypeDefinition
 import eu.ddmore.mdllib.mdllib.TypeClass
 import eu.ddmore.mdllib.mdllib.TypeDefinition
 import eu.ddmore.mdllib.mdllib.TypeSpec
 import java.util.ArrayList
-import java.util.List
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.generator.IFileSystemAccess
-import org.eclipse.xtext.generator.IGenerator
 import java.util.Collections
 import java.util.Comparator
-import eu.ddmore.mdllib.mdllib.ArgumentDefinition
-import eu.ddmore.mdllib.mdllib.AttValListMap
-import eu.ddmore.mdllib.mdllib.FuncArgumentDefinition
-import eu.ddmore.mdllib.mdllib.ListAttributeDefn
-import eu.ddmore.mdllib.mdllib.AbstractTypeDefinition
-import eu.ddmore.mdllib.mdllib.PropertyReference
-import eu.ddmore.mdllib.mdllib.FunctionDefnBody
-import eu.ddmore.mdllib.mdllib.MappingTypeDefinition
-import eu.ddmore.mdllib.mdllib.AttNameListMap
+import java.util.List
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.generator.AbstractGenerator
+import org.eclipse.xtext.generator.IFileSystemAccess2
+import org.eclipse.xtext.generator.IGeneratorContext
 
 /**
  * Generates code from your model files on save.
  * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
-class MdlLibGenerator implements IGenerator {
+class MdlLibGenerator extends AbstractGenerator  {
 	
-	override void doGenerate(Resource resource, IFileSystemAccess fsa) {
+	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		val content = resource.contents.head
-		if(content != null){
+		if(content !== null){
 			fsa.generateFile('mdl_reference.tex', writeDocument(content as Library))
 		}
 	}
@@ -291,12 +292,12 @@ class MdlLibGenerator implements IGenerator {
 					]
 				)»
 			«ENDIF»
-			«IF blk.listType != null || !blk.listTypeMappings.isEmpty || !blk.listAttMappings.isEmpty»
+			«IF blk.listType !== null || !blk.listTypeMappings.isEmpty || !blk.listAttMappings.isEmpty»
 				\subsubsection{Lists}
 				%
 				«writeLatexTable(#['List', 'Key Attribute', 'Key Value'], #['l', 'l', 'l'], [
 					val retVal = new ArrayList<List<String>>	
-					if(blk.listType != null){
+					if(blk.listType !== null){
 						val row = new ArrayList<String>
 						row.add(hyperLink(blk.listType.name, 'type'))
 						row.add('N/A')
@@ -384,7 +385,7 @@ class MdlLibGenerator implements IGenerator {
 		})»
 			\subsection{«func.name»}
 			%
-			«IF func.funcSpec.descn != null»
+			«IF func.funcSpec.descn !== null»
 				«func.funcSpec.descn»
 			«ENDIF»
 			%
@@ -445,16 +446,16 @@ class MdlLibGenerator implements IGenerator {
 					%
 					Options:
 					\begin{description}
-						«IF listDefn.superRef != null»
+						«IF listDefn.superRef !== null»
 							\item[extends] «hyperLink(listDefn.superRef.name.protectString, 'type')»
 						«ENDIF»
 						\item[anonymous] «if(listDefn.isAnonymous) "true" else "false"»
 						\item[can define categories] «if(listDefn.isEnumList) "true" else "false"»
-						«IF listDefn.catMapType != null»
+						«IF listDefn.catMapType !== null»
 							\item[supports category mapping with type] «listDefn.catMapType.writeTypeSpec.protectString»
 							\item[category mapping optional] «if(listDefn.isCatMappingOptional) "true" else "false"»
 						«ENDIF»
-						«IF listDefn.altType != null»
+						«IF listDefn.altType !== null»
 							\item[alternate type] «listDefn.altType.writeTypeSpec»
 						«ENDIF»
 					\end{description}
@@ -549,7 +550,7 @@ class MdlLibGenerator implements IGenerator {
 				
 			})){
 				if(td instanceof TypeDefinition){
-					if(td.typeClass != TypeClass.ENUM){
+					if(td.typeClass !== TypeClass.ENUM){
 						val row = new ArrayList<String>
 						row.add(td.name + '\\label{type:' + td.name + '}')
 						row.add(td.typeClass.toString)
@@ -647,7 +648,7 @@ class MdlLibGenerator implements IGenerator {
 	'''
 
 	def String writeTypeSpec(TypeSpec it)'''
-		«hyperLink(typeName.name, 'type')»«IF elementType != null»[«elementType.writeTypeSpec»]«ENDIF»«IF cellType != null»[[«cellType.writeTypeSpec»]]«ENDIF»«FOR a : argSpecs BEFORE '(' SEPARATOR ',' AFTER ')'»«a.writeTypeSpec»«ENDFOR»«IF rtnSpec != null»«rtnSpec.writeTypeSpec ?: ''»«ENDIF»
+		«hyperLink(typeName.name, 'type')»«IF elementType !== null»[«elementType.writeTypeSpec»]«ENDIF»«IF cellType !== null»[[«cellType.writeTypeSpec»]]«ENDIF»«FOR a : argSpecs BEFORE '(' SEPARATOR ',' AFTER ')'»«a.writeTypeSpec»«ENDFOR»«IF rtnSpec !== null»«rtnSpec.writeTypeSpec ?: ''»«ENDIF»
 	'''
 	
 
@@ -673,15 +674,15 @@ class MdlLibGenerator implements IGenerator {
 		\end{tabular}
 		'''
 
-	def private writeMultipageLatexTable(List<String> header, List<String> columnFormat, () => List<List<String>> columnLambda)
-		'''
-		\begin{longtable}{«FOR c : columnFormat» «c» «ENDFOR»}
-		«FOR h : header SEPARATOR ' & ' AFTER '\\\\\\hline'»«h»«ENDFOR»
-		«FOR row : columnLambda.apply»
-			«FOR colVal : row SEPARATOR ' & ' AFTER '\\\\'»«colVal.protectString»«ENDFOR»
-		«ENDFOR»
-		\end{longtable}
-		'''
+//	def private writeMultipageLatexTable(List<String> header, List<String> columnFormat, () => List<List<String>> columnLambda)
+//		'''
+//		\begin{longtable}{«FOR c : columnFormat» «c» «ENDFOR»}
+//		«FOR h : header SEPARATOR ' & ' AFTER '\\\\\\hline'»«h»«ENDFOR»
+//		«FOR row : columnLambda.apply»
+//			«FOR colVal : row SEPARATOR ' & ' AFTER '\\\\'»«colVal.protectString»«ENDFOR»
+//		«ENDFOR»
+//		\end{longtable}
+//		'''
 
 }
 

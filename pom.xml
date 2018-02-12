@@ -23,7 +23,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		<xtext.version>2.12.0</xtext.version>
         <tycho-extras-version>1.0.0</tycho-extras-version>
         <maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
-        <platform-version>[3.9,4.0)</platform-version>
+        <platform-version>[4.0,)</platform-version>
  	</properties>
 
 	<build>

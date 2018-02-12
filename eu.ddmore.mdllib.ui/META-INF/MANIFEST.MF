@@ -20,13 +20,12 @@ Require-Bundle: eu.ddmore.mdllib;visibility:=reexport,
  org.eclipse.xtext.common.types.ui,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.core.runtime,
- org.eclipse.core.resources
+ org.eclipse.core.resources,
+ eu.ddmore.mdllib.ide;bundle-version="1.3.3"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: eu.ddmore.mdllib.ui,
  eu.ddmore.mdllib.ui.contentassist,
- eu.ddmore.mdllib.ui.contentassist.antlr,
- eu.ddmore.mdllib.ui.contentassist.antlr.internal,
  eu.ddmore.mdllib.ui.internal,
  eu.ddmore.mdllib.ui.labeling,
  eu.ddmore.mdllib.ui.outline,
