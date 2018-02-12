@@ -87,13 +87,13 @@
 						<argument>
 							-p
 						</argument>
-						<argument>
+<!-- 						<argument>
 							runtimeProject=/${project.basedir}
 						</argument>
-<!-- 						<argument>
-							rootPath=/${project.basedir}
+ --> 						<argument>
+							rootPath=/${project.basedir}/..
 						</argument>
- -->					</arguments>
+					</arguments>
 				</configuration>
 				<dependencies>
 					<dependency>

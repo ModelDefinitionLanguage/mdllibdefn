@@ -10,11 +10,14 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 
 	<modules>
 		<module>eu.ddmore.mdllib</module>
+		<module>eu.ddmore.mdllib.ide</module>
 		<module>eu.ddmore.mdllib.ui</module>
-		<module>eu.ddmore.mdllib.tests</module>
+		<module>eu.ddmore.mdllib.target</module>
 		<module>eu.ddmore.mdllib.sdk</module>
 		<module>eu.ddmore.mdllib.updatesite</module>
-		<module>eu.ddmore.mdllib.target</module>
+		<module>eu.ddmore.mdllib.tests</module>
+		<!-- No tests UI so skip -->
+		<!--  module>eu.ddmore.mdllib.ui.tests</module-->
 	</modules>
 
 	<properties>

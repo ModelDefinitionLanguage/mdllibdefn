@@ -19,7 +19,7 @@ Workflow {
                 baseName = projectName
                 rootPath = rootPath
                 runtimeTest = {
-                		enabled = false
+                		enabled = true
                 }
                 eclipsePlugin = {
                     enabled = true
@@ -27,6 +27,10 @@ Workflow {
                 eclipsePluginTest = {
                 		enabled = true
                 }
+                genericIde = {
+                		enabled = true
+                }
+                
                 createEclipseMetaData = true
             }
             code = {
@@ -75,7 +79,9 @@ Workflow {
     		}
     
     		// formatter API
-    		fragment = formatting.Formatter2Fragment2 {}
+    		fragment = formatting.Formatter2Fragment2 {
+    			generateXtendStub = true
+    		}
     
     		// labeling API
     		fragment = ui.labeling.LabelProviderFragment2 {
