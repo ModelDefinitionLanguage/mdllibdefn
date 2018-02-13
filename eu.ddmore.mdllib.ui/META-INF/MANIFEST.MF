@@ -31,7 +31,5 @@ Export-Package: eu.ddmore.mdllib.ui,
  eu.ddmore.mdllib.ui.labeling,
  eu.ddmore.mdllib.ui.outline,
  eu.ddmore.mdllib.ui.quickfix,
- eu.ddmore.mdllib.ui.wizard,
- eu.ddmore.mdllib.ide.contentassist.antlr.internal,
- eu.ddmore.mdllib.ide.contentassist.antlr
-Bundle-Activator: eu.ddmore.mdllib.ui.internal.MdlLibActivator
+ eu.ddmore.mdllib.ui.wizard
+Bundle-Activator: eu.ddmore.mdllib.ui.internal.MdllibActivator
