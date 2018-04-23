@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: eu.ddmore.mdllib.ide
-Bundle-Version: 1.3.3.qualifier
+Bundle-Version: 1.3.3
 Bundle-SymbolicName: eu.ddmore.mdllib.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext.ide,
