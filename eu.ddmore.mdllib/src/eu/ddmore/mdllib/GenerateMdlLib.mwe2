@@ -10,6 +10,10 @@ var rootPath = ".."
 Workflow {
 	bean = org.eclipse.emf.mwe.utils.StandaloneSetup {
 	    		platformUri = rootPath
+		    	projectMapping = {
+				projectName = "${projectName}" 
+				path = "${projectName}"
+			}
 	    		
 	    		scanClassPath = true
     }

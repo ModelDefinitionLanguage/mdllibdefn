@@ -50,6 +50,9 @@
 									<directory>${basedir}/src-gen/</directory>
 								</fileset>
 								<fileset>
+									<directory>${basedir}/emf-gen/</directory>
+								</fileset>
+								<fileset>
 									<directory>${basedir}/model/generated/</directory>
 								</fileset>
 								<fileset>
@@ -87,11 +90,11 @@
 						<argument>
 							-p
 						</argument>
-<!-- 						<argument>
+ 						<!-- argument>
 							runtimeProject=/${project.basedir}
-						</argument>
- --> 						<argument>
-							rootPath=/${project.basedir}/..
+						</argument-->
+ 						<argument>
+							rootPath=${project.basedir}/..
 						</argument>
 					</arguments>
 				</configuration>
