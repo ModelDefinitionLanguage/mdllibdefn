@@ -6,5 +6,6 @@ emf-gen/
 .classpath
 .DS_Store
 .project
+!eu.ddmore.mdllib/.project
 workspace/
 .settings/
